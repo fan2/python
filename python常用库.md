@@ -20,68 +20,6 @@ raspbian 的 pip3 安装包的目录（Location）为 `/usr/lib/python3/dist-pac
 
 输入 `pip show pkg`（`pip3 show pkg`）可查看具体 pkg 的信息。
 
-## IDE
-[Comparison of integrated development environments § Python](https://en.wikipedia.org/wiki/Comparison_of_integrated_development_environments#Python)
-
-raspbian 默认安装了 [IDLE](https://en.wikipedia.org/wiki/IDLE_(Python))、[Geany](https://en.wikipedia.org/wiki/Geany) 和 [Thonny](https://en.wikipedia.org/wiki/Thonny) 等 python 集成编译工具。
-
-![Programming-on-raspbian](images/Programming-on-raspbian.png)
-
-### [IDLE](https://docs.python.org/3/library/idle.html)
-**IDLE** (**I**ntegrated **D**eveLopment **E**nvironment or **I**ntegrated **D**evelopment and **L**earning **E**nvironment) is an integrated development environment for Python, which has been bundled with the default implementation of the language since 1.5.2b1.  
-It is packaged as an optional part of the Python packaging with many Linux distributions.  
-
-IDLE is intended to be a *simple* IDE and suitable for beginners, especially in an educational environment. To that end, it is cross-platform, and avoids feature clutter.
-
-### [Geany](http://www.geany.org/)
-
-在 raspbian 终端输入 `geany -V` 查看 geany 版本信息：
-
-```Shell
-pi@raspberrypi:~ $ geany -V
-geany 1.29 (built on 2017-10-30 with GTK 2.24.31, GLib 2.50.3)
-```
-
-在 raspbian 终端输入 `man geany` 查看 geany 帮助信息：
-
-```Shell
-GEANY(1)                                                                             GEANY(1)
-
-NAME
-       Geany — a small and lightweight IDE
-
-SYNOPSIS
-       geany [option]  [+number]  [files ...]
-
-DESCRIPTION
-       Geany  is  a  small  and  fast editor with basic features of an integrated development
-       environment.
-
-       Some of its features: syntax highlighting, code completion, code  folding,  symbol/tag
-       lists  and  many  supported  filetypes  like C(++), Java, PHP, HTML, DocBook, Perl and
-       more.
-
-       Homepage: http://www.geany.org/
-```
-
-### [thonny](http://thonny.org)
-Python IDE for beginners：[thonny](http://thonny.org)  
-
-在终端输入 `pip3 show thonny` 可查看 thonny 信息：
-
-```Shell
-pi@raspberrypi:~ $ pip3 show thonny
-Name: thonny
-Version: 2.1.10
-Summary: Python IDE for beginners
-Home-page: http://thonny.org
-Author: Aivar Annamaa and others
-Author-email: thonny@googlegroups.com
-License: MIT
-Location: /usr/lib/python3/dist-packages
-Requires: 
-```
-
 # python package help
 
 > [python 查询函数用法?](https://www.zhihu.com/question/29433964)  
