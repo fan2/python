@@ -103,7 +103,7 @@ lrwxr-xr-x  1 faner  admin  55 Nov  3 08:09 /usr/local/Cellar/python3/3.6.3/bin/
 
 > The interpreter operates somewhat like the Unix shell: when called with standard input connected to a tty device, it reads and executes commands interactively; when called with a file name argument or with a file as standard input, it reads and executes a *script* from that file.  
 
-python shell 前导符（primary prompt）为3个大于号 `>>>` 等待输入 python 命令。  
+python shell 前导符（primary prompt）为3个大于号 `>>>`（类似 bash shell 的 <kbd>$</kbd>），等待输入 python 命令。  
 
 在 python(2) 下输入 `>>> print "Hello World from Python2"`，在 python3 下输入 `>>> print("Hello World from Python3")` 可打印 `Hello World from Python*`。
 
@@ -131,6 +131,42 @@ Hello World from Python3
 ```
 
 > python3 XXX.py 指定 python3 执行 py 脚本文件。
+
+### multi line input
+如果一行输入不下，可以输入反斜杠 <kbd>\\</kbd>，新起续航书写。
+
+```Shell
+>>> hello = 'Hello World \
+... from Python3'
+>>> print(hello)
+Hello World from Python3
+>>> 
+```
+
+三引号（`'''`）开头结尾的输入，中间支持换行输入：
+
+```Shell
+>>> hello = '''Hello
+... World
+... from
+... Python3'''
+>>> print(hello)
+Hello
+World
+from
+Python3
+```
+
+以上每行尾部加反斜杠 <kbd>\\</kbd> 示意续行，防止分行：
+
+```Shell
+>>> hello = '''Hello \
+... World \
+... from \
+... Python3'''
+>>> print(hello)
+Hello World from Python3
+```
 
 ### quit/exit
 按下 `<C-d>`（windows 下为 `<C-z>`）或输入 `quit()`/`exit()` 即可退出 python shell，退回到系统 shell。
