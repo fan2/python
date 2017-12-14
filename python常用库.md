@@ -1,3 +1,6 @@
+
+> [哪些Python库让你拍案叫绝，有相见恨晚之感？](https://www.wukong.com/question/6488161616905896205/)  
+
 # raspbian
 raspbian 的 pip 安装包的目录（Location）为 `/usr/lib/python2.7/dist-packages`，  
 raspbian 的 pip3 安装包的目录（Location）为 `/usr/lib/python3/dist-package`。  
@@ -143,6 +146,3 @@ numpy(**Num**erical **Py**thon extensions)是一个第三方的Python包，用�
 [python使用matplotlib绘图 -- barChart](http://www.cnblogs.com/qianlifeng/archive/2012/02/13/2350086.html)  
 [matplotlib 绘图可视化知识点整理](http://python.jobbole.com/85106/)  
 [给深度学习入门者的Python快速教程 - numpy和Matplotlib篇](https://zhuanlan.zhihu.com/p/24309547)  
-
-
-

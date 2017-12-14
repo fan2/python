@@ -13,3 +13,7 @@
 [模拟登录知乎， 爬虫，操作excel](https://github.com/injetlee/Python)  
 [Show Me the Code Python version](https://github.com/Show-Me-the-Code/python)  
 [My Python Examples](https://github.com/geekcomputers/Python)  
+
+## awesome python
+[Python 资源大全中文版](https://github.com/jobbole/awesome-python-cn/blob/master/README.md)  
+[awesome-python](https://github.com/vinta/awesome-python) - [cn](https://github.com/jobbole/awesome-python-cn)  

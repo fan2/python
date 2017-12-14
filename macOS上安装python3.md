@@ -42,7 +42,7 @@ Not installed
 
 ### python3 --version
 执行 `python -V`（`python --version`）查看 macOS/Xcode 自带的 python2 的版本号。  
-安装 python3 后，执行 `python3 -V`（`python --version`）可查看安装的 python2 的版本号。  
+安装 python3 后，执行 `python3 -V`（`python3 --version`）可查看安装的 python3  的版本号。  
 
 ```Shell
 faner@THOMASFAN-MB0:~|⇒  python -V
@@ -71,6 +71,8 @@ Python 3.5.3
 pi@raspberrypi:~ $ which python3
 /usr/bin/python3
 ```
+
+> [python和numpy的版本、安装位置](http://www.cnblogs.com/klchang/p/4543032.html)  
 
 ### python3 Orignial
 macOS 通过 brew 安装的 python3 默认在 `/usr/local/Cellar/python3/` 目录下，然后软链（symlink）到 `/usr/local/bin/` 目录下。
