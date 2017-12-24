@@ -4,7 +4,7 @@
 [廖雪峰python教程](https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000)  
 [**Python最佳实践指南**](http://pythonguidecn.readthedocs.io/zh/latest/)  
 
-[《编程小白的第一本Python入门书》笔记](http://blog.csdn.net/ch717828/article/details/70186125)
+[《编程小白的第一本Python入门书》笔记](http://blog.csdn.net/ch717828/article/details/70186125)  
 [CSDN](http://download.csdn.net/download/mapplei/9561729) / [百度云盘](http://www.olecn.com/2397.html)  
 
 ## github 站点
