@@ -14,6 +14,12 @@ Django also includes the ability to launch a [FastCGI](https://en.wikipedia.org/
 Django officially supports four database backends: [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL), [MySQL](https://en.wikipedia.org/wiki/MySQL), [SQLite](https://en.wikipedia.org/wiki/SQLite), and [Oracle](https://en.wikipedia.org/wiki/Oracle_Database).
 
 ## 博客教程
+[**Django 博客入门**](https://www.gitbook.com/book/shenxgan/django) - gitbooks  
+[**Django 博客教程**](https://www.zmrenwu.com/post/2/)  
+
+[Django 博客系统开发小结](https://imququ.com/post/django-blog-dev.html)  
+[Django 博客开发实战：详情视图](http://codingpy.com/article/writing-your-own-blog-with-django-part-two/)  
+
 [用Django搭建个人博客](https://laike9m.com/blog/yong-djangoda-jian-ge-ren-bo-ke,22/)  
 [Django写博客是很多学习Python人必经之路](https://www.zhihu.com/question/24179143)  
 [Geekblog——基于Django框架的博客系统](http://xianglong.me/article/django-based-blog-geekblog/)  
@@ -27,6 +33,29 @@ CentOS + uwsgi + nginx + Django搭建个人博客 [(1)](http://www.jianshu.com/p
 [django 搭建博客教程](http://blog.csdn.net/jiange_zh/article/details/49976365) by [jiange_zh](http://blog.csdn.net/jiange_zh/article/category/5714017)@CSDN  
 
 [Django 开发博客](http://blog.csdn.net/wyb199026/article/details/50437048) by [点点寒彬](http://blog.csdn.net/wyb199026/article/category/6084497)@CSDN  
+
+[Django博客开发实战：开篇](http://codingpy.com/article/writing-your-own-blog-with-django/)  
+[Django博客第一篇 环境搭建](https://zhuanlan.zhihu.com/p/26760300)  
+[Django博客第二篇 工程搭建](https://zhuanlan.zhihu.com/p/26780959)  
+
+[Django实际站点项目开发经验谈](http://www.cnblogs.com/Lands-ljk/p/5711392.html)  
+[Django1.8教程——安装Django](http://www.cnblogs.com/Lands-ljk/p/5712637.html)  
+[Django1.8教程——从零开始搭建一个完整django博客（一）](http://www.cnblogs.com/Lands-ljk/p/5716355.html)  
+[Django1.8教程——从零开始搭建一个完整django博客（二）](http://www.cnblogs.com/Lands-ljk/p/5719300.html)  
+[Django1.8教程——从零开始搭建一个完整django博客（三）](http://www.cnblogs.com/Lands-ljk/p/5723828.html)  
+
+[Django学习笔记一：搭建简易博客](http://blog.csdn.net/xunalove/article/details/75371327)  @[zhihu](https://zhuanlan.zhihu.com/p/28210842)  
+[Django学习笔记二：实现博客详情，完善文章的分类和标签](http://blog.csdn.net/xunalove/article/details/76021076)  
+[Django学习笔记三：页面侧边栏最新文章,文章归档,分类,标签云的实现](http://blog.csdn.net/xunalove/article/details/76127251)  
+[Django学习笔记四：阿里云服务器购买和配置nginx](http://blog.csdn.net/xunalove/article/details/76233174)  
+[Django学习笔记五：通过nginx+uwsgi部署Django项目](http://blog.csdn.net/xunalove/article/details/76359890)  
+[Django学习笔记六：form表单实现评论（检验数据合法性)](http://blog.csdn.net/xunalove/article/details/76581163)  
+
+[用 Django 构建简易博客（一）：开始前的准备工作](http://www.dannysite.com/blog/233/)  
+[用 Django 构建简易博客（二）：开启博客系统之旅](http://www.dannysite.com/blog/234/)  
+[用 Django 构建简易博客（三）：专注功能的实现之博客列表](http://www.dannysite.com/blog/235/)  
+[用 Django 构建简易博客（四）：专注功能的实现之博客详情与评论](http://www.dannysite.com/blog/236/)  
+[用 Django 构建简易博客（五）：添枝加叶](http://www.dannysite.com/blog/237/)  
 
 ## MySQL / mariaDB
 [How to connect Python programs to MariaDB](https://mariadb.com/resources/blog/how-connect-python-programs-mariadb)  

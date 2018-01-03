@@ -126,7 +126,7 @@ pip works on Unix/Linux, macOS, and Windows.
 另外，不少的软件包也可以在 PyPI 中找到。  
 
 #### [Installation](https://pip.pypa.io/en/stable/installing.html)
-To install pip, securely download get-pip.py. [2]
+To install pip, securely download [get-pip.py](https://bootstrap.pypa.io/get-pip.py)
 
 Then run the following:
 
