@@ -78,13 +78,19 @@ PyCharm一个跨平台开发环境，拥有Windows, macOS 和Linux版本。社�
 > [将 Sublime 3 打造成 Python/Django IDE](http://www.weiguda.com/blog/48/)  
 > [将Sublime Text 3设置为Python全栈开发环境](http://python.jobbole.com/81312/) - macOS  
 > [sublime text 3 + python配置，完整搭建及常用插件安装](http://blog.csdn.net/mx472756841/article/details/50535517) - windows  
+> [Setting Up Sublime Text 3 for Full Stack Python Development](https://realpython.com/blog/python/setting-up-sublime-text-3-for-full-stack-python-development/)  
 
 ### SublimeREPL
+
+[Sublime Text 2 console input](https://stackoverflow.com/questions/10604409/sublime-text-2-console-input)  
 
 ### Anaconda
 Anaconda 是一个终极 Python 插件，它为 ST3 增添了多项 IDE 类似的功能特性。
 
 Anaconda 是目前 Sublime 3 中最好的 Python 自动补全和语法提示插件，并且提供了"跳转到定义"、"查找使用"、"显示文档"、"自动重命名" 等 IDE 中插件的功能。
+
+### requirementstxt
+[Requirementstxt](https://sublime.wbond.net/packages/requirementstxt) provides autocompletion and syntax highlight-lighting as well as a nice version management system for your *requirements.txt* files.
 
 ### Djaneiro
 Djaneiro 支持 Django 模版和关键字高亮以及许多实用的代码片(snippets)功能。其中的 snippets 绝对是省时神器。你可以通过很少几个关键字就能创建许多常见的 Django 代码块比如 templates，models，forms，以及 views。
