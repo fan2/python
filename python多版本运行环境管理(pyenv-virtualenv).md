@@ -8,6 +8,7 @@ Simple Python Version Management: pyenv
 pyenv lets you easily switch between multiple versions of Python.  
 It's simple, unobtrusive, and follows the UNIX tradition of single-purpose tools that do one thing well.  
 
+> [Multiple Python installations on OS X](https://gist.github.com/Bouke/11261620)  
 > [python 环境管理器pyenv 命令](http://blog.csdn.net/sentimental_dog/article/details/52718398)  
 > [使用 pyenv 可以在一个系统中安装多个python版本](http://www.jianshu.com/p/a23448208d9a)  
 > [在 Mac OS X 10.10 安装 pyenv 的一个小坑](http://blog.csdn.net/gzlaiyonghao/article/details/46343913)  
