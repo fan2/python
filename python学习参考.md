@@ -1,27 +1,40 @@
 
-## Python学习资源
-[python学习笔记](https://github.com/xxg1413/python)  
-[python常用脚本](https://github.com/joe011/python)  
-[模拟登录知乎， 爬虫，操作excel](https://github.com/injetlee/Python)  
-[Show Me the Code Python version](https://github.com/Show-Me-the-Code/python)  
-[My Python Examples](https://github.com/geekcomputers/Python)  
-
+## Python学习参考
+### Python 之美
 [码农·从Python开始（总第7期）](http://download.csdn.net/download/haiyoung/9356897)  
 知乎专栏 [Python之美](https://zhuanlan.zhihu.com/python-cn)  
 
-### awesome python
-[Python 资源大全中文版](https://github.com/jobbole/awesome-python-cn/blob/master/README.md)  
-[awesome-python](https://github.com/vinta/awesome-python) - [cn](https://github.com/jobbole/awesome-python-cn)  
+### Python 学习
+[如何系统学习python](http://www.xuliangwei.com/xubusi/956.html)  
+[Python 学习路线图](http://www.apachecn.org/map/10.html)  
+[Python系统学习流程图](https://www.toutiao.com/a6536174274070184462/)  
+[Python 编程核心知识体系](https://woaielf.github.io/2017/06/13/python3-all/)  
 
-## Python在线教程
+### Python 指南
+[python-guide](http://docs.python-guide.org/en/latest/) @[github](https://github.com/kennethreitz/python-guide)  
+[awesome-python](https://awesome-python.com/) @[github](https://github.com/vinta/awesome-python) - [cn](https://github.com/jobbole/awesome-python-cn)  
+
+### Python 教程
 [Python 基础教程](http://www.runoob.com/python/python-tutorial.html) @runoob  
 [莫烦PYTHON](https://morvanzhou.github.io/) | [basic](https://morvanzhou.github.io/tutorials/python-basic/)  
 [廖雪峰python教程](https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000)  
 [**Python最佳实践指南**](http://pythonguidecn.readthedocs.io/zh/latest/)  
-知乎周刊 [编程小白学 Python](https://www.zhihu.com/publications/book/19550511)  
+
+### Python 示例
+[python学习笔记](https://github.com/xxg1413/python)  
+[python常用脚本](https://github.com/joe011/python)  
+
+[My Python Examples](https://github.com/geekcomputers/Python)  
+[Show Me the Code Python](https://github.com/Show-Me-the-Code/python)  
+
+### Python 进阶
+[Python 学习系列五](https://blog.csdn.net/Jofranks/article/category/1182806)  
+[模拟登录知乎， 爬虫，操作excel](https://github.com/injetlee/Python)  
+[从零开始掌握Python机器学习：十四步教程]()  
 
 ## Python编程书籍
-豆瓣读书 - [**python**](https://book.douban.com/subject_search?search_text=python&cat=1001)
+豆瓣读书 - [**python**](https://book.douban.com/subject_search?search_text=python&cat=1001)  
+知乎周刊 [编程小白学 Python](https://www.zhihu.com/publications/book/19550511)  
 
 ### 编程小白的第一本Python入门书
 [@amazon](https://www.amazon.cn/dp/B01I2JGBMQ/ref=sr_1_1?ie=UTF8&qid=1519808694&sr=8-1&keywords=python)  
