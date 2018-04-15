@@ -23,6 +23,8 @@ Github Page: <https://github.com/pypa>
 CPython is the reference implementation of the [Python programming language](https://en.wikipedia.org/wiki/Python_programming_language).  
 Written in ***C***, CPython is the **default** and most widely used implementation of the language.
 
+Python Source code: [github](https://github.com/python/cpython) / [Mercurial](https://hg.python.org/cpython/)  
+
 ### [Jython](https://en.wikipedia.org/wiki/Jython)
 
 > <http://www.jython.org/>
