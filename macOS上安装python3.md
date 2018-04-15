@@ -107,6 +107,18 @@ lrwxr-xr-x  1 faner  admin  55 Nov  3 08:09 /usr/local/Cellar/python3/3.6.3/bin/
 
 python shell 前导符（primary prompt）为3个大于号 `>>>`（类似 bash shell 的 <kbd>$</kbd>），等待输入 python 命令。  
 
+```shell
+>>> import sys
+
+# primary prompts
+>>> sys.ps1
+'>>> '
+
+# secondary prompts
+>>> sys.ps2
+'... '
+```
+
 在 python(2) 下输入 `>>> print "Hello World from Python2"`，在 python3 下输入 `>>> print("Hello World from Python3")` 可打印 `Hello World from Python*`。
 
 ```Shell
@@ -135,6 +147,30 @@ Hello World from Python3
 > python3 XXX.py 指定 python3 执行 py 脚本文件。
 
 ### multi line input
+
+当输入 `(`,`[`,`{`，尚未定义完时，解析器会自动接受续行输入。
+
+```shell
+
+>>> str1=('hello'
+... 'world')
+>>> str1
+'helloworld'
+
+>>> list1=[1,3,5,
+... 7,9,11]
+
+>>> tuple1=(1,4,9,
+... 16,25,36)
+
+>>> set1={2,4,6,
+... 8,10,12}
+
+>>> exit(
+... )
+
+```
+
 如果一行输入不下，可以输入反斜杠 <kbd>\\</kbd>，新起续航书写。
 
 ```Shell
