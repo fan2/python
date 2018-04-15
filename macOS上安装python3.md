@@ -170,6 +170,20 @@ Python3
 Hello World from Python3
 ```
 
+### comment
+python 控制台及脚本中均支持开头或语句尾部以 `#` 开始的注释。
+
+```shell
+>>> #comment
+... test='test'
+>>> test
+'test'
+
+>>> test='hello' #comment
+>>> test
+'hello'
+```
+
 ### quit/exit
 按下 `<C-d>`（windows 下为 `<C-z>`）或输入 `quit()`/`exit()` 即可退出 python shell，退回到系统 shell。
 
