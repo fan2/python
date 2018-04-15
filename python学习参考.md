@@ -11,18 +11,26 @@
 [Python 编程核心知识体系](https://woaielf.github.io/2017/06/13/python3-all/)  
 
 ### Python 指南
-[python-guide](http://docs.python-guide.org/en/latest/) @[github](https://github.com/kennethreitz/python-guide)  
+[**python-guide**](http://docs.python-guide.org/en/latest/) @[github](https://github.com/kennethreitz/python-guide)  
+
+> This is a living, breathing guide.  
+
 [awesome-python](https://awesome-python.com/) @[github](https://github.com/vinta/awesome-python) - [cn](https://github.com/jobbole/awesome-python-cn)  
 
+> A curated list of awesome Python frameworks, libraries, software and resources.
+
 ### Python 教程
+[**The Python Tutorial**](https://docs.python.org/3.6/tutorial/)  
+
 [Python 基础教程](http://www.runoob.com/python/python-tutorial.html) @runoob  
 [莫烦PYTHON](https://morvanzhou.github.io/) | [basic](https://morvanzhou.github.io/tutorials/python-basic/)  
 [廖雪峰python教程](https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000)  
 [**Python最佳实践指南**](http://pythonguidecn.readthedocs.io/zh/latest/)  
 
 ### Python 示例
-[python学习笔记](https://github.com/xxg1413/python)  
 [python常用脚本](https://github.com/joe011/python)  
+[python学习笔记](https://github.com/xxg1413/python) - github  
+[python学习笔记](https://blog.csdn.net/leexide/article/category/1779961) - CSDN  
 
 [My Python Examples](https://github.com/geekcomputers/Python)  
 [Show Me the Code Python](https://github.com/Show-Me-the-Code/python)  
