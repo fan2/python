@@ -42,7 +42,8 @@ from foo.bar import baz    # foo.bar.baz imported and bound as baz
 from foo import attr       # foo imported and foo.attr bound as attr
 ```
 
-> 类似 C++ 中命名空间的导入使用。
+> import 类似 C(++) 中的 include，Objective-C 中的 import；  
+> `from module import class(.method)` 类似 C++ 中命名空间的导入引用（using）。  
 
 If the list of identifiers is replaced by a star ('`*`'), all public names defined in the module are bound in the local namespace for the scope where the import statement occurs.
 
