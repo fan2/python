@@ -1,3 +1,7 @@
+[PEP 0 -- Index of Python Enhancement Proposals (PEPs)](https://www.python.org/dev/peps/)  
+
+This PEP contains the index of all Python Enhancement Proposals, known as PEPs.
+
 ## [PEP8](https://www.python.org/dev/peps/pep-0008/) - Style Guide for Python Code
 
 ```shell
@@ -21,6 +25,7 @@ pepper8 (1.1.1)                   - Transforms pep8 or flake8 output into an HTM
 [PEP 8——Python编码风格指南](https://lizhe2004.gitbooks.io/code-style-guideline-cn/content/python/python-pep8.html)  
 
 ## Anaconda PEP8 lint error
+
 - `Anaconda: Disable linting on this file`，选中后将不再进行 PEP8 错误标识。  
 
 	> 选中 **Disable** 禁止 PEP8 错误提示后，将多出相应的 **Enable** 项可恢复提示。  
