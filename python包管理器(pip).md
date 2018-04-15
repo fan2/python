@@ -21,7 +21,7 @@ Github Page: [pypa](https://github.com/pypa) / [setuptools](https://github.com/p
 
 macOS 下使用 brew 安装 python3 时，默认已安装 pip3 和 setuptools。
 
-```Shell
+```shell
 faner@THOMASFAN-MB0:~|⇒  pip3 list
 DEPRECATION: The default format will switch to columns in the future. You can use --format=(legacy|columns) (or define a format=(legacy|columns) in your pip.conf under the [list] section) to disable this warning.
 pip (9.0.1)
@@ -31,7 +31,7 @@ wheel (0.30.0)
 
 可通过 `pip3 show setuptools` 命令查看 wheel 包信息。
 
-```Shell
+```shell
 faner@THOMASFAN-MB0:~|⇒  pip3 show setuptools
 Name: setuptools
 Version: 36.5.0
@@ -52,7 +52,7 @@ A **wheel** is a ZIP-format archive with a specially formatted filename and the 
 
 macOS 下使用 brew 安装 python3 时，默认已安装 pip3 和 wheel3。
 
-```Shell
+```shell
 faner@THOMASFAN-MB0:~|⇒  wheel3 -V
 usage: wheel3 [-h]
               {keygen,sign,unsign,verify,unpack,install,install-scripts,convert,version,help}
@@ -62,7 +62,7 @@ wheel3: error: unrecognized arguments: -V
 
 可通过 `pip3 show wheel` 命令查看 wheel 包信息。
 
-```Shell
+```shell
 faner@THOMASFAN-MB0:~|⇒  pip3 show wheel     
 Name: wheel
 Version: 0.30.0
@@ -93,7 +93,7 @@ Easy Install is a python module (`easy_install`) bundled with `setuptools` that 
 - 输入 `easy_install --version` 命令可查看 Python 2.7 对应的 easy_install 的版本号；  
 - 输入 `easy_install-3.6 --version`（`easy_install3 --version`）可查看 Python 3.* 对应的 easy_install 的版本号。  
 
-```Shell
+```shell
 faner@THOMASFAN-MB0:~|⇒  easy_install
 easy_install      easy_install-2.6  easy_install-2.7  easy_install-3.6
 
@@ -104,7 +104,7 @@ faner@THOMASFAN-MB0:~|⇒  easy_install-3.6 --version
 setuptools 36.5.0 from /usr/local/lib/python3.6/site-packages (Python 3.6)
 ```
 
-```Shell
+```shell
 pi@raspberrypi:~ $ easy_install
 easy_install   easy_install3
 
@@ -130,7 +130,7 @@ To install pip, securely download [get-pip.py](https://bootstrap.pypa.io/get-pip
 
 Then run the following:
 
-```Shell
+```shell
 python get-pip.py
 ```
 
@@ -144,7 +144,7 @@ python get-pip.py
 
 输入 pip 默认运行 pip 2，输入 pip3 则指定运行版本3的 pip。  
 
-```Shell
+```shell
 # macOS
 
 faner@THOMASFAN-MB0:~|⇒  pip3 -V
@@ -153,7 +153,7 @@ faner@THOMASFAN-MB0:~|⇒  which pip3
 /usr/local/bin/pip3
 ```
 
-```Shell
+```shell
 # raspbian
 
 pi@raspberrypi:~ $ pip -V
@@ -178,7 +178,7 @@ pip 和 pip3 带 `-h`(`--help`) 选项可查看帮助（Show help）。
 
 pip 的主要命令（Commands）如下：
 
-```Shell
+```shell
 pi@raspberrypi:~ $ pip -h
 
 Usage:   
@@ -215,11 +215,11 @@ Commands:
 #### [upgrade pip](https://pip.pypa.io/en/stable/installing/#upgrading-pip)
 On Linux or macOS:
 
-```Shell
+```shell
 pip install -U pip
 ```
 
-```Shell
+```shell
 pi@raspberrypi:~ $ pip install -U pip
 Collecting pip
   Downloading pip-9.0.1-py2.py3-none-any.whl (1.3MB)
@@ -230,8 +230,44 @@ Successfully installed pip-9.0.1
 
 On Windows:
 
-```Shell
+```shell
 python -m pip install -U pip
+```
+
+---
+
+运行 pip3 命令，提示新版本可供升级：
+
+```shell
+faner@MBP-FAN:~|⇒  pip3 list
+DEPRECATION: The default format will switch to columns in the future. You can use --format=(legacy|columns) (or define a format=(legacy|columns) in your pip.conf under the [list] section) to disable this warning.
+beautifulsoup4 (4.6.0)
+cppman (0.4.8)
+html5lib (1.0.1)
+pip (9.0.1)
+setuptools (36.5.0)
+six (1.11.0)
+webencodings (0.5.1)
+wheel (0.30.0)
+You are using pip version 9.0.1, however version 9.0.3 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+```
+
+按照提示运行 `pip install --upgrade pip`（`-U` = `--upgrade`）可升级 pip：
+
+```shell
+faner@MBP-FAN:~|⇒  pip3 install -U pip
+Collecting pip
+  Downloading pip-9.0.3-py2.py3-none-any.whl (1.4MB)
+    100% |████████████████████████████████| 1.4MB 989kB/s 
+Installing collected packages: pip
+  Found existing installation: pip 9.0.1
+    Uninstalling pip-9.0.1:
+      Successfully uninstalled pip-9.0.1
+Successfully installed pip-9.0.3
+
+faner@MBP-FAN:~|⇒  pip3 --version
+pip 9.0.3 from /usr/local/lib/python3.6/site-packages (python 3.6)
 ```
 
 ### pip over easy_install
