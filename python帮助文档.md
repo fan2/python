@@ -1,8 +1,14 @@
 ## Docs
 
 [Documentation](https://www.python.org/doc/) » [Python 3.x Docs](http://docs.python.org/3/)  
+
+[Glossary](https://docs.python.org/3/glossary.html)  
+
+[The Python Language Reference](https://docs.python.org/3/reference/index.html)  
 [The Python Standard Library](https://docs.python.org/3/library/index.html)  
 [The Python Tutorial](https://docs.python.org/3.6/tutorial/)  
+
+[Python Developer’s Guide](https://devguide.python.org/)  
 
 [查看python的模块和函数帮助文档方法](http://blog.csdn.net/u013810296/article/details/55509284)  
 
@@ -228,7 +234,7 @@ to. Enter any symbol to get more help.
 **=                 <                   ]                   
 ```
 
-#### modules
+#### [modules](https://docs.python.org/3.6/tutorial/modules.html)
 
 输入 `modules` 可以列出当前所有已安装的模块：
 
@@ -266,6 +272,38 @@ pip._vendor.urllib3.util.timeout
 
 > 在处理某一特定领域问题，想要看看现有的模块库支持时，基于关键字进行模糊匹配相当实用。
 
+##### src
+
+[How do I find the location of Python module sources?](https://stackoverflow.com/questions/269795/how-do-i-find-the-location-of-python-module-sources)
+
+在终端执行 python(3) 启动时，可携带 `-v` 选项，将输出详细的模块加载信息：
+
+```shell
+-v     : verbose (trace import statements); also PYTHONVERBOSE=x
+         can be supplied multiple times to increase verbosity
+```
+
+另外，也可以打印查看模块的 `__file__` 属性。
+
+```shell
+# builtins 模块未定义该属性
+>>> import builtins
+>>> builtins.__file__
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: module 'builtins' has no attribute '__file__'
+
+# array 模块对应 cpython 实现动态库
+>>> import array
+>>> array.__file__
+'/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/array.cpython-36m-darwin.so'
+
+# datetime 模块对应的 python 实现源码
+>>> import datetime
+>>> datetime.__file__
+'/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/datetime.py'
+```
+
 #### quit
 
 通过快捷键 `<C-c>` / `<C-d>` 或 `quit` 可退出 help utility 命令行 `help> ` 回到 Python 主控制台 `>>> `。
@@ -284,6 +322,11 @@ has the same effect as typing a particular string at the help> prompt.
 退回到 `>>>` 中输入`help(module)`、`help(module.function)`、`help(module.class)`、`help(module.class.method)` 可查看等效帮助。  
 
 ## [dir()](https://docs.python.org/3/library/functions.html#dir)
+
+The built-in function [dir()](https://docs.python.org/3.6/tutorial/modules.html#the-dir-function) is used to find out which names a module defines. It returns a sorted list of strings:
+
+> Note that it lists all types of names: variables, modules, functions, etc.  
+> [dir()](https://docs.python.org/3.6/library/functions.html#dir) does not list the names of built-in functions and variables.  
 
 内置模块 builtins 提供的 `dir()` 方法用于列举类或实例的属性方法。
 
@@ -326,6 +369,27 @@ dir(...)
 ```
 
 	> 也可执行 `print(builtins.__dict__)` 打印 builtins 模块的符号表。
+
+## direct input
+
+在 python 主控制台中直接输入 `module`、`module.function`、` module.class`、` module.class.method` 也会显示其类型信息：
+
+```
+>>> builtins
+<module 'builtins' (built-in)>
+
+>>> builtins.print
+<built-in function print>
+
+>>> builtins.str
+<class 'str'>
+
+>>> builtins.str.format
+<method 'format' of 'str' objects>
+
+>>> array
+<module 'array' from '/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/array.cpython-36m-darwin.so'>
+```
 
 ## autocompletion
 
