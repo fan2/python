@@ -2,7 +2,19 @@
 
 [str tutorial](https://docs.python.org/3.6/tutorial/introduction.html#strings)  
 
-## access based on subscripted index
+## empty string
+
+1. `s=str()`: 构造一个空字符串对象。  
+2. `s=''`：定义空字符串字面量。  
+
+## expressions
+
+- `len(s)`: Return the length of str(number of single character).  
+- `c in s`: Test x for membership in s.  
+- `c not in s`: Test x for non-membership in s.  
+- `for c in s`: enumerate substring(character)  in s.  
+
+## access through subscripted index
 
 ```shell
 >>> word = 'Python'
