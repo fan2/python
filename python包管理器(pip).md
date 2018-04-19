@@ -29,6 +29,8 @@ setuptools (36.5.0)
 wheel (0.30.0)
 ```
 
+> [How can I get a list of locally installed Python modules?](https://stackoverflow.com/questions/739993/how-can-i-get-a-list-of-locally-installed-python-modules)  
+
 可通过 `pip3 show setuptools` 命令查看 wheel 包信息。
 
 ```shell

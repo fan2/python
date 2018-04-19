@@ -71,6 +71,15 @@ Type help() for interactive help, or help(object) for help about object.
 
 ### help(object)
 
+调用 `help('modules')` 可以列出当前所有已安装的模块：
+
+```shell
+>>> help('modules')
+
+Please wait a moment while I gather a list of all available modules...
+
+```
+
 调用 `import(module)` 导入模块后，可调用 `help(module)` 查看模块帮助：
 
 1. 调用  `help(module.function)` 查看静态函数 function 帮助。  
@@ -243,6 +252,8 @@ help> modules
 
 Please wait a moment while I gather a list of all available modules...
 ```
+
+> 等效于  `help('modules')`  
 
 除此之外，还可以调用 `modules time` 查看所有名称或概要信息中包含 time 的模块。
 
