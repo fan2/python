@@ -108,9 +108,110 @@ builtins 的 print() 函数：
 
 参考 [str.format](https://docs.python.org/3/library/stdtypes.html#str.format) 和 [Format String Syntax](https://docs.python.org/3/library/string.html#formatstrings)。
 
-> [printf-style String Formatting](https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting)  
 > [python格式化输出](http://blog.csdn.net/wchoclate/article/details/42297173)  
 > [Python print函数用法](http://blog.csdn.net/zanfeng/article/details/52164124)  
+
+##### expr
+
+`print(object)` 输出描述或类型信息。
+
+```shell
+#######################################
+# 打印模块信息
+#######################################
+# python3
+>>> print(builtins)
+<module 'builtins' (built-in)>
+
+>>> print(array)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'array' is not defined
+>>> import array
+
+# python2
+>>> print(array)
+<module 'array' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-dynload/array.so'>
+
+# python3
+>>> print(array)
+<module 'array' from '/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/array.cpython-36m-darwin.so'>
+
+#######################################
+# 打印模块类型信息
+#######################################
+
+# python2
+>>> print(list)
+<type 'list'>
+
+# python3
+>>> print(list)
+<class 'list'>
+
+>>> print(len)
+<built-in function len>
+
+>>> print(hex)
+<built-in function hex>
+```
+
+`print(var)` 或 `print(expr)` 打印变量或表达式的值。
+
+```shell
+>>> start=1
+>>> stop=10
+>>> step=2
+
+>>> print(start)
+1
+
+>>> print(start+step)
+3
+
+>>> r=range(1,10,2)
+# python2
+>>> print(r)
+[1, 3, 5, 7, 9]
+# python3
+>>> print(r)
+range(1, 10, 2)
+
+>>> l1=[1,2,3,4]
+>>> print(l1)
+[1, 2, 3, 4]
+
+```
+
+##### list vars
+
+逗号后直接接变量，将自动拼接前半句字面量和后面的变量，以空格隔开。
+
+```shell
+>>> print('start is', start)
+start is 1
+
+>>> print('start, stop is', start, stop)
+start, stop is 1 10
+```
+
+##### [printf-style String Formatting](https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting)
+
+C printf 风格，使用 `%` 格式符标识占位，
+
+```shell
+# start 可加括号
+>>> print('start is %d' % start)
+start is 1
+
+>>> print('start,stop is %d, %d' % (start, stop))
+start,stop is 1, 10
+
+```
+
+对很多应用程序来说，使用模块 logging 来写入日志比使用 print 更合适。
+
+> 相关模块参考：syslog, logging。
 
 #### bin(), hex()
 
