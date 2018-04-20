@@ -74,10 +74,34 @@ Type help() for interactive help, or help(object) for help about object.
 调用 `help('modules')` 可以列出当前所有已安装的模块：
 
 ```shell
+>>> help(modules)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'modules' is not defined
+
 >>> help('modules')
 
 Please wait a moment while I gather a list of all available modules...
 
+```
+
+如果不 import 导入模块，加引号 `help('module')` 也可以查看模块帮助。
+
+```shell
+>>> help(array)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'array' is not defined
+
+>>> help('array')
+
+Help on module array:
+
+NAME
+    array
+
+MODULE REFERENCE
+    https://docs.python.org/3.6/library/array
 ```
 
 调用 `import(module)` 导入模块后，可调用 `help(module)` 查看模块帮助：
@@ -144,7 +168,7 @@ class dict(object)
  |  dict() -> new empty dictionary
 ```
 
-但是想调用 `help(module)` 查看 builtins 模块或其他模块帮助及说明，还得先显式 import，否则报错。  
+若想调用 `help(module)` 查看 builtins 模块或其他模块帮助及说明，还得先显式 import 导入模块。
 
 ```shell
 >>> help(builtins)
@@ -165,7 +189,7 @@ NameError: name 'array' is not defined
 
 ### help()
 
-在 python 控制台中输入 `help()` 可打开交互式帮助系统（help utility）。
+在 python 控制台中输入 `help()` 可打开交互式（`help> prompt`）帮助系统（help utility）。
 
 ```shell
 >>> help()
