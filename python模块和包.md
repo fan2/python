@@ -11,6 +11,34 @@ Python的程序由包（[package](https://docs.python.org/3/glossary.html#term-p
 
 - ***function***: A series of statements which returns some value to a caller. It can also be passed zero or more [arguments](https://docs.python.org/3/glossary.html#term-argument) which may be used in the execution of the body. See also [parameter](https://docs.python.org/3/glossary.html#term-parameter), [method](https://docs.python.org/3/glossary.html#term-method), and the [Function definitions](https://docs.python.org/3/reference/compound_stmts.html#function) section.
 
+## sys
+
+```shell
+>>> import sys
+
+>>> help(sys)
+
+Help on built-in module sys:
+
+NAME
+    sys
+
+DESCRIPTION
+    This module provides access to some objects used or maintained by the
+    interpreter and to functions that interact strongly with the interpreter.
+    
+    Dynamic objects:
+    
+    argv -- command line arguments; argv[0] is the script pathname if known
+    path -- module search path; path[0] is the script directory, else ''
+    modules -- dictionary of loaded modules
+
+    Static objects:
+    
+    builtin_module_names -- tuple of module names built into this interpreter
+
+```
+
 ## import
 
 Python code in one [module](https://docs.python.org/3/glossary.html#term-module) **gains access** to the code in another module by the process of [importing](https://docs.python.org/3/glossary.html#term-importing) it. The [import](https://docs.python.org/3/reference/simple_stmts.html#import) statement is the most common way of invoking the import machinery, but it is not the only way. Functions such as [importlib.import_module()](https://docs.python.org/3/library/importlib.html#importlib.import_module) and built-in [`__import__()`](https://docs.python.org/3/library/functions.html#__import__) can also be used to invoke the import machinery.
@@ -73,3 +101,93 @@ Options and arguments (and corresponding environment variables):
 ```
 
 [Special considerations for __main__](https://docs.python.org/3/reference/import.html#special-considerations-for-main)  
+
+### main entry
+
+```python
+def main(args):
+    function(args)  # do something
+    pass
+
+
+# main entry
+if __name__ == '__main__':
+    print('This program is being run by itself')
+    if len(sys.argv)<2:
+        print('please input parameters:')
+    else:
+        main(sys.argv[1])
+else:
+    print('I am being imported from another module')
+```
+
+## test
+
+1. test_module.py  
+2. test_modulefinder.py  
+
+## demo
+
+新建一个 resnet1.py 文件：
+
+```python
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+
+def inference(a, b):
+    return a+b
+
+```
+
+再新建一个 train.py 文件，导入 resnet1 模块，调用其中的 inference 函数：
+
+```python
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+import sys
+import importlib
+import argparse
+
+
+def main(args):
+    network = importlib.import_module(args.model_def, 'inference')
+    c = network.inference(1,2)
+    print(c)
+
+
+def parse_arguments(argv):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model_def', 
+        type=str, 
+        help='Model definition.', 
+        default='resnet1')
+    return parser.parse_args(argv)
+
+
+if __name__ == '__main__':
+    main(parse_arguments(sys.argv[1:]))
+
+```
+
+## references
+
+[Python导入模块的几种姿势](https://blog.csdn.net/bitcarmanlee/article/details/52825260)  
+[python学习之动态导入模块](http://www.cnblogs.com/zy6103/p/6943557.html)：__import__ 和 importlib  
+Python中标准模块 importlib [介绍](http://www.cnblogs.com/meishandehaizi/p/5863233.html) 及 [详解](http://www.jb51.net/article/111282.htm)  
+[scrapy 中引入源码的 load_object 实现](https://blog.csdn.net/hhczy1003/article/details/76662184)  
+[python中from module import * 的一个陷阱](http://www.cnblogs.com/baiyanhuang/p/3855841.html)  
+[python中实现动态导入模块 importlib.import_module](http://www.360doc.com/content/17/0608/16/10408243_661106033.shtml)  
+[Python 动态导入对象之 importlib.import_module 案例](https://www.aliyun.com/jiaocheng/517064.html)  
+
+[Python Class vs. Module Attributes](https://stackoverflow.com/questions/1250779/python-class-vs-module-attributes)
