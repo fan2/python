@@ -59,7 +59,7 @@ sys.thread_info(name='pthread', lock='mutex+cond', version=None)
 
 ## os
 
-```
+```shell
 >>> import os
 
 >>> os.path
