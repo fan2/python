@@ -11,6 +11,8 @@
 2
 ```
 
+## access through subscripted index
+
 range 支持下标索引访问：
 
 ```shell
