@@ -17,6 +17,20 @@ Github Page: <https://github.com/pypa>
 
 ## Implementation
 
+```shell
+>>> import sys
+# Python 实现信息
+>>> sys.implementation
+namespace(_multiarch='darwin', cache_tag='cpython-36', hexversion=50726384, name='cpython', version=sys.version_info(major=3, minor=6, micro=5, releaselevel='final', serial=0))
+
+>>> import platform
+>>> platform.python_implementation()
+'CPython'
+>>> platform.python_version()
+'3.6.5'
+
+```
+
 ### [CPyhton](https://en.wikipedia.org/wiki/CPython)
 [What is CPython?](https://www.quora.com/What-is-CPython)  
 
