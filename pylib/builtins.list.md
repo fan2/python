@@ -1,5 +1,10 @@
 # [list](https://docs.python.org/3/library/stdtypes.html#list)（有序列表）
 
+```shell
+>>> type(sys.argv)
+<class 'list'>
+```
+
 ## empty list
 
 1. `l=list()`: 构造一个空列表对象。  
