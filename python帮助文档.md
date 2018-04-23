@@ -12,56 +12,6 @@
 
 [查看python的模块和函数帮助文档方法](http://blog.csdn.net/u013810296/article/details/55509284)  
 
-## `__doc__`
-
-> python 中每个 module，每个 class，每个 def 都留有写 doc 的地方。
-
-- `print(module.__doc__)`：查看模块概述。
-
-```shell
->>> import builtins
->>> print(builtins.__doc__)
-Built-in functions, exceptions, and other objects.
-
-Noteworthy: None is the `nil' object; Ellipsis represents `...' in slices.
-
->>> import array
-# 同 help(array) 的 DESCRIPTION
->>> print(array.__doc__)
-This module defines an object type which can efficiently represent
-an array of basic values: characters, integers, floating point
-numbers.  Arrays are sequence types and behave very much like lists,
-except that the type of objects stored in them is constrained.
-```
-
-> 注意：先要 import module！
-
-- `print(class.__doc__)`（或 `print(object.__doc__)`）：查看类说明。  
-
-```shell
->>> print(str.__doc__)
-str(object='') -> str
-str(bytes_or_buffer[, encoding[, errors]]) -> str
-
-Create a new string object from the given object. If encoding or
-errors is specified, then the object must expose a data buffer
-that will be decoded using the given encoding and error handler.
-Otherwise, returns the result of object.__str__() (if defined)
-or repr(object).
-encoding defaults to sys.getdefaultencoding().
-errors defaults to 'strict'.
-```
-
-- `print(class.method.__doc__)`（或 `print(object.method.__doc__)`）：查看类成员函数说明。  
-
-```shell
->>> print(str.format.__doc__)
-S.format(*args, **kwargs) -> str
-
-Return a formatted version of S, using substitutions from args and kwargs.
-The substitutions are identified by braces ('{' and '}').
-```
-
 ## help
 
 ```shell
@@ -307,38 +257,6 @@ pip._vendor.urllib3.util.timeout
 
 > 在处理某一特定领域问题，想要看看现有的模块库支持时，基于关键字进行模糊匹配相当实用。
 
-##### src
-
-[How do I find the location of Python module sources?](https://stackoverflow.com/questions/269795/how-do-i-find-the-location-of-python-module-sources)
-
-在终端执行 python(3) 启动时，可携带 `-v` 选项，将输出详细的模块加载信息：
-
-```shell
--v     : verbose (trace import statements); also PYTHONVERBOSE=x
-         can be supplied multiple times to increase verbosity
-```
-
-另外，也可以打印查看模块的 `__file__` 属性。
-
-```shell
-# builtins 模块未定义该属性
->>> import builtins
->>> builtins.__file__
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-AttributeError: module 'builtins' has no attribute '__file__'
-
-# array 模块对应 cpython 实现动态库
->>> import array
->>> array.__file__
-'/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/array.cpython-36m-darwin.so'
-
-# datetime 模块对应的 python 实现源码
->>> import datetime
->>> datetime.__file__
-'/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/datetime.py'
-```
-
 #### quit
 
 通过快捷键 `<C-c>` / `<C-d>` 或 `quit` 可退出 help utility 命令行 `help> ` 回到 Python 主控制台 `>>> `。
@@ -355,6 +273,56 @@ has the same effect as typing a particular string at the help> prompt.
 `help>` 输入 `module`（无需先 imprt）, `module.function`, `module.class`, `module.class.method` 可查看相关帮助。
 
 退回到 `>>>` 中输入`help(module)`、`help(module.function)`、`help(module.class)`、`help(module.class.method)` 可查看等效帮助。  
+
+## `__doc__`
+
+> python 中每个 module，每个 class，每个 def 都留有写 doc 的地方。
+
+- `print(module.__doc__)`：查看模块概述。
+
+```shell
+>>> import builtins
+>>> print(builtins.__doc__)
+Built-in functions, exceptions, and other objects.
+
+Noteworthy: None is the `nil' object; Ellipsis represents `...' in slices.
+
+>>> import array
+# 同 help(array) 的 DESCRIPTION
+>>> print(array.__doc__)
+This module defines an object type which can efficiently represent
+an array of basic values: characters, integers, floating point
+numbers.  Arrays are sequence types and behave very much like lists,
+except that the type of objects stored in them is constrained.
+```
+
+> 注意：先要 import module！
+
+- `print(class.__doc__)`（或 `print(object.__doc__)`）：查看类说明。  
+
+```shell
+>>> print(str.__doc__)
+str(object='') -> str
+str(bytes_or_buffer[, encoding[, errors]]) -> str
+
+Create a new string object from the given object. If encoding or
+errors is specified, then the object must expose a data buffer
+that will be decoded using the given encoding and error handler.
+Otherwise, returns the result of object.__str__() (if defined)
+or repr(object).
+encoding defaults to sys.getdefaultencoding().
+errors defaults to 'strict'.
+```
+
+- `print(class.method.__doc__)`（或 `print(object.method.__doc__)`）：查看类成员函数说明。  
+
+```shell
+>>> print(str.format.__doc__)
+S.format(*args, **kwargs) -> str
+
+Return a formatted version of S, using substitutions from args and kwargs.
+The substitutions are identified by braces ('{' and '}').
+```
 
 ## [dir()](https://docs.python.org/3/library/functions.html#dir)
 
@@ -405,28 +373,7 @@ dir(...)
 
 	> 也可执行 `print(builtins.__dict__)` 打印 builtins 模块的符号表。
 
-## direct input
-
-在 python 主控制台中直接输入 `module`、`module.function`、` module.class`、` module.class.method` 也会显示其类型信息：
-
-```
->>> builtins
-<module 'builtins' (built-in)>
-
->>> builtins.print
-<built-in function print>
-
->>> builtins.str
-<class 'str'>
-
->>> builtins.str.format
-<method 'format' of 'str' objects>
-
->>> array
-<module 'array' from '/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/array.cpython-36m-darwin.so'>
-```
-
-## autocompletion
+### autocompletion
 
 在 python3 控制台中，对于明确类型的对象，输入引用符点号（`.`）后，再按下 tab 会列举所有可能的成员函数或属性：
 
@@ -449,3 +396,211 @@ str1.index(         str1.isupper(       str1.rpartition(    str1.zfill(
 借此特性，在编码过程中，可一览某一类别实例的可用属性、方法。
 
 对于 Sublime Text 等文本编辑器，需要借助 [Anaconda](https://www.anaconda.com/) 或 [SublimeLinter-pycodestyle](https://github.com/SublimeLinter/SublimeLinter-pycodestyle) 等插件来实现自动完成智能提示。
+
+## `__file__`
+
+[How do I find the location of Python module sources?](https://stackoverflow.com/questions/269795/how-do-i-find-the-location-of-python-module-sources)
+
+在 python 主控制台中直接输入 `module`、`module.function`、` module.class`、` module.class.method` 也会显示其路径或类型等信息：
+
+```shell
+>>> import builtins
+>>> builtins
+<module 'builtins' (built-in)>
+
+>>> builtins.print
+<built-in function print>
+
+>>> builtins.str
+<class 'str'>
+
+>>> builtins.str.format
+<method 'format' of 'str' objects>
+
+>>> import sys
+>>> sys
+<module 'sys' (built-in)>
+
+>>> import os
+>>> os
+<module 'os' from '/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/os.py'>
+
+>>> import array
+>>> array
+<module 'array' from '/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/array.cpython-36m-darwin.so'>
+```
+
+在终端执行 python(3) 启动时，可携带 `-v` 选项，将输出详细的模块加载信息：
+
+```shell
+-v     : verbose (trace import statements); also PYTHONVERBOSE=x
+         can be supplied multiple times to increase verbosity
+```
+
+---
+
+另外，也可打印模块的 `__file__` 属性来查看模块路径信息。
+
+```shell
+# builtins 模块未定义该属性
+>>> import builtins
+>>> builtins.__file__
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: module 'builtins' has no attribute '__file__'
+
+# sys 模块未定义该属性
+>>> import sys
+>>> sys.__file__
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: module 'sys' has no attribute '__file__'
+
+# os 模块对应 Python 源码
+>>> import os
+>>> os.__file__
+'/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/os.py'
+
+# array 模块对应 cpython 实现动态库
+>>> import array
+>>> array.__file__
+'/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/array.cpython-36m-darwin.so'
+
+```
+
+### study the source code
+
+初学 Python 的一种有效途径是阅读 python 标准模块源码，通过阅读源码可观摩编码规范，了解语言风格，快速掌握 Python 程序设计的一般流程。
+
+找到对应模块的 Python 源码路径，我们便可以[使用文本编辑器打开](http://www.cnblogs.com/IPYQ/p/5672922.html)进行研读。  
+
+`os.system('open '+module.__file__)`：调用 open 使用默认文本编辑器打开 module 源码：
+
+```shell
+>>> import argparse
+>>> import os
+# 调用 open 命令打开 argparse 模块源码
+>>> os.system('open '+argparse.__file__)
+
+# 调用 subl 命令打开 argparse 模块源码
+>>> os.system('subl '+argparse.__file__)
+```
+
+当然，我们也可以先切换工作目录到 python 库源码目录，再调用 `os.system('open '+'module'+'.py')`。
+
+```shell
+>>> import os
+
+# 获取当前工作目录并记录
+>>> os.getcwd()
+'/Users/faner'
+>>> last_cwd=os.getcwd()
+
+# 修改工作目录
+>>> os.chdir('/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/')
+>>> os.getcwd()
+'/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6'
+
+# 调用 open 命令打开 python 库源码目录
+>>> os.system('subl '+os.getcwd())
+0
+
+# 调用 subl 命令打开 python 库源码目录
+>>> os.system('subl '+os.getcwd())
+0
+
+# 调用 open 命令打开指定 python 源码
+>>> os.system('open '+'argparse'+'.py')
+0
+
+# 调用 subl 命令打开指定 python 源码
+>>> os.system('subl '+'argparse'+'.py')
+0
+```
+
+调用 subl 命令打开 python 库源码目录，可使用 Sublime Text 强大的搜索和定位功能进行高效阅读。
+
+阅读 `base64.py` 可知内部调用了基础库 binascii，其为解释器内置模块（`binascii.cpython-36m-darwin.so`）。
+
+```shell
+>>> import binascii
+>>> binascii
+<module 'binascii' from '/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/binascii.cpython-36m-darwin.so'>
+```
+
+参考 [cpython](https://github.com/python/cpython) 的 [binascii.c.h](https://github.com/python/cpython/blob/master/Modules/clinic/binascii.c.h)。
+
+### openPythonModuleCode
+
+`openPythonModuleCode.py` 脚本用于打开指定名称的模块的源代码：
+
+```python
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+import os
+import sys
+import importlib
+
+
+def open_module_source_code(str_module_name):
+    try:
+        dynamic_module = importlib.import_module(str_module_name)
+        str_cmd = 'subl '  # 'open '
+        str_file = dynamic_module.__file__
+        dot_idx = str_file.rindex(os.extsep)
+        file_ext = str_file[dot_idx+1:]
+        if file_ext == 'py':
+            print('execute system command: ', str_cmd+str_file)
+            os.system(str_cmd+str_file)
+        else:  # 'module.cpython*.so'
+            # file_name_idx = str_file.rindex(os.sep)
+            # file_name = str_file[file_name_idx+1:]
+            print('module file: ', str_file)
+    except (ImportError, AttributeError, ValueError) as e:
+        print(e)
+        sys.exit()
+    pass
+
+
+def main(args):
+    open_module_source_code(args)
+    pass
+
+
+# main entry
+if __name__ == '__main__':
+    print('This program is being run by itself')
+    if len(sys.argv)<2:
+        print('please input module name')
+    else:
+        main(sys.argv[1])
+else:
+    print('I am being imported from another module')
+
+```
+
+以下为几组执行结果：
+
+```shell
+# ImportError
+faner@MBP-FAN:~/Projects/python|⇒  python3 openPythonModuleCode.py arg
+This program is being run by itself
+No module named 'arg'
+
+# AttributeError
+faner@MBP-FAN:~/Projects/python|⇒  python3 openPythonModuleCode.py builtins
+This program is being run by itself
+module 'builtins' has no attribute '__file__'
+
+# cpython.so
+faner@MBP-FAN:~/Projects/python|⇒  python3 openPythonModuleCode.py array
+This program is being run by itself
+module file:  /usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/array.cpython-36m-darwin.so
+
+# python
+faner@MBP-FAN:~/Projects/python|⇒  python3 openPythonModuleCode.py argparse
+This program is being run by itself
+execute system command:  subl /usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/argparse.py
+
+```
