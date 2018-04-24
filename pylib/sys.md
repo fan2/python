@@ -43,7 +43,7 @@ modules -- dictionary of loaded modules
 >>> sys.version_info
 sys.version_info(major=3, minor=6, micro=5, releaselevel='final', serial=0)
 
-# Python 实现信息
+# Python 实现信息(python3)
 >>> sys.implementation
 namespace(_multiarch='darwin', cache_tag='cpython-36', hexversion=50726384, name='cpython', version=sys.version_info(major=3, minor=6, micro=5, releaselevel='final', serial=0))
 
@@ -51,7 +51,11 @@ namespace(_multiarch='darwin', cache_tag='cpython-36', hexversion=50726384, name
 >>> sys.byteorder
 'little'
 
-# 线程模型
+# python2: sys.long_info
+>>> sys.int_info
+sys.int_info(bits_per_digit=30, sizeof_digit=4)
+
+# 线程模型(python3)
 >>> sys.thread_info
 sys.thread_info(name='pthread', lock='mutex+cond', version=None)
 
