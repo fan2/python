@@ -105,6 +105,16 @@ Options and arguments (and corresponding environment variables):
 ### main entry
 
 ```python
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+
+import sys
+
+
+def function(args):
+    pass
+
+
 def main(args):
     function(args)  # do something
     pass
@@ -113,13 +123,25 @@ def main(args):
 # main entry
 if __name__ == '__main__':
     print('This program is being run by itself')
-    if len(sys.argv)<2:
+    if len(sys.argv) < 2:
         print('please input parameters:')
     else:
         main(sys.argv[1])
 else:
     print('I am being imported from another module')
+
 ```
+
+### [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
+
+[Purpose of #!/usr/bin/python3](https://stackoverflow.com/questions/7670303/purpose-of-usr-bin-python3)  
+[Should I put #! (shebang) in Python scripts, and what form should it take?](https://stackoverflow.com/questions/6908143/should-i-put-shebang-in-python-scripts-and-what-form-should-it-take)  
+
+- [Shebang line for Python 2.7](https://stackoverflow.com/questions/21189346/shebang-line-for-python-2-7)：`#!/usr/bin/env python2.7`  
+- Shebang line for Python 3：`#!/usr/bin/env python3`  
+- compatible with both Python 2.x and 3.x：`#!/usr/bin/env python`  
+
+To be better portable users can use `#!/usr/bin/env python3` which will use the first python3 from the `PATH`.
 
 ## test
 
@@ -131,7 +153,7 @@ else:
 新建一个 resnet1.py 文件：
 
 ```python
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 
 
@@ -148,7 +170,7 @@ def inference(a, b):
 再新建一个 train.py 文件，导入 resnet1 模块，调用其中的 inference 函数：
 
 ```python
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 
 from __future__ import absolute_import

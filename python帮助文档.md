@@ -535,7 +535,7 @@ AttributeError: module 'sys' has no attribute '__file__'
 `openPythonModuleCode.py` 脚本用于打开指定名称的模块的源代码：
 
 ```python
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
 import os
@@ -571,7 +571,7 @@ def main(args):
 # main entry
 if __name__ == '__main__':
     print('This program is being run by itself')
-    if len(sys.argv)<2:
+    if len(sys.argv) < 2:
         print('please input module name')
     else:
         main(sys.argv[1])
