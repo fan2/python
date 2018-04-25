@@ -549,10 +549,10 @@ def open_module_source_code(str_module_name):
         str_cmd = 'subl '  # 'open '
         str_file = dynamic_module.__file__
         dot_idx = str_file.rindex(os.extsep)
-        file_ext = str_file[dot_idx+1:]
+        file_ext = str_file[(dot_idx + 1):]
         if file_ext == 'py':
-            print('execute system command: ', str_cmd+str_file)
-            os.system(str_cmd+str_file)
+            print('execute system command: ', str_cmd + str_file)
+            os.system(str_cmd + str_file)
         else:  # 'module.cpython*.so'
             # file_name_idx = str_file.rindex(os.sep)
             # file_name = str_file[file_name_idx+1:]
@@ -564,7 +564,7 @@ def open_module_source_code(str_module_name):
 
 
 def main(args):
-    open_module_source_code(args)
+    open_module_source_code(args[0])
     pass
 
 
@@ -574,7 +574,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         print('please input module name')
     else:
-        main(sys.argv[1])
+        main(sys.argv[1:])
 else:
     print('I am being imported from another module')
 
