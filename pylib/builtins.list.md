@@ -20,3 +20,20 @@
 - `e in l`: Test e for membership in l.  
 - `e not in l`: Test e for non-membership in l.  
 - `for e in l`: enumerate elements in l.  
+
+## demos
+
+```shell
+# 判断模块名称中是否包含 '__doc__' 和 '__file__'
+>>> import builtins
+>>> '__doc__' in dir(builtins)
+True
+>>> '__file__' in dir(builtins)
+False
+
+>>> import os
+>>> '__doc__' in dir(os)
+True
+>>> '__file__' in dir(os)
+True
+```

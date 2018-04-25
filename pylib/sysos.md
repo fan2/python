@@ -3,6 +3,7 @@
 ### doc
 
 ```shell
+>>> import sys
 >>> print(sys.__doc__)
 This module provides access to some objects used or maintained by the
 interpreter and to functions that interact strongly with the interpreter.
@@ -39,13 +40,31 @@ modules -- dictionary of loaded modules
 3.6.5 (default, Apr 14 2018, 06:59:43) 
 [GCC 4.2.1 Compatible Apple LLVM 9.1.0 (clang-902.0.39.1)]
 
-# 版本信息（tuple格式）
+# 版本信息（Version information as a named tuple.）
 >>> sys.version_info
 sys.version_info(major=3, minor=6, micro=5, releaselevel='final', serial=0)
+# 获取字符串格式描述
+>>> repr(sys.version_info)
+"sys.version_info(major=3, minor=6, micro=5, releaselevel='final', serial=0)"
+# 获取数据成员属性(Data descriptors)
+>>> sys.version_info.major
+3
+>>> sys.version_info.minor
+6
+>>> sys.version_info.micro
+5
+>>> sys.version_info.releaselevel
+'final'
+>>> sys.version_info.serial
+0
 
 # Python 实现信息(python3)
+## 返回 types.SimpleNamespace 对象实例
 >>> sys.implementation
 namespace(_multiarch='darwin', cache_tag='cpython-36', hexversion=50726384, name='cpython', version=sys.version_info(major=3, minor=6, micro=5, releaselevel='final', serial=0))
+## 取字典格式
+>>> sys.implementation.__dict__
+{'name': 'cpython', 'cache_tag': 'cpython-36', 'version': sys.version_info(major=3, minor=6, micro=5, releaselevel='final', serial=0), 'hexversion': 50726384, '_multiarch': 'darwin'}
 
 # 字节序
 >>> sys.byteorder
@@ -54,6 +73,10 @@ namespace(_multiarch='darwin', cache_tag='cpython-36', hexversion=50726384, name
 # python2: sys.long_info
 >>> sys.int_info
 sys.int_info(bits_per_digit=30, sizeof_digit=4)
+>>> sys.int_info.bits_per_digit
+30
+>>> sys.int_info.sizeof_digit
+4
 
 # 线程模型(python3)
 >>> sys.thread_info
@@ -62,6 +85,36 @@ sys.thread_info(name='pthread', lock='mutex+cond', version=None)
 ```
 
 ## os
+
+### doc
+
+```shell
+>>> import os
+>>> print(os.__doc__)
+OS routines for NT or Posix depending on what system we're on.
+
+This exports:
+  - all functions from posix or nt, e.g. unlink, stat, etc.
+  - os.path is either posixpath or ntpath
+  - os.name is either 'posix' or 'nt'
+  - os.curdir is a string representing the current directory (always '.')
+  - os.pardir is a string representing the parent directory (always '..')
+  - os.sep is the (or a most common) pathname separator ('/' or '\\')
+  - os.extsep is the extension separator (always '.')
+  - os.altsep is the alternate pathname separator (None or '/')
+  - os.pathsep is the component separator used in $PATH etc
+  - os.linesep is the line separator in text files ('\r' or '\n' or '\r\n')
+  - os.defpath is the default search path for executables
+  - os.devnull is the file path of the null device ('/dev/null', etc.)
+
+Programs that import and use 'os' stand a better chance of being
+portable between different platforms.  Of course, they must then
+only use functions that are defined by all platforms (e.g., unlink
+and opendir), and leave all pathname manipulation to os.path
+(e.g., split and join).
+```
+
+### test
 
 ```shell
 >>> import os
@@ -94,6 +147,21 @@ posix.uname_result(sysname='Darwin', nodename='MBP-FAN', release='17.6.0', versi
 ```
 
 ## platform
+
+### doc
+
+```shell
+>>> import platform
+>>> print(platform.__doc__)
+ This module tries to retrieve as much platform-identifying data as
+    possible. It makes this information available via function APIs.
+
+    If called from the command line, it prints the platform
+    information concatenated as single string to stdout. The output
+    format is useable as part of a filename.
+```
+
+### test
 
 ```shell
 >>> import platform
@@ -130,6 +198,16 @@ uname_result(system='Darwin', node='MBP-FAN', release='17.6.0', version='Darwin 
 ```
 
 ## sysconfig
+
+### doc
+
+```shell
+>>> import sysconfig
+>>> print(sysconfig.__doc__)
+Access to Python's configuration information.
+```
+
+### test
 
 ```shell
 >>> import sysconfig
