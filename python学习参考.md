@@ -41,14 +41,14 @@
 [从零开始掌握Python机器学习：十四步教程]()  
 
 ## Python编程书籍
+
 豆瓣读书 - [**python**](https://book.douban.com/subject_search?search_text=python&cat=1001)  
 知乎周刊 [编程小白学 Python](https://www.zhihu.com/publications/book/19550511)  
 
-### 编程小白的第一本Python入门书
-[@amazon](https://www.amazon.cn/dp/B01I2JGBMQ/ref=sr_1_1?ie=UTF8&qid=1519808694&sr=8-1&keywords=python)  
-[笔记](http://blog.csdn.net/ch717828/article/details/70186125) / [CSDN](http://download.csdn.net/download/mapplei/9561729) / [百度云盘](http://www.olecn.com/2397.html)  
-
 ### Python简明教程（byte-of-python）
+
+☆
+
 [A Byte of Python](https://book.douban.com/subject/5948760/)
 
 > https://python.swaroopch.com/  
@@ -57,17 +57,17 @@
 
 [1](http://download.csdn.net/download/fastwind1985/9937770) / [**2**](http://download.csdn.net/download/baoaya/9985593) / [***3***](http://download.csdn.net/download/bmaboowood/10257971) @CSDN  
 
-### [Python基础教程（第3版）](https://book.douban.com/subject/27667375/)
-作者: [挪] Magnus Lie Hetland  
-出版社: 人民邮电出版社  
-译者: 袁国忠  
-出版年: 2018-1-30  
-页数: 476  
-定价: 99.00元  
+### 编程小白的第一本Python入门书
 
-[pdf](http://download.csdn.net/download/hn2xz110/10226572) @CSDN  
+☆☆
+
+[@amazon](https://www.amazon.cn/dp/B01I2JGBMQ/ref=sr_1_1?ie=UTF8&qid=1519808694&sr=8-1&keywords=python)  
+[笔记](http://blog.csdn.net/ch717828/article/details/70186125) / [CSDN](http://download.csdn.net/download/mapplei/9561729) / [百度云盘](http://www.olecn.com/2397.html)  
 
 ### [Python编程从入门到实践](https://book.douban.com/subject/26829016/)
+
+☆☆☆
+
 豆瓣评分: 9.0  
 
 作者: [美]埃里克·马瑟斯  
@@ -79,7 +79,23 @@
 页数: 459  
 定价: CNY 89.00  
 
+### [Python基础教程（第3版）](https://book.douban.com/subject/27667375/)
+
+☆☆☆☆
+
+作者: [挪] Magnus Lie Hetland  
+出版社: 人民邮电出版社  
+译者: 袁国忠  
+出版年: 2018-1-30  
+页数: 476  
+定价: 99.00元  
+
+[pdf](http://download.csdn.net/download/hn2xz110/10226572) @CSDN  
+
 ### [流畅的Python](https://book.douban.com/subject/27028517/)
+
+☆☆☆☆☆
+
 豆瓣评分: 9.2  
 
 作者: [巴西] Luciano Ramalho  
@@ -93,6 +109,9 @@
 [**1**](http://download.csdn.net/download/yuanminbj/10231333) / [2](http://download.csdn.net/download/zhang_xiaomeng/9851181) @CSDN  
 
 ### [Python核心编程（第3版）](https://book.douban.com/subject/26801374/)
+
+☆☆☆☆
+
 豆瓣评分: 7.9  
 
 作者: [美] Wesley Chun  
