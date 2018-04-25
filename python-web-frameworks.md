@@ -27,12 +27,18 @@ Django officially supports four database backends: [PostgreSQL](https://en.wikip
 
 CentOS + uwsgi + nginx + Django搭建个人博客 [(1)](http://www.jianshu.com/p/b299ac8b54e1)  [(2)](http://www.jianshu.com/p/dec13c9d510d)  
 
+[django-blog](https://github.com/jhao104/django-blog)
+
+> <http://www.spiderpy.cn/blog>
+
 ## 系列教程
 [Django 博客开发教程](https://segmentfault.com/a/1190000009506458) by segmentfault.com  
 
 [django 搭建博客教程](http://blog.csdn.net/jiange_zh/article/details/49976365) by [jiange_zh](http://blog.csdn.net/jiange_zh/article/category/5714017)@CSDN  
 
 [Django 开发博客](http://blog.csdn.net/wyb199026/article/details/50437048) by [点点寒彬](http://blog.csdn.net/wyb199026/article/category/6084497)@CSDN  
+
+[Django开发个人博客网站](https://blog.csdn.net/geerniya/article/category/7227170) by geerniya@CSDN  
 
 [Django博客开发实战：开篇](http://codingpy.com/article/writing-your-own-blog-with-django/)  
 [Django博客第一篇 环境搭建](https://zhuanlan.zhihu.com/p/26760300)  
@@ -56,15 +62,5 @@ CentOS + uwsgi + nginx + Django搭建个人博客 [(1)](http://www.jianshu.com/p
 [用 Django 构建简易博客（三）：专注功能的实现之博客列表](http://www.dannysite.com/blog/235/)  
 [用 Django 构建简易博客（四）：专注功能的实现之博客详情与评论](http://www.dannysite.com/blog/236/)  
 [用 Django 构建简易博客（五）：添枝加叶](http://www.dannysite.com/blog/237/)  
-
-## MySQL / mariaDB
-[How to connect Python programs to MariaDB](https://mariadb.com/resources/blog/how-connect-python-programs-mariadb)  
-
-[How To Use MySQL or MariaDB with your Django Application on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-use-mysql-or-mariadb-with-your-django-application-on-ubuntu-14-04)  
-
-[MySQLdb安装|Centos 7 下关联 python 和 MariaDB or MySQL](http://blog.csdn.net/xingshunkai/article/details/46821711)  
-[在CENTOS 7.X 上搭建DJANGO/MYSQL(MARIADB)](http://smilejay.com/2014/12/django-mysql-mariadb-on-centos-7/)  
-[Django@Python3添加MySQL/MariaDB支持](https://www.robberphex.com/2013/12/254)  
-[Django + MariaDB](https://medium.com/code-zen/django-mariadb-85cc9daeeef8)  
 
 # Flask
