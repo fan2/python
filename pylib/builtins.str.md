@@ -235,6 +235,23 @@ str.splitlines([keepends])
 
 ```
 
+## repr
+
+```
+>>> help(repr)
+
+Help on built-in function repr in module builtins:
+
+repr(obj, /)
+    Return the canonical string representation of the object.
+    
+    For many object types, including most builtins, eval(repr(obj)) == obj.
+```
+
+repr 实际上调用的是 obj 的 `__repr__` 方法，获取该对象实例的描述信息。
+
+`repr(obj) = obj.__repr__()`
+
 ## demos
 
 ```shell
