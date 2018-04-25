@@ -99,6 +99,8 @@ builtins 模块提供了一些常用的内置函数，大概分为 vars、math�
 
 #### print
 
+在 Python 2 中，print 为关键字；在 Python 3 中，print 为内置函数（builtins.print）。
+
 builtins 的 print() 函数：
 
 ```shell
@@ -106,108 +108,10 @@ builtins 的 print() 函数：
         print(value, ..., sep=' ', end='\n', file=sys.stdout, flush=False)
 ```
 
-参考 [str.format](https://docs.python.org/3/library/stdtypes.html#str.format) 和 [Format String Syntax](https://docs.python.org/3/library/string.html#formatstrings)。
-
-> [python格式化输出](http://blog.csdn.net/wchoclate/article/details/42297173)  
 > [Python print函数用法](http://blog.csdn.net/zanfeng/article/details/52164124)  
+> [python格式化输出](http://blog.csdn.net/wchoclate/article/details/42297173)  
 
-##### expr
-
-`print(object)` 输出描述或类型信息。
-
-```shell
-#######################################
-# 打印模块信息
-#######################################
-# python3
->>> print(builtins)
-<module 'builtins' (built-in)>
-
->>> print(array)
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-NameError: name 'array' is not defined
->>> import array
-
-# python2
->>> print(array)
-<module 'array' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-dynload/array.so'>
-
-# python3
->>> print(array)
-<module 'array' from '/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/array.cpython-36m-darwin.so'>
-
-#######################################
-# 打印模块类型信息
-#######################################
-
-# python2
->>> print(list)
-<type 'list'>
-
-# python3
->>> print(list)
-<class 'list'>
-
->>> print(len)
-<built-in function len>
-
->>> print(hex)
-<built-in function hex>
-```
-
-`print(var)` 或 `print(expr)` 打印变量或表达式的值。
-
-```shell
->>> start=1
->>> stop=10
->>> step=2
-
->>> print(start)
-1
-
->>> print(start+step)
-3
-
->>> r=range(1,10,2)
-# python2
->>> print(r)
-[1, 3, 5, 7, 9]
-# python3
->>> print(r)
-range(1, 10, 2)
-
->>> l1=[1,2,3,4]
->>> print(l1)
-[1, 2, 3, 4]
-
-```
-
-##### list vars
-
-逗号后直接接变量，将自动拼接前半句字面量和后面的变量，以空格隔开。
-
-```shell
->>> print('start is', start)
-start is 1
-
->>> print('start, stop is', start, stop)
-start, stop is 1 10
-```
-
-##### [printf-style String Formatting](https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting)
-
-C printf 风格，使用 `%` 格式符标识占位，
-
-```shell
-# start 可加括号
->>> print('start is %d' % start)
-start is 1
-
->>> print('start,stop is %d, %d' % (start, stop))
-start,stop is 1, 10
-
-```
+---
 
 对很多应用程序来说，使用模块 logging 来写入日志比使用 print 更合适。
 
@@ -502,6 +406,36 @@ class enumerate(object)
 
 >>> list(range(0, 30, 5))
 [0, 5, 10, 15, 20, 25]
+```
+
+`range(start,stop,step)` 可用 while 循环等效实现：
+
+```shell
+>>> start=0
+>>> stop=30
+>>> step=5
+
+>>> r=range(start,stop,step)
+>>> list(r)
+[0, 5, 10, 15, 20, 25]
+
+# range 的等效定义
+>>> i=0
+>>> v=0
+>>> while True:
+...     v = start+i*step
+...     if v >= stop:
+...         break
+...     else:
+...         print('v[%d] = %d' % (i, v))
+...         i += 1
+... 
+v[0] = 0
+v[1] = 5
+v[2] = 10
+v[3] = 15
+v[4] = 20
+v[5] = 25
 ```
 
 典型应用是 stop 取 len(list)，基于索引循环遍历列表：
