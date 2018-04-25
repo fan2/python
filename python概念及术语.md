@@ -17,6 +17,8 @@ Github Page: <https://github.com/pypa>
 
 ## Implementation
 
+[The Python Language Reference](https://docs.python.org/3/reference/index.html) - [Alternate Implementations](https://docs.python.org/3/reference/introduction.html#alternate-implementations)  
+
 ```shell
 >>> import sys
 # Python 实现信息
@@ -32,19 +34,20 @@ namespace(_multiarch='darwin', cache_tag='cpython-36', hexversion=50726384, name
 ```
 
 ### [CPyhton](https://en.wikipedia.org/wiki/CPython)
+
+This is the original and most-maintained implementation of Python, written in C. New language features generally appear here first.
+
+---
+
 [What is CPython?](https://www.quora.com/What-is-CPython)  
 
-CPython is the reference implementation of the [Python programming language](https://en.wikipedia.org/wiki/Python_programming_language).  
 Written in ***C***, CPython is the **default** and most widely used implementation of the language.
 
 Python Source code: [github](https://github.com/python/cpython) / [Mercurial](https://hg.python.org/cpython/)  
 
 ### [Jython](https://en.wikipedia.org/wiki/Jython)
 
-> <http://www.jython.org/>
-
-Jython is an implementation of the Python programming language designed to run on the ***Java*** platform.  
-It is the successor of JPython
+Python implemented in Java. This implementation can be used as a scripting language for Java applications, or can be used to create applications using the Java class libraries. It is also often used to create tests for Java libraries. More information can be found at [the Jython website](http://www.jython.org/).
 
 ```shell
 >>> import test
@@ -52,21 +55,30 @@ It is the successor of JPython
 False
 ```
 
+### Python for .NET
+
+This implementation actually uses the CPython implementation, but is a managed .NET application and makes .NET libraries available. It was created by Brian Lloyd. For more information, see the [Python for .NET home page](https://pythonnet.github.io/).
+
 ### [IronPython](https://en.wikipedia.org/wiki/IronPython)
 
->  <http://ironpython.net/>
+An alternate Python for .NET. Unlike Python.NET, this is a complete Python implementation that generates IL, and compiles Python code directly to .NET assemblies. It was created by Jim Hugunin, the original creator of Jython. For more information, see [the IronPython website](http://ironpython.net/).
 
-IronPython is an implementation of the Python programming language targeting the .NET Framework and Mono. Jim Hugunin created the project.
+### [PyPy](https://en.wikipedia.org/wiki/PyPy)
 
-### [PyPy](http://pypy.org/)
+An implementation of Python written completely in Python. It supports several advanced features not found in other implementations like stackless support and a Just in Time compiler. One of the goals of the project is to encourage experimentation with the language itself by making it easier to modify the interpreter (since it is written in Python). Additional information is available on [the PyPy project’s home page](http://pypy.org/).
+
+---
+
+<http://pypy.org/>
+
 [Docs](http://doc.pypy.org/en/latest/#) » [PyPy’s documentation](http://doc.pypy.org/en/latest/)
 
-#### [wiki](https://en.wikipedia.org/wiki/PyPy)
-**PyPy** is an alternate implementation of the Python programming language written in **Python**. Specifically, its interpreter is written in ***RPython*** (a subset of Python).  
-In contrast, the standard reference implementation of Python is written in C (known as [**CPython**](https://en.wikipedia.org/wiki/CPython)). The implementation of the interpreter in *high level* Python, over a *low-level* implementation in C, enables quick experimentation of new language features.  
-This is shown to have benefits in areas of execution speed, memory usage, sandboxing etc., in certain use cases. The [self-hosting](https://en.wikipedia.org/wiki/Self-hosting) nature of PyPy is reflected in the project's logo, which depicts a snake swallowing its own tail in an ouroboros.  
+[introduction](http://doc.pypy.org/en/latest/introduction.html)
 
-#### [what](http://doc.pypy.org/en/latest/introduction.html)
 Historically, PyPy has been used to mean two things.   
 The first is the [RPython translation toolchain](http://rpython.readthedocs.io/en/latest/index.html#index) for generating interpreters for dynamic programming languages.  
 And the second is one particular implementation of [Python](http://python.org/) produced with it.  
+
+---
+
+Each of these implementations varies in some way from the language as documented in this manual, or introduces specific information beyond what’s covered in the standard Python documentation. Please refer to the implementation-specific documentation to determine what else you need to know about the specific implementation you’re using.
