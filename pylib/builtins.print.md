@@ -153,7 +153,7 @@ start,stop is 0, 30
 
 ```
 
-## format
+## str.format
 
 - reference - [2.4.3. Formatted string literals](https://docs.python.org/3.6/reference/lexical_analysis.html#f-strings) - New in version 3.6.  
 - tutorial - [7.1. Fancier Output Formatting](https://docs.python.org/3.6/tutorial/inputoutput.html#fancier-output-formatting)  
@@ -173,7 +173,9 @@ Perform a string formatting operation. The string on which this method is called
 ### positional argument
 
 大括号中可指定参数索引（the numeric index of a positional argument）。  
-从 Python 3.1 开始，占位序号也可以省略，`{} {}` 等效于 `{0} {1}`。  
+从 Python 3.1 开始，占位序号也可以省略，`{} {}` 自动编号为 `{0} {1}`。  
+
+Accessing arguments by position:
 
 ```shell
 >>> print('{0} {1}'.format('hello','world'))
@@ -188,9 +190,18 @@ hello world hello
 
 大括号中也可指定占位替换变量（the name of a keyword argument）。  
 
+Accessing arguments by name:
+
 ```shell
 >>> print('i love {you}'.format(you='python'))
 i love python
+>>>
+>>> 'Coordinates: {latitude}, {longitude}'.format(latitude='37.24N', longitude='-115.81W')
+'Coordinates: 37.24N, -115.81W'
+>>> 
+>>> coord = {'latitude': '37.24N', 'longitude': '-115.81W'}
+>>> 'Coordinates: {latitude}, {longitude}'.format(**coord)
+'Coordinates: 37.24N, -115.81W'
 ```
 
 以下示例利用三引号跨行定义一个 HTML 模板：
@@ -227,7 +238,7 @@ i love python
 ... </body>
 ```
 
-Python 3.2 开始还提供了 **`format_map()`** 方法，支持传入字典作为参数键值对对模板进行实例化：
+Python 3.2 开始还提供了 str.**format_map()** 方法，支持传入字典作为参数键值对对模板进行实例化：
 
 ```shell
 >>> data = {'title': 'My Home Page', 'text': 'Welcome to my home page!'}
@@ -249,7 +260,9 @@ The story of Bill, Manfred, and Georg.
 
 ### format specifier
 
-An optional '`:`' and format specifier can follow the field name. This allows greater control over how the value is formatted.
+在占位序号或关键字之后可以 `:` 来设置填充（fill）、对齐（align）、位宽（width）、进制（base）等格式控制。
+
+> An optional '`:`' and format specifier can follow the field name. This allows greater control over how the value is formatted.
 
 1. 设置打印进制格式
 
@@ -263,8 +276,6 @@ An optional '`:`' and format specifier can follow the field name. This allows gr
 'int: 42;  hex: 0x2a;  oct: 0o52;  bin: 0b101010'
 
 ```
-
-Passing an integer after the '`:`' will cause that field to be a minimum number of characters wide. This is useful for making tables pretty.
 
 2. 设置浮点数位数
 
@@ -326,6 +337,8 @@ The value of PI is approximately 3.142.
 '-----------centered-----------'
 ```
 
+> Passing an integer after the '`:`' will cause that field to be a minimum number of characters wide. This is useful for making tables pretty.
+
 ```shell
 # position:{width}{base}
 >>> table = {'Sjoerd': 4127, 'Jack': 4098, 'Dcab': 7678}
@@ -336,3 +349,42 @@ Sjoerd     ==>       4127
 Jack       ==>       4098
 Dcab       ==>       7678
 ```
+
+5. 逗号千位分隔（Using the comma as a thousands separator）
+
+```shell
+# 对整数进行千位分隔
+>>> str1 = '{:,}'.format(1234567890)
+>>> str1
+'1,234,567,890'
+
+# 去掉千位分隔符
+>>> int(str1.replace(',', ''))
+1234567890
+```
+
+6. 输出百分数
+
+```shell
+>>> points = 19
+>>> total = 22
+>>> 'Correct answers: {:.2%}'.format(points/total)
+'Correct answers: 86.36%'
+```
+
+## string.Template
+
+The [string](https://docs.python.org/3/library/string.html#module-string) module provides a [Template](https://docs.python.org/3/library/string.html#string.Template) class that implements these rules. The methods of [Template](https://docs.python.org/3/library/string.html#string.Template) are:
+
+*class* string.**Template**(*template*)
+
+> The constructor takes a single argument which is the template string.
+
+```shell
+>>> from string import Template
+>>> s = Template('$who likes $what')
+>>> s.substitute(who='tim', what='kung pao')
+'tim likes kung pao'
+```
+
+`string.Template(str_sql_t).substitute(db=g_db, tbl=g_tbl)`
