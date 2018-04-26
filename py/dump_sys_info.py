@@ -23,10 +23,11 @@ def dump_sys_info():
     print('sys.platform = ' + sys.platform)
     print('sys.version = ' + sys.version)
     print('sys.version_info = ' + repr(sys.version_info))
-    print('sys.implementation = ' + repr(sys.implementation))  # only support python3
     print('sys.byteorder = ' + sys.byteorder)
-    print('sys.int_info = ' + repr(sys.int_info))  # only support python3
-    print('sys.thread_info = ' + repr(sys.thread_info))  # only support python3
+    if sys.version_info.major > 2:
+        print('sys.implementation = ' + repr(sys.implementation))
+        print('sys.int_info = ' + repr(sys.int_info))
+        print('sys.thread_info = ' + repr(sys.thread_info))
     print('\n')
     pass
 
@@ -36,7 +37,7 @@ def dump_os_info():
     print('os.sep = %s' % os.sep)
     print('os.extsep = %s' % os.extsep)
     print('os.pathsep = %s' % os.pathsep)
-    print('os.linesep = %s' % os.linesep)
+    print('os.linesep = %s' % repr(os.linesep))
     print('\n')
     pass
 

@@ -206,7 +206,7 @@ str.endswith(suffix[, start[, end]])
 
 # 计算子串的个数
 str.count(sub[, start[, end]])
- 
+
 # 查找子串的位置索引，不存在则返回-1
 str.find(sub[, start[, end]])
 str.rfind(sub[, start[, end]])
