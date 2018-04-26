@@ -56,8 +56,6 @@ id(obj, /)
     (CPython uses the object's memory address.)
 ```
 
-> CPython
-
 以下测试打印类 str 和实例 str1 和 str2 的类型 ID：
 
 ```shell
@@ -135,6 +133,26 @@ id(obj, /)
 ```shell
     issubclass(cls, class_or_tuple, /)
         Return whether 'cls' is a derived from another class or is the same class.
+```
+
+## is, is not
+reference - [6.10.3. Identity comparisons](https://docs.python.org/3/reference/expressions.html#is)
+
+The operators `is` and `is not` test for **object identity**: `x is y` is true if and only if x and y are the same object. Object identity is determined using the `id()` function. x is not y yields the inverse truth value. 
+
+```shell
+>>> str1='str1'
+>>> str2=str1
+>>> str1 is str2
+True
+>>>
+>>> str2='str1'
+>>> str1 is str2
+True
+>>>
+>>> str2='str2'
+>>> str1 is str2
+False
 ```
 
 ## demos
