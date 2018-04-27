@@ -83,6 +83,14 @@ len(obj, /)
 7
 ```
 
+**列表解析**将for循环和创建新元素的代码合并成一行，并自动附加新元素。
+
+```shell
+>>> squares = [value**2 for value in range(1,11)]
+>>> print(squares)
+[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+```
+
 ## iter, next
 
 ```shell
