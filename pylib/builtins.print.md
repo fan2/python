@@ -387,4 +387,13 @@ The [string](https://docs.python.org/3/library/string.html#module-string) module
 'tim likes kung pao'
 ```
 
-`string.Template(str_sql_t).substitute(db=g_db, tbl=g_tbl)`
+[TDW](http://code.tencent.com/tdw.html)（[腾讯的分布式数据仓库](https://blog.csdn.net/johnny_lee/article/details/26673829/)）  [HIVE SQL](http://data.qq.com/article?id=819) 使用了 python 作为流程控制语言，以下摘自某段格式化查询脚本：
+
+```python
+# 模板
+sql_query_t = 'SELECT * FROM ${db}::${tbl} WHERE time=${date}'
+# 格式化替换参数
+sql_query = string.Template(sql_query_t).substitute(db='myDB', tbl='myTable', date='20180108')
+# 执行 sql
+tdwqe.execute(sql_query)
+```
