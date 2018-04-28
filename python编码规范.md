@@ -103,6 +103,27 @@ This package used to be called `pep8` but was **renamed** to `pycodestyle` to re
 
 > **pycodestyle**(pep8): 静态检查 PEP 8 编码风格的工具。  
 
+#### version information
+
+执行 `pip3 install pycodestyle` 安装 pycodestyle。
+
+查看帮助和版本信息：
+
+```shell
+faner@MBP-FAN:~|⇒  pycodestyle -h
+Usage: pycodestyle [options] input ...
+
+Options:
+  --version            show program's version number and exit
+  -h, --help           show this help message and exit
+  -v, --verbose        print status messages, or debug with -vv
+
+faner@MBP-FAN:~|⇒  pycodestyle --version
+2.3.1
+```
+
+查看已安装的包信息：
+
 ```shell
 faner@MBP-FAN:~|⇒  pip3 show pycodestyle
 Name: pycodestyle
@@ -115,6 +136,14 @@ License: Expat license
 Location: /usr/local/lib/python3.6/site-packages
 Requires: 
 Required-by: flake8
+```
+
+#### [usage](https://pycodestyle.readthedocs.io/en/latest/intro.html#example-usage-and-output)
+
+调用 pycodestyle 进行代码风格检查使用示例：
+
+```shell
+pycodestyle /usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/optparse.py
 ```
 
 ### pyflakes
@@ -131,6 +160,25 @@ If you like Pyflakes but also want stylistic checks, you want [flake8](https://p
 
 > **pyflakes**: 静态检查 Python 代码逻辑错误的工具。  
 
+#### version information
+
+执行 `pip3 install pyflakes` 安装 pyflakes。
+
+查看帮助和版本信息：
+
+```shell
+faner@MBP-FAN:~|⇒  pyflakes -h
+Usage: pyflakes [options]
+
+Options:
+  --version   show program's version number and exit
+  -h, --help  show this help message and exit
+faner@MBP-FAN:~|⇒  pyflakes --version
+1.6.0
+```
+
+查看已安装的包信息：
+
 ```shell
 faner@MBP-FAN:~|⇒  pip3 show pyflakes
 Name: pyflakes
@@ -143,6 +191,14 @@ License: MIT
 Location: /usr/local/lib/python3.6/site-packages
 Requires: 
 Required-by: flake8
+```
+
+#### usage
+
+调用 pyflakes 进行逻辑错误检查使用示例：
+
+```
+pyflakes /usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/optparse.py
 ```
 
 ### flake8
@@ -163,6 +219,38 @@ Flake8 is a wrapper around these tools:
 
 Flake8 runs all the tools by launching the single flake8 command. It displays the warnings in a per-file, merged output.
 
+> [pyflakes vs flake8](https://python-forum.io/Thread-pyflakes-vs-flake8): Flake8 bring together pycodestyle(pep8) and pyflakes.
+
+> [Configuring Flake8](http://flake8.pycqa.org/en/latest/user/configuration.html#configuration-locations)
+
+- [Flake8简介](http://www.malike.net.cn/blog/2013/10/23/flake8-tutorial/)  
+- [Vim插件之vim-flake8](https://blog.csdn.net/demorngel/article/details/69053321)  
+
+#### version information
+
+执行 `pip3 install flake8` 安装 flake8。
+
+查看帮助和版本信息：
+
+```shell
+faner@MBP-FAN:~|⇒  flake8 -h
+Usage: flake8 [options] file file ...
+
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -v, --verbose         Print more information about what is happening in
+                        flake8. This option is repeatable and will increase
+                        verbosity each time it is repeated.
+
+Installed plugins: mccabe: 0.6.1, pycodestyle: 2.3.1, pyflakes: 1.6.0
+
+faner@MBP-FAN:~|⇒  flake8 --version
+3.5.0 (mccabe: 0.6.1, pycodestyle: 2.3.1, pyflakes: 1.6.0) CPython 3.6.5 on Darwin
+```
+
+查看已安装的包信息：
+
 ```shell
 faner@MBP-FAN:~|⇒  pip show flake8
 Name: flake8
@@ -177,21 +265,34 @@ Requires: pyflakes, pycodestyle, mccabe
 Required-by: 
 ```
 
-> [pyflakes vs flake8](https://python-forum.io/Thread-pyflakes-vs-flake8): Flake8 bring together pycodestyle(pep8) and pyflakes.
+#### usage
 
-> [Configuring Flake8](http://flake8.pycqa.org/en/latest/user/configuration.html#configuration-locations)
+flake8 同时调用 pycodestyle 和 pyflakes 分别进行代码风格检查和逻辑错误检查，使用示例：
 
-- [Flake8简介](http://www.malike.net.cn/blog/2013/10/23/flake8-tutorial/)  
-- [Vim插件之vim-flake8](https://blog.csdn.net/demorngel/article/details/69053321)  
+```shell
+flake8 path/to/code/to/check.py
+# or
+flake8 path/to/code/
+```
+
+```shell
+flake8 /usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/optparse.py
+```
+
+flake8 相比 pycodestyle 多了一些 F 开头的错误码（pyflakes logic errors），例如：
+
+```
+optparse.py:1387:13: F841 local variable 'stop' is assigned to but never used
+```
 
 ## SublimeLinter
 
 [SublimeLinter](https://github.com/SublimeLinter) - The code linting framework for Sublime Text 3  
 [SublimeLinter](https://github.com/SublimeLinter/SublimeLinter) Framework  
 
-- [SublimeLinter-pycodestyle](https://github.com/SublimeLinter/SublimeLinter-pycodestyle)：需执行 `pip3 install pycodestyle` 安装 pycodestyle  
-- [SublimeLinter-pyflakes](https://github.com/SublimeLinter/SublimeLinter-pyflakes)：需要执行 `pip3 install pyflakes` 安装 pyflakes  
-- [**SublimeLinter-flake8**](https://github.com/SublimeLinter/SublimeLinter-flake8)：需要执行 `pip3 install flake8` 安装 flake8  
+- [SublimeLinter-pycodestyle](https://github.com/SublimeLinter/SublimeLinter-pycodestyle)：需先 pip 安装 pycodestyle  
+- [SublimeLinter-pyflakes](https://github.com/SublimeLinter/SublimeLinter-pyflakes)：需先 pip 安装 pyflakes  
+- [**SublimeLinter-flake8**](https://github.com/SublimeLinter/SublimeLinter-flake8)：需先 pip 安装 flake8  
 
 ### anaconda_linting - default
 
