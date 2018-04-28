@@ -126,7 +126,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         print('please input parameters:')
     else:
-        main(sys.argv[1])
+        main(sys.argv[1:])
 else:
     print('I am being imported from another module')
 
@@ -142,6 +142,11 @@ else:
 - compatible with both Python 2.x and 3.x：`#!/usr/bin/env python`  
 
 To be better portable users can use `#!/usr/bin/env python3` which will use the first python3 from the `PATH`.
+
+当执行`chmod a+x code.py` 赋予 python 脚本执行权，则可在终端敲下 `code.py` 或 `./code.py` 像执行 bash shell 脚本那样运行。  
+此时，将读取首行的 shebang，找到其指定的 python 版本进行解释执行。
+
+当以 `python code.py` 或 `python3 code.py` 显式指定调用 python(2.7) 或 python3 进行解释执行时，将忽略首行的 shebang。
 
 ## test
 
