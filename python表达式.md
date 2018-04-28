@@ -17,7 +17,7 @@ reference - [6. Expressions](https://docs.python.org/3/reference/expressions.htm
 >>>
 >>> dict1=dict() # dict1={}
 >>> for i in range1:
-...     k = 'k{}'.format(i)
+...     k = 'k{}'.format(i) # 'k'+str(i)
 ...     dict1[k]=i
 ... 
 >>> dict1

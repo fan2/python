@@ -16,7 +16,6 @@ def dump_platform_info():
     (major, minor, micro) = platform.python_version_tuple()
     print('(major, minor, micro) =', (major, minor, micro))
     print('\n')
-    pass
 
 
 # ------------------------------------------------------------------------------
@@ -65,8 +64,6 @@ def main(args):
         int_aging_days = int(str_aging_days)
 
     drop_old_partitions(str_begin_date, int_aging_days)
-
-    pass
 
 
 # main entry

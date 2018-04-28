@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 
 import os
@@ -23,12 +23,10 @@ def open_module_source_code(str_module_name):
     except (ImportError, AttributeError, ValueError) as e:
         print(e)
         sys.exit()
-    pass
 
 
 def main(args):
     open_module_source_code(args[0])
-    pass
 
 
 # main entry

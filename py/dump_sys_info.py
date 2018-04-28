@@ -16,7 +16,6 @@ def dump_platform_info():
     (major, minor, micro) = platform.python_version_tuple()
     print('(major, minor, micro) =', (major, minor, micro))
     print('\n')
-    pass
 
 
 def dump_sys_info():
@@ -29,7 +28,6 @@ def dump_sys_info():
         print('sys.int_info = ' + repr(sys.int_info))
         print('sys.thread_info = ' + repr(sys.thread_info))
     print('\n')
-    pass
 
 
 def dump_os_info():
@@ -39,13 +37,11 @@ def dump_os_info():
     print('os.pathsep = %s' % os.pathsep)
     print('os.linesep = %s' % repr(os.linesep))
     print('\n')
-    pass
 
 
 def dump_sysconfig_info():
     print('sysconfig.get_platform is', sysconfig.get_platform())
     print('sysconfig.get_python_version is', sysconfig.get_python_version())
-    pass
 
 
 def main(args):
@@ -53,7 +49,6 @@ def main(args):
     dump_sys_info()
     dump_os_info()
     dump_sysconfig_info()
-    pass
 
 
 # main entry
@@ -63,6 +58,6 @@ if __name__ == '__main__':
         # print('please input parameters:')
         main(None)
     else:
-        main(sys.argv[1])
+        main(sys.argv[1:])
 else:
     print('I am being imported from another module')
