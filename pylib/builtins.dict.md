@@ -16,3 +16,28 @@
 - `e in d`: Test e for membership in d.keys.  
 - `e not in d`: Test e for non-membership in d.keys.  
 - `for e in d`: enumerate elements in d.keys.  
+
+```shell
+
+>>> for k in dict1.keys():
+...     print('dict1[{0}]={1}'.format(k, dict1[k]))
+... 
+dict1[k1]=1
+dict1[k2]=2
+dict1[k3]=3
+dict1[k4]=4
+dict1[k5]=5
+dict1[k6]=6
+dict1[k7]=7
+>>>
+>>> for key, value in dict1.items():
+...     print('dict1[{0}]={1}'.format(key, value))
+... 
+dict1[k1]=1
+dict1[k2]=2
+dict1[k3]=3
+dict1[k4]=4
+dict1[k5]=5
+dict1[k6]=6
+dict1[k7]=7
+```
