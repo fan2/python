@@ -217,6 +217,30 @@ hex=7e1
 
 ```
 
+### inspect.isbuiltin
+
+通过 `inspect.isbuiltin(object)` 可判断 object 是否为内置函数：
+
+```shell
+inspect.isbuiltin(object)
+Return true if the object is a built-in function or a bound built-in method.
+```
+
+示例如下：
+
+```shell
+>>> inspect.isbuiltin(print)
+True
+>>> inspect.isbuiltin(len)
+True
+>>> inspect.isbuiltin(hex)
+True
+>>> inspect.isbuiltin(str)
+False
+>>> inspect.isbuiltin(string)
+False
+```
+
 ## [CLASSES](https://docs.python.org/3/library/stdtypes.html#)
 
 builtins 模块还提供了一些常用的基础类：
