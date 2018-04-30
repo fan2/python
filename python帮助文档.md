@@ -12,12 +12,18 @@
 
 [查看python的模块和函数帮助文档方法](http://blog.csdn.net/u013810296/article/details/55509284)  
 
-## help
+## [help](https://docs.python.org/3/library/functions.html#help)
 
 ```shell
 >>> help
 Type help() for interactive help, or help(object) for help about object.
 ```
+
+Invoke the built-in help system. (This function is intended for interactive use.) 
+
+- If no argument is given, the **interactive help system** starts on the interpreter console.  
+- If the argument is a string, then the string is looked up as the name of a module, function, class, method, keyword, or documentation topic, and a help page is printed on the console.  
+- If the argument is any other kind of object, a help page on the object is generated.  
 
 ### help(object)
 
@@ -33,25 +39,6 @@ NameError: name 'modules' is not defined
 
 Please wait a moment while I gather a list of all available modules...
 
-```
-
-如果不 import 导入模块，加引号 `help('module')` 也可以查看模块帮助。
-
-```shell
->>> help(array)
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-NameError: name 'array' is not defined
-
->>> help('array')
-
-Help on module array:
-
-NAME
-    array
-
-MODULE REFERENCE
-    https://docs.python.org/3.6/library/array
 ```
 
 调用 `import(module)` 导入模块后，可调用 `help(module)` 查看模块帮助：
@@ -121,15 +108,51 @@ class dict(object)
 若想调用 `help(module)` 查看 builtins 模块或其他模块帮助及说明，还得先显式 import 导入模块。
 
 ```shell
+>>> # help(builtins)
 >>> help(builtins)
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 NameError: name 'builtins' is not defined
+>>> # 先 import 再 help
+>>> import builtins
+>>> help(builtins)
 
->>> help(array)
+Help on built-in module builtins:
+
+NAME
+    builtins - Built-in functions, exceptions, and other objects.
+>>>
+>>> # help(string)
+>>> help(string)
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
-NameError: name 'array' is not defined
+NameError: name 'string' is not defined
+>>> # 先 import 再 help
+>>>
+>>> import string
+>>> help(string)
+
+Help on module string:
+
+NAME
+    string - A collection of string constants.
+>>>
+```
+
+![string.help](./images/string.help.png)
+
+如果不 import 导入模块，加引号 `help('module')` 也可以查看模块帮助。
+
+```shell
+>>> help('array')
+
+Help on module array:
+
+NAME
+    array
+
+MODULE REFERENCE
+    https://docs.python.org/3.6/library/array
 ```
 
 #### quit
@@ -190,6 +213,33 @@ break               for                 not
 class               from                or                  
 continue            global              pass                
 ```
+
+通过 `help('keyword')` 可查看某个关键字 keyword 的说明。
+
+- 如果不清楚 python 中 `in`, `is`, `as` 关系判断的区别，可调用 help(`in`)、help(`is`) 或 help(`as`) 查看相关说明；  
+- 如果不清楚关键字 `None` 和 `not` 的区别，可调用 help(`None`) 或 help(`not`) 查看相关说明；  
+
+以下通过 `help('pass')` 获取 pass 关键字的帮助说明。
+
+```shell
+>>> help('pass')
+
+The "pass" statement
+********************
+
+   pass_stmt ::= "pass"
+
+"pass" is a null operation --- when it is executed, nothing happens.
+It is useful as a placeholder when a statement is required
+syntactically, but no code needs to be executed, for example:
+
+   def f(arg): pass    # a function that does nothing (yet)
+
+   class C: pass       # a class with no methods (yet)
+(END)
+```
+
+其他不熟悉或不清楚的 [nonlocal](https://docs.python.org/3.6/reference/simple_stmts.html#nonlocal), [global](https://docs.python.org/3.6/reference/simple_stmts.html#global), with 等关键字，均可通过此法获取其帮助说明。
 
 #### symbols
 
@@ -259,7 +309,7 @@ pip._vendor.urllib3.util.timeout
 
 #### quit
 
-通过快捷键 `<C-c>` / `<C-d>` 或 `quit` 可退出 help utility 命令行 `help> ` 回到 Python 主控制台 `>>> `。
+通过快捷键 `<C-c>` / `<C-d>` 或 **`quit`** 可退出 help utility 命令行 `help> ` 回到 Python 主控制台 `>>> `。
 
 ```shell
 help> quit
@@ -274,33 +324,66 @@ has the same effect as typing a particular string at the help> prompt.
 
 退回到 `>>>` 中输入`help(module)`、`help(module.function)`、`help(module.class)`、`help(module.class.method)` 可查看等效帮助。  
 
-## `__doc__`
+### Docstring
+
+A [docstring](https://www.python.org/dev/peps/pep-0257/#what-is-a-docstring) is a string literal that occurs as the **first** statement in a module, function, class, or method definition.  
+Such a docstring becomes the `__doc__` special attribute of that object.
+
+![string.docstring](./images/string.docstring.png)
+
+pydoc 模块自动根据 python 模块代码中各部分按约定格式定义的 docstring，聚合生成整个模块的帮助文档。
+
+> The [pydoc](https://docs.python.org/3/library/pydoc.html?highlight=docstring#module-pydoc) module automatically generates documentation from Python modules.  
+
+调用 `help()` 的输出实际上就是整个模块的 docstrings 或各个部分的 docstring。
+
+> Calling `help()` on methods or functions displays the docstrings:  
+
+[PEP 257 -- Docstring Conventions](https://www.python.org/dev/peps/pep-0257/)  
+[使用Python的docstring](http://www.maixj.net/ict/python-docstring-16247)  
+
+### `__doc__`
 
 > python 中每个 module，每个 class，每个 def 都留有写 doc 的地方。
+
+关于 `__doc__` 属性，参考 《[29.12.1. Types and members](https://docs.python.org/3/library/inspect.html#types-and-members)》。
 
 - `print(module.__doc__)`：查看模块概述。
 
 ```shell
+>>> # 查看 builtins 模块的 docstring
 >>> import builtins
 >>> print(builtins.__doc__)
 Built-in functions, exceptions, and other objects.
 
 Noteworthy: None is the `nil' object; Ellipsis represents `...' in slices.
+>>>
+>>> # 查看 string 模块的 docstring
+>>> print(string.__doc__)
+A collection of string constants.
 
->>> import array
-# 同 help(array) 的 DESCRIPTION
->>> print(array.__doc__)
-This module defines an object type which can efficiently represent
-an array of basic values: characters, integers, floating point
-numbers.  Arrays are sequence types and behave very much like lists,
-except that the type of objects stored in them is constrained.
+Public module variables:
+
+whitespace -- a string containing all ASCII whitespace
+ascii_lowercase -- a string containing all ASCII lowercase letters
+ascii_uppercase -- a string containing all ASCII uppercase letters
+ascii_letters -- a string containing all ASCII letters
+digits -- a string containing all ASCII decimal digits
+hexdigits -- a string containing all ASCII hexadecimal digits
+octdigits -- a string containing all ASCII octal digits
+punctuation -- a string containing all ASCII punctuation characters
+printable -- a string containing all ASCII characters considered printable
 ```
 
-> 注意：先要 import module！
+**注意**：先要 import module。
+
+> `string.__doc__` 即 string.docstring 截图中定义在模块代码 `string.py` 首部三引号包括的多行注释部分（[Multi-line Docstrings](https://www.python.org/dev/peps/pep-0257/#id17)）—— ①。  
+> 结合 help() 输出可知，包括紧随三引号后的 NAME 部分，以及间隔空行后的 DESCRIPTION 部分。  
 
 - `print(class.__doc__)`（或 `print(object.__doc__)`）：查看类说明。  
 
 ```shell
+>>> # 查看 builtins.str 类的 docstring
 >>> print(str.__doc__)
 str(object='') -> str
 str(bytes_or_buffer[, encoding[, errors]]) -> str
@@ -312,17 +395,52 @@ Otherwise, returns the result of object.__str__() (if defined)
 or repr(object).
 encoding defaults to sys.getdefaultencoding().
 errors defaults to 'strict'.
+>>>
+>>> # 查看 string 模块的类 Template 的 docstring
+>>> print(string.Template.__doc__)
+A string class for supporting $-substitutions.
 ```
+
+> `string.Template.__doc__` 即 string.docstring 截图中定义在模块代码 `string.py` 中 Template 类声明后的单行三引号注释部分（[One-line Docstrings](https://www.python.org/dev/peps/pep-0257/#id16)） —— ③。  
 
 - `print(class.method.__doc__)`（或 `print(object.method.__doc__)`）：查看类成员函数说明。  
 
 ```shell
+>>> # 查看 builtins.str 类的成员函数 format 的 docstring
 >>> print(str.format.__doc__)
 S.format(*args, **kwargs) -> str
 
 Return a formatted version of S, using substitutions from args and kwargs.
 The substitutions are identified by braces ('{' and '}').
+>>>
+>>> # 查看 string 模块的函数 capwords 的 docstring
+>>> print(string.capwords.__doc__)
+capwords(s [,sep]) -> string
+
+    Split the argument into words using split, capitalize each
+    word using capitalize, and join the capitalized words using
+    join.  If the optional second argument sep is absent or None,
+    runs of whitespace characters are replaced by a single space
+    and leading and trailing whitespace are removed, otherwise
+    sep is used to split and join the words.
 ```
+
+> `string.capwords.__doc__` 即 string.docstring 截图中定义在模块代码 `string.py` 中 capwords 函数体首部三引号包括的多行注释部分 —— ②。  
+> 结合 help() 输出可知，包括紧随三引号后的概要（summary line），以及间隔空行后（followed by a blank line）的详细说明部分（more elaborate description）。  
+
+### inspect.getdoc
+
+通过 inspect.getdoc(*object*) 接口亦可获取 object 对应的 docstring（documentation string）：
+
+```shell
+inspect.getdoc(object)
+Get the documentation string for an object
+```
+
+`inspect.getdoc(str)` 等效于 `str.__doc__`  
+`inspect.getdoc(string)` 等效于 `string.__doc__`  
+`inspect.getdoc(string.Template)` 等效于 `string.Template.__doc__ `  
+`inspect.getdoc(string.capwords)` 等效于 `string.capwords.__doc__ `  
 
 ## [dir()](https://docs.python.org/3/library/functions.html#dir)
 
@@ -397,9 +515,11 @@ str1.index(         str1.isupper(       str1.rpartition(    str1.zfill(
 
 对于 Sublime Text 等文本编辑器，需要借助 [Anaconda](https://www.anaconda.com/) 或 [SublimeLinter-pycodestyle](https://github.com/SublimeLinter/SublimeLinter-pycodestyle) 等插件来实现自动完成智能提示。
 
-## `__file__`
+## Source Code
 
-[How do I find the location of Python module sources?](https://stackoverflow.com/questions/269795/how-do-i-find-the-location-of-python-module-sources)
+### `__file__`
+
+关于 `__file__` 属性，参考 《[29.12.1. Types and members](https://docs.python.org/3/library/inspect.html#types-and-members)》。
 
 在 python 主控制台中直接输入 `module`、`module.function`、` module.class`、` module.class.method` 也会显示其路径或类型等信息：
 
@@ -468,7 +588,7 @@ AttributeError: module 'sys' has no attribute '__file__'
 
 ```
 
-### study the source code
+#### study the source code
 
 初学 Python 的一种有效途径是阅读 python 标准模块源码，通过阅读源码可观摩编码规范，了解语言风格，快速掌握 Python 程序设计的一般流程。
 
@@ -530,7 +650,7 @@ AttributeError: module 'sys' has no attribute '__file__'
 
 参考 [cpython](https://github.com/python/cpython) 的 [binascii.c.h](https://github.com/python/cpython/blob/master/Modules/clinic/binascii.c.h)。
 
-### openPythonModuleCode
+#### openPythonModuleCode
 
 `openPythonModuleCode.py` 脚本用于打开指定名称的模块的源代码：
 
@@ -603,4 +723,140 @@ faner@MBP-FAN:~/Projects/python|⇒  python3 openPythonModuleCode.py argparse
 This program is being run by itself
 execute system command:  subl /usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/argparse.py
 
+```
+
+### inspect
+
+[How do I find the location of Python module sources?](https://stackoverflow.com/questions/269795/how-do-i-find-the-location-of-python-module-sources)
+
+除了通过 `__file__` 属性外 ，还可通过 inspect 模块提供的一些接口，来查看某个类、对象或函数所属模块以及源文件等信息。参考 [29.12.2. Retrieving source code](https://docs.python.org/3/library/inspect.html#retrieving-source-code) 章节。
+
+#### inspect.getfile
+
+`inspect.getfile(object)` 接口用于获取定义 object（模块、类或函数）的文件，python 源码或 cpython 动态库（so）。
+
+```shell
+inspect.getfile(object)
+Return the name of the (text or binary) file in which an object was defined. This will fail with a TypeError if the object is a built-in module, class, or function.
+```
+
+对于内置模块、类或函数，调用该接口将报 TypeError 异常。
+
+```shell
+>>> # string 模块的代码
+>>> inspect.getfile(string)
+'/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/string.py'
+>>>
+>>> # array 模块的 cpython 实现 so
+>>> inspect.getfile(array)
+'/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/array.cpython-36m-darwin.so'
+>>>
+>>> # str 类为内置 built-in class，报 TypeError 异常
+>>> inspect.getfile(str)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/inspect.py", line 654, in getfile
+    raise TypeError('{!r} is a built-in class'.format(object))
+TypeError: <module 'builtins' (built-in)> is a built-in class
+```
+
+#### inspect.getsourcefile
+
+`inspect.getsourcefile(object)` 接口用于获取定义 object（模块、类或函数）的 python 源文件。
+
+```shell
+inspect.getsourcefile(object)
+Return the name of the Python source file in which an object was defined. This will fail with a TypeError if the object is a built-in module, class, or function.
+```
+
+对于通过 cpython.so 动态库提供的模块接口，没有 python 源码，返回空。  
+对于内置模块、类或函数，调用该接口将报 TypeError 异常。  
+
+```shell
+>>> # string 模块的代码
+>>> inspect.getsourcefile(string))
+/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/string.py
+>>>
+>>> # array 模块的源码？
+>>> inspect.getsourcefile(array)
+>>> 
+>>> # str 类为内置 built-in class，报 TypeError 异常
+>>> inspect.getsourcefile(str)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/inspect.py", line 684, in getsourcefile
+    filename = getfile(object)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/inspect.py", line 654, in getfile
+    raise TypeError('{!r} is a built-in class'.format(object))
+TypeError: <module 'builtins' (built-in)> is a built-in class
+```
+
+#### inspect.getsource
+
+`inspect.getsource(object)` 接口用于获取 object（模块、类或函数）的 python 实现源码。
+
+```shell
+inspect.getsource(object)
+Return the text of the source code for an object. The argument may be a module, class, method, function, traceback, frame, or code object. The source code is returned as a single string. An OSError is raised if the source code cannot be retrieved.
+```
+
+对于内置模块(builtins) 等以 so 形式未提供 python 源码，将报 TypeError 异常。
+
+```shell
+>>> # 解释器控制台输出 string.Template.substitute 实现源码
+>>> inspect.getsource(string.Template.substitute))
+    def substitute(*args, **kws):
+        if not args:
+            raise TypeError("descriptor 'substitute' of 'Template' object "
+                            "needs an argument")
+        self, *args = args  # allow the "self" keyword be passed
+        if len(args) > 1:
+            raise TypeError('Too many positional arguments')
+        if not args:
+            mapping = kws
+        elif kws:
+            mapping = _ChainMap(kws, args[0])
+        else:
+            mapping = args[0]
+        # Helper function for .sub()
+        def convert(mo):
+            # Check the most common path first.
+            named = mo.group('named') or mo.group('braced')
+            if named is not None:
+                return str(mapping[named])
+            if mo.group('escaped') is not None:
+                return self.delimiter
+            if mo.group('invalid') is not None:
+                self._invalid(mo)
+            raise ValueError('Unrecognized named group in pattern',
+                             self.pattern)
+        return self.pattern.sub(convert, self.template)
+>>> 
+>>> # array 模块以 so 提供，未提供 python 源码，报 TypeError 异常
+>>> inspect.getsource(array)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/inspect.py", line 968, in getsource
+    lines, lnum = getsourcelines(object)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/inspect.py", line 955, in getsourcelines
+    lines, lnum = findsource(object)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/inspect.py", line 778, in findsource
+    raise OSError('source code not available')
+OSError: source code not available
+>>>
+>>> # str 定义在内置模块(builtins)，以 so 提供，未提供 python 源码，报 TypeError 异常
+>>> inspect.getsource(str)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/inspect.py", line 968, in getsource
+    lines, lnum = getsourcelines(object)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/inspect.py", line 955, in getsourcelines
+    lines, lnum = findsource(object)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/inspect.py", line 768, in findsource
+    file = getsourcefile(object)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/inspect.py", line 684, in getsourcefile
+    filename = getfile(object)
+  File "/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/inspect.py", line 654, in getfile
+    raise TypeError('{!r} is a built-in class'.format(object))
+TypeError: <module 'builtins' (built-in)> is a built-in class
 ```
