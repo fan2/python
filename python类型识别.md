@@ -155,6 +155,36 @@ True
 False
 ```
 
+## inspect
+
+```shell
+>>> import inspect
+>>> help(inspect)
+
+Help on module inspect:
+
+NAME
+    inspect - Get useful information from live Python objects.
+
+
+
+# 判断 object 是否为模块
+inspect.ismodule(object)
+Return true if the object is a module.
+
+# 判断 object 是否为类
+inspect.isclass(object)
+Return true if the object is a class, whether built-in or created in Python code.
+
+# 判断 object 是否为绑定方法
+inspect.ismethod(object)
+Return true if the object is a bound method written in Python.
+
+# 判断 object 是否为函数
+inspect.isfunction(object)
+Return true if the object is a Python function, which includes functions created by a lambda expression.
+```
+
 ## demos
 
 [How to find out if a Python object is a string?](https://stackoverflow.com/questions/1303243/how-to-find-out-if-a-python-object-is-a-string)
@@ -178,4 +208,27 @@ True
 
 >>> str(str2)==str2
 True
+```
+
+以下为 `inspect.is*` 系列函数示例：
+
+```shell
+
+>>> inspect.isclass(str)
+True
+>>> inspect.isclass(string)
+False
+>>> inspect.ismodule(string)
+True
+>>> inspect.ismethod(string.capwords)
+False
+>>> inspect.isfunction(string.capwords)
+True
+>>> inspect.isclass(string.Template)
+True
+>>> inspect.ismethod(string.Template.substitute)
+False
+>>> inspect.isfunction(string.Template.substitute)
+True
+
 ```
