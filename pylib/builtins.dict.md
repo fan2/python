@@ -18,8 +18,8 @@
 - `for e in d`: enumerate elements in d.keys.  
 
 ```shell
-
->>> for k in dict1.keys():
+>>> # 等效于 for k in dict1.keys()
+>>> for k in dict1:
 ...     print('dict1[{0}]={1}'.format(k, dict1[k]))
 ... 
 dict1[k1]=1

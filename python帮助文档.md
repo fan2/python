@@ -153,6 +153,17 @@ NAME
 
 MODULE REFERENCE
     https://docs.python.org/3.6/library/array
+
+>>> help('collections.deque')
+
+Help on class deque in collections:
+
+collections.deque = class deque(builtins.object)
+ |  deque([iterable[, maxlen]]) --> deque object
+ |  
+ |  A list-like sequence optimized for data accesses near its endpoints.
+ |  
+ |  Methods defined here:
 ```
 
 #### quit
@@ -337,7 +348,8 @@ pydoc 模块自动根据 python 模块代码中各部分按约定格式定义的
 
 调用 `help()` 的输出实际上就是整个模块的 docstrings 或各个部分的 docstring。
 
-> Calling `help()` on methods or functions displays the docstrings:  
+> Calling `help()` on methods or functions displays the docstrings.  
+>> The built-in function `help()` invokes the online help system in the interactive interpreter, which uses [pydoc](https://docs.python.org/3/library/pydoc.html?highlight=docstring#module-pydoc) to generate its documentation as text on the console.  
 
 [PEP 257 -- Docstring Conventions](https://www.python.org/dev/peps/pep-0257/)  
 [使用Python的docstring](http://www.maixj.net/ict/python-docstring-16247)  

@@ -117,7 +117,6 @@ def function(args):
 
 def main(args):
     function(args)  # do something
-    pass
 
 
 # main entry
