@@ -410,13 +410,16 @@ def capwords(s, sep=None):
     return (sep or ' ').join(x.capitalize() for x in s.split(sep))
 ```
 
-以下示例通过列表推导将 copy 模块中以下划线开头的非供外部使用的名称过滤掉：
+以下示例通过列表推导将指定模块中以下划线开头的非供外部使用的名称过滤掉：
 
 ```shell
 >>> import copy
 >>> [n for n in dir(copy) if not n.startswith('_')]
 ['Error', 'copy', 'deepcopy', 'dispatch_table', 'error']
 >>> 
+>>> import string
+>>> [n for n in dir(string) if not n.startswith('_')]
+['Formatter', 'Template', 'ascii_letters', 'ascii_lowercase', 'ascii_uppercase', 'capwords', 'digits', 'hexdigits', 'octdigits', 'printable', 'punctuation', 'whitespace']
 ```
 
 关于 dict comprehension/set comprehension 等话题，参考 [6.2.4. Displays for lists, sets and dictionaries](https://docs.python.org/3/reference/expressions.html#displays-for-lists-sets-and-dictionaries)。

@@ -503,6 +503,14 @@ dir(...)
 
 	> 也可执行 `print(builtins.__dict__)` 打印 builtins 模块的符号表。
 
+通过列表推导式将指定模块中以下划线开头的非供外部使用的名称过滤掉：
+
+```shell
+>>> import string
+>>> [n for n in dir(string) if not n.startswith('_')]
+['Formatter', 'Template', 'ascii_letters', 'ascii_lowercase', 'ascii_uppercase', 'capwords', 'digits', 'hexdigits', 'octdigits', 'printable', 'punctuation', 'whitespace']
+```
+
 ### autocompletion
 
 在 python3 控制台中，对于明确类型的对象，输入引用符点号（`.`）后，再按下 tab 会列举所有可能的成员函数或属性：

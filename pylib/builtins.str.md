@@ -160,6 +160,8 @@ C:\nowhere
 Let\'s go!
 ```
 
+参考 reference - [2.4. Literals](https://docs.python.org/3/reference/lexical_analysis.html#literals) 中的 **stringprefix**。
+
 ## expressions
 
 - `len(s)`: Return the length of str(number of single character).  
