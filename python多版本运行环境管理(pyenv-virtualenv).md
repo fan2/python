@@ -123,12 +123,8 @@ Requires:
 
 > [用了pyenv-virtualenv, 天黑都不怕](https://www.darkof.com/2014/10/17/pyenv-virtualenv/) - 简介  
 > [Python多版本管理器pyenv和虚拟环境pyenv-virtualenv的安装设置](http://www.jianshu.com/p/1842a363257c)  
-
-> [mac下使用pyenv,pyenv-virtualenv管理python的多个版本](http://blog.csdn.net/angel22xu/article/details/45443019)  
-> [Mac OS 上用pyenv和pyenv-virtualenv管理多个Python多版本及虚拟环境](http://blog.csdn.net/liuchunming033/article/details/78345286)  
-> [Python版本管理：pyenv和pyenv-virtualenv(MAC、Linux)、virtualenv和virtualenvwrapper(windows)](http://www.jianshu.com/p/60f361822a7e)  
+> [pyenv简介——Debian/Ubuntu中管理多版本Python](http://www.malike.net.cn/blog/2016/05/21/pyenv-tutorial/) - git clone  
 
 > [mac下使用pyenv,pyenv-virtualenv管理python的多个版本](http://blog.csdn.net/angel22xu/article/details/45443019) - homebrew - 图文详细  
 > [Mac OS 上用pyenv和pyenv-virtualenv管理多个Python多版本及虚拟环境](http://blog.csdn.net/liuchunming033/article/details/78345286) - homebrew  
-> [pyenv简介——Debian/Ubuntu中管理多版本Python](http://www.malike.net.cn/blog/2016/05/21/pyenv-tutorial/) - git clone  
 > [Python版本管理：pyenv和pyenv-virtualenv(MAC、Linux)、virtualenv和virtualenvwrapper(windows)](http://www.jianshu.com/p/60f361822a7e) - git clone  
