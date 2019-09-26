@@ -1,16 +1,21 @@
 
 ## Python学习参考
+
 ### Python 之美
+
 [码农·从Python开始（总第7期）](http://download.csdn.net/download/haiyoung/9356897)  
 知乎专栏 [Python之美](https://zhuanlan.zhihu.com/python-cn)  
 
 ### Python 学习
+
 [如何系统学习python](http://www.xuliangwei.com/xubusi/956.html)  
 [Python 学习路线图](http://www.apachecn.org/map/10.html)  
-[Python系统学习流程图](https://www.toutiao.com/a6536174274070184462/)  
 [Python 编程核心知识体系](https://woaielf.github.io/2017/06/13/python3-all/)  
 
+[Python语言学习天地](http://liao.cpython.org/)  
+
 ### Python 指南
+
 [**python-guide**](http://docs.python-guide.org/en/latest/) @[github](https://github.com/kennethreitz/python-guide)  
 
 > This is a living, breathing guide.  
@@ -20,6 +25,7 @@
 > A curated list of awesome Python frameworks, libraries, software and resources.
 
 ### Python 教程
+
 [**The Python Tutorial**](https://docs.python.org/3.6/tutorial/)  
 
 [Python 基础教程](http://www.runoob.com/python/python-tutorial.html) @runoob  
@@ -28,6 +34,7 @@
 [**Python最佳实践指南**](http://pythonguidecn.readthedocs.io/zh/latest/)  
 
 ### Python 示例
+
 [python常用脚本](https://github.com/joe011/python)  
 [python学习笔记](https://github.com/xxg1413/python) - github  
 [python学习笔记](https://blog.csdn.net/leexide/article/category/1779961) - CSDN  
@@ -36,9 +43,10 @@
 [Show Me the Code Python](https://github.com/Show-Me-the-Code/python)  
 
 ### Python 进阶
+
 [Python 学习系列五](https://blog.csdn.net/Jofranks/article/category/1182806)  
-[模拟登录知乎， 爬虫，操作excel](https://github.com/injetlee/Python)  
-[从零开始掌握Python机器学习：十四步教程]()  
+[模拟登录知乎，爬虫，操作excel](https://github.com/injetlee/Python)  
+[从零开始掌握Python机器学习：十四步教程](https://www.cnblogs.com/IT-LearnHall/p/9459669.html)  
 
 ## Python编程书籍
 
@@ -124,6 +132,7 @@
 [1](http://download.csdn.net/download/jsjxlhy/9706067) / [2](http://download.csdn.net/download/lyiang001/10045953) / [***3***](http://download.csdn.net/download/bbb_sxja59f/10239621) / [**4**](http://download.csdn.net/download/sean09/10203197) @CSDN  
 
 ### 其他
+
 [Python编程快速上手:让繁琐工作自动化](https://www.amazon.cn/dp/B01I0XN8XY/ref=sr_1_6?ie=UTF8&qid=1519808694&sr=8-6&keywords=python)  
 斯维加特 (Al Sweigart)、 王海鹏
 

@@ -1,11 +1,15 @@
 # Concepts
+
 ## [python](https://www.python.org/)
+
 Once you have read a tutorial, you can browse through [Python's online documentation](http://docs.python.org/). It includes [a tutorial](http://docs.python.org/tut/) that might come in handy, [a Library Reference](http://docs.python.org//lib/) that lists all of the modules that come standard with Python, and [the Language Reference](http://docs.python.org/ref/) for a complete (if rather dry) explanation of Python's syntax.
 
 ## [PyPI](http://pypi.python.org/pypi)
+
 The `Python Package Index`(PyPI) is a repository of software for the Python programming language.
 
 ## [PyPA](https://www.pypa.io/)
+
 The `Python Packaging Authority` (PyPA) is a working group that **maintains** many of the relevant projects in Python packaging.
 
 Github Page: <https://github.com/pypa>  
