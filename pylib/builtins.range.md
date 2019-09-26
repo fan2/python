@@ -87,3 +87,31 @@ ValueError: 4 is not in range
 >>> r.index(5)
 2
 ```
+
+## slice
+
+slice命令用法:
+
+```
+slice(start, stop[, step])
+```
+
+创建一个slice类型. slice(None) 等价于冒号 `:`，表示从头到尾。
+
+a = `[1,2,3,4,5,6,7]`，取切片 `a[1:3]` 索引范围 = [1,3)，取出的子集为 `[2, 3]`。
+
+也可以用 slice 函数指定 start、stop 和 step，构造切片索引，对序列进行切片取值。
+
+```
+s = slice(1,3)
+a[s] = [2,3]
+```
+
+这样使得切片范围可编程定制化，更灵活的截取子集。
+
+### refs
+
+[Python切片Slice](http://liao.cpython.org/07slice/)  
+[python中切片（Slice）操作符](https://blog.csdn.net/xiaofeiyu321/article/details/82941765)  
+[切片（Slice）在python中的运用](https://blog.csdn.net/dfshi198/article/details/80843175)  
+[Python高级特性——切片（Slice）](https://www.cnblogs.com/hiwuchong/p/8052502.html)  
