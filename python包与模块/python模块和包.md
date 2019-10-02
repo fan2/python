@@ -3,6 +3,9 @@
 [The Python Language Reference](https://docs.python.org/3/reference/index.html) - [The import system](https://docs.python.org/3/reference/import.html#importsystem)  
 [The Python Tutorial](https://docs.python.org/3.6/tutorial/) - [Modules](https://docs.python.org/3.6/tutorial/modules.html)  
 
+[General Index](https://docs.python.org/3/genindex.html)  
+[Global Module Index](https://docs.python.org/3/py-modindex.html)  
+
 Python的程序由包（[package](https://docs.python.org/3/glossary.html#term-package)）、模块（[module](https://docs.python.org/3/glossary.html#term-module)）和函数组成。包是由一系列模块组成的集合。模块是处理某一类问题的函数和类的集合。
 
 - ***package***: A Python [module](https://docs.python.org/3/glossary.html#term-module) which can contain submodules or recursively, subpackages. Technically, a package is a Python module with an `__path__` attribute.

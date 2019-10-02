@@ -214,12 +214,14 @@ True
 
 ```shell
 
+>>> inspect.ismodule(str)
+False
 >>> inspect.isclass(str)
+True
+>>> inspect.ismodule(string)
 True
 >>> inspect.isclass(string)
 False
->>> inspect.ismodule(string)
-True
 >>> inspect.ismethod(string.capwords)
 False
 >>> inspect.isfunction(string.capwords)

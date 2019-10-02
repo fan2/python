@@ -282,6 +282,15 @@ CLASSES
 
 > [How to Check if a List, Tuple or Dictionary is Empty in Python](https://www.pythoncentral.io/how-to-check-if-a-list-tuple-or-dictionary-is-empty-in-python/)  
 
+```
+>>> str.__module__
+'builtins'
+
+>>> import inspect
+>>> inspect.getmodule(str)
+<module 'builtins' (built-in)>
+```
+
 ### [Text Sequence Type — str](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str)
 
 > Textual data in Python is handled with **str** objects.

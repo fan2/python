@@ -4,9 +4,10 @@
 
 [Glossary](https://docs.python.org/3/glossary.html)  
 
-[The Python Language Reference](https://docs.python.org/3/reference/index.html)  
-[The Python Standard Library](https://docs.python.org/3/library/index.html)  
-[The Python Tutorial](https://docs.python.org/3.6/tutorial/)  
+[Language Reference](https://docs.python.org/3/reference/index.html)  
+[Library Reference](https://docs.python.org/3/library/index.html)  
+[Tutorial](https://docs.python.org/3.6/tutorial/)  
+[Python HOWTOs](https://docs.python.org/3/howto/index.html)  
 
 [Python Developer’s Guide](https://devguide.python.org/)  
 
