@@ -11,8 +11,13 @@ Help on built-in function print in module builtins:
 
 print(...)
     print(value, ..., sep=' ', end='\n', file=sys.stdout, flush=False)
-    
+
     Prints the values to a stream, or to sys.stdout by default.
+    Optional keyword arguments:
+    file:  a file-like object (stream); defaults to the current sys.stdout.
+    sep:   string inserted between values, default a space.
+    end:   string appended after the last value, default a newline.
+    flush: whether to forcibly flush the stream.
 ```
 
 Python3 已经不支持 print 的非函数格式了，必须使用 `print()` 函数调用格式。
@@ -34,6 +39,68 @@ SyntaxError: Missing parentheses in call to 'print'. Did you mean print('hello,w
 对很多应用程序来说，使用模块 logging 来写入日志比使用 print 更合适。
 
 > 相关模块参考：syslog, logging。
+
+## sep & end
+
+### sep
+
+print 一行打印多个变量（逗号分隔），默认会以空格（`sep=' '`）分隔：
+
+```
+>>> year=2019
+>>> month=10
+>>> day=1
+>>> print(year,month,day)
+2019 10 1
+```
+
+可以指定 sep 参数，定制行内分隔（连接）符：
+
+```
+>>> print(year,month,day,sep='')
+2019101
+>>> print(year,month,day,sep='-')
+2019-10-1
+```
+
+另外一个例子：print 打印日志起始行 tuple，两行之间插了一个空格：
+
+```
+mbr_start_line = '2019-09-22 21:41:59.416 Debug|1031|137920|:96|IMPDT_MBR_Engine||start: role = 1\n'
+mbr_stop_line = '2019-09-22 21:43:59.947 Debug|1031|672495|:125|IMPDT_MBR_Engine||stop: reset role from 1\n'
+print(mbr_start_line, mbr_stop_line)
+```
+
+```
+2019-09-22 21:41:59.416 Debug|1031|137920|:96|IMPDT_MBR_Engine||start: role = 1
+ 2019-09-22 21:43:59.947 Debug|1031|672495|:125|IMPDT_MBR_Engine||stop: reset role from 1
+```
+
+也可以指定 sep 去掉空格：`print(mbr_start_line, mbr_stop_line,sep='')`
+
+### end
+
+```
+mbr_start_line = '2019-09-22 21:41:59.416 Debug|1031|137920|:96|IMPDT_MBR_Engine||start: role = 1\n'
+mbr_stop_line = '2019-09-22 21:43:59.947 Debug|1031|672495|:125|IMPDT_MBR_Engine||stop: reset role from 1\n'
+#print(mbr_start_line),print(mbr_stop_line)
+mbr_border_lines = (mbr_start_line, mbr_stop_line) # make tuple
+for line in mbr_border_lines:
+    print(line,end='') #print(line)
+```
+
+打印结果为：
+
+```
+2019-09-22 21:41:59.416 Debug|1031|137920|:96|IMPDT_MBR_Engine||start: role = 1
+
+2019-09-22 21:43:59.947 Debug|1031|672495|:125|IMPDT_MBR_Engine||stop: reset role from 1
+
+```
+
+由于按文本读出的行末尾本身就有换行符，因此在连续打印多行日志时，可考虑将 print 在尾部追加的换行符置空，或定制其他行间分隔符。
+
+> 将 `print(line)` 修改为 `print(line, end='')` 即可。
 
 ## expr
 
@@ -153,110 +220,12 @@ start,stop is 0, 30
 
 ```
 
-## str.format
+## format
 
-- reference - [2.4.3. Formatted string literals](https://docs.python.org/3.6/reference/lexical_analysis.html#f-strings) - New in version 3.6.  
-- tutorial - [7.1. Fancier Output Formatting](https://docs.python.org/3.6/tutorial/inputoutput.html#fancier-output-formatting)  
-- library - [str.format](https://docs.python.org/3/library/stdtypes.html#str.format)  
-- library - [**6.1.3. Format String Syntax**](https://docs.python.org/3/library/string.html#formatstrings)  
+可参考 builtins.format 和 str.format 函数，输入 `help('FORMATTING')` 可查看字符串格式化相关议题。
 
-The [string](https://docs.python.org/3.6/library/string.html#module-string) module contains a [Template](https://docs.python.org/3.6/library/string.html#string.Template) class which offers yet another way to **substitute** values into strings.
-
-函数原型：str.**format**(\**args*, \*\**kwargs*)
-
-```
-Perform a string formatting operation. The string on which this method is called can contain literal text or replacement fields delimited by braces {}. Each replacement field contains either the numeric index of a positional argument, or the name of a keyword argument.
-```
-
-`format()` 函数把字符串当成一个模板，通过传入的参数进行格式化，并使用大括号 `{}` 作为特殊字符代替 % 占位格式符。
-
-### positional argument
-
-大括号中可指定参数索引（the numeric index of a positional argument）。  
-从 Python 3.1 开始，占位序号也可以省略，`{} {}` 自动编号为 `{0} {1}`。  
-
-Accessing arguments by position:
-
-```shell
->>> print('{0} {1}'.format('hello','world'))
-hello world
->>> print('{} {}'.format('hello','world'))
-hello world
->>> print('{0} {1} {0}'.format('hello','world'))
-hello world hello
-```
-
-### keyword argument
-
-大括号中也可指定占位替换变量（the name of a keyword argument）。  
-
-Accessing arguments by name:
-
-```shell
->>> print('i love {you}'.format(you='python'))
-i love python
->>>
->>> 'Coordinates: {latitude}, {longitude}'.format(latitude='37.24N', longitude='-115.81W')
-'Coordinates: 37.24N, -115.81W'
->>> 
->>> coord = {'latitude': '37.24N', 'longitude': '-115.81W'}
->>> 'Coordinates: {latitude}, {longitude}'.format(**coord)
-'Coordinates: 37.24N, -115.81W'
-```
-
-以下示例利用三引号跨行定义一个 HTML 模板：
-
-```shell
->>> template='''<html>
-... <head><title>{title}</title></head>
-... <body>
-... <h1>{title}</h1>
-... <p>{text}</p>
-... </body>'''
-
->>> template
-'<html>\n<head><title>{title}</title></head>\n<body>\n<h1>{title}</h1>\n<p>{text}</p>\n</body>'
-
->>> print(template)
-<html>
-<head><title>{title}</title></head>
-<body>
-<h1>{title}</h1>
-<p>{text}</p>
-</body>
-```
-
-通过 format 传参替换占位变量对模板进行实例化：
-
-```shell
->>> print(template.format(title='My Home Page', text='Welcome to my home page!'))
-<html>
-... <head><title>My Home Page</title></head>
-... <body>
-... <h1>My Home Page</h1>
-... <p>Welcome to my home page!</p>
-... </body>
-```
-
-Python 3.2 开始还提供了 str.**format_map()** 方法，支持传入字典作为参数键值对对模板进行实例化：
-
-```shell
->>> data = {'title': 'My Home Page', 'text': 'Welcome to my home page!'}
->>> print(template.format_map(data))
-<html>
-<head><title>My Home Page</title></head>
-<body>
-<h1>My Home Page</h1>
-<p>Welcome to my home page!</p>
-</body>
-```
-
-位置占位和关键字占位可混合使用：
-
-```shell
->>> print('The story of {0}, {1}, and {other}.'.format('Bill', 'Manfred', other='Georg'))
-The story of Bill, Manfred, and Georg.
-```
+[Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax)  
+[Format Specification Mini-Language](https://docs.python.org/3/library/string.html#formatspec)  
 
 ### format specifier
 
@@ -370,30 +339,4 @@ Dcab       ==>       7678
 >>> total = 22
 >>> 'Correct answers: {:.2%}'.format(points/total)
 'Correct answers: 86.36%'
-```
-
-## string.Template
-
-The [string](https://docs.python.org/3/library/string.html#module-string) module provides a [Template](https://docs.python.org/3/library/string.html#string.Template) class that implements these rules. The methods of [Template](https://docs.python.org/3/library/string.html#string.Template) are:
-
-*class* string.**Template**(*template*)
-
-> The constructor takes a single argument which is the template string.
-
-```shell
->>> from string import Template
->>> s = Template('$who likes $what')
->>> s.substitute(who='tim', what='kung pao')
-'tim likes kung pao'
-```
-
-[TDW](http://code.tencent.com/tdw.html)（[腾讯的分布式数据仓库](https://blog.csdn.net/johnny_lee/article/details/26673829/)）  [HIVE SQL](http://data.qq.com/article?id=819) 使用了 python 作为流程控制语言，以下摘自某段格式化查询脚本：
-
-```python
-# 模板
-sql_query_t = 'SELECT * FROM ${db}::${tbl} WHERE time=${date}'
-# 格式化替换参数
-sql_query = string.Template(sql_query_t).substitute(db='myDB', tbl='myTable', date='20180108')
-# 执行 sql
-tdwqe.execute(sql_query)
 ```
