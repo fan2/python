@@ -11,6 +11,16 @@
 2
 ```
 
+可以将其转换为 tuple 或 list 打印出其值：
+
+```
+>>> tuple(r)
+(1, 3, 5, 7, 9)
+
+>>> list(r)
+[1, 3, 5, 7, 9]
+```
+
 ## access through subscripted index
 
 range 支持下标索引访问：
