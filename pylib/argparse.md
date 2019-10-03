@@ -53,9 +53,10 @@ formatter_class=argparse.RawTextHelpFormatter
 ### add_argument()
 
 ArgumentParser.add_argument 方法定义应该如何解析一个命令行参数。
+
 下面每个参数有它们自己详细的描述，简单地讲它们是：
 
-- name or flags - 选项字符串的名字或者列表，例如 foo 或者-f, --foo。  
+- name or flags - 选项字符串的名字或者列表，例如 `foo` 或者 `-f`, `--foo`。  
 - action - 在命令行遇到该参数时采取的基本动作类型。  
 - nargs - 应该读取的命令行参数数目。  
 - const - 某些action和nargs选项要求的常数值。  
@@ -65,9 +66,66 @@ ArgumentParser.add_argument 方法定义应该如何解析一个命令行参数�
 - required - 该命令行选项是否可以省略（只针对可选参数）。  
 - help - 参数的简短描述。  
 - metavar - 参数在帮助信息中的名字。  
-- dest - 给parse_args()返回的对象要添加的属性名称。  
+- dest - 给 parse_args() 返回的对象要添加的属性名称。  
 
-#### filepath
+#### Name or Flags
+
+Setting the Name or Flags of the Arguments
+
+The first arguments passed to `add_argument()` must therefore be either a *series* of flags, or a *simple* argument name. 
+
+For example, an optional argument could be created like:
+
+```
+parser.add_argument('-f', '--foo')
+```
+
+while a positional argument could be created like:
+
+```
+parser.add_argument('bar')
+```
+
+---
+
+There are basically two different types of arguments that you can add to your command line interface:
+
+1. Positional arguments  
+2. Optional arguments  
+
+**Positional** arguments are the ones your command needs to operate. -- `required=True`
+
+In the previous example, the argument `path` was a positional argument, and our program couldn’t work without it.  
+They are called **positional** because their position defines their function.
+
+For example, consider the cp command on Linux (or the copy command in Windows). 
+Here’s the standard usage:
+
+```
+faner@THOMASFAN-MB1 (master)✗ [64] % cp -h
+cp: illegal option -- h
+usage: cp [-R [-H | -L | -P]] [-fi | -n] [-apvXc] source_file target_file
+       cp [-R [-H | -L | -P]] [-fi | -n] [-apvXc] source_file ... target_directory
+```
+
+The first positional argument after the `cp` command is the *source* of the file you’re going to copy.  
+The second one is the *destination* where you want to copy it.  
+
+**Optional** arguments are not mandatory, and when they are used they can modify the behavior of the command at runtime.  
+In the `cp` example, an optional argument is, for example, the `-R` flag, which makes the command copy directories recursively.
+
+Syntactically, the difference between positional and optional arguments is that optional arguments start with `-` or `--`, while positional arguments don’t.
+
+To add an optional argument, you just need to call `.add_argument()` again and name the new argument with a starting `-`.
+
+test_argparse.py 中的 `logpath` 为位置参数； `-p/--platform` 为可选参数。
+
+```Python
+    argparser.add_argument('logpath', type=str, help='path of log file')
+    argparser.add_argument('-p', '--platform', type=int)
+```
+
+#### argparse.FileType
 
 [Python: Loading pathlib Paths with argparse](https://dusty.phillips.codes/2018/08/13/python-loading-pathlib-paths-with-argparse/)
 
@@ -123,46 +181,39 @@ else:
 
 ## demo
 
-```Python
-import argparse
+`test_argparse.py` 定义了以下4个参数：
 
-# main entry
-if __name__ == '__main__':
-    # print('This program is being run by itself')
-    # if len(sys.argv) < 2:
-    #     print('please input args as filepath')
-    # else:
-    #     argv1 = sys.argv[1]
-    #     if os.path.isfile(argv1): #检查输入的参数为文件路径
-    #         main(argv1)
-    #     else:
-    #         print('please input valid filepath')
-    argparser = argparse.ArgumentParser(description='MBR_Client log analyzer',
-                                        formatter_class=argparse.RawTextHelpFormatter,
-                                        epilog='fan@qq.com')
-    argparser.version = '1.0'
-    argparser.add_argument('-V', '--version', action='version')
-    argparser.add_argument('-p', '--platform', metavar='PLATFORM', type=int,
-                           choices=[0, 1, 2], required=True,
-                           help='0 for ios,\n'
-                                '1 for android,\n'
-                                '2 for windows.')
-    argparser.add_argument('-f', '--filepath',
-                           type=str, dest='logpath',
-                           required=True, help='path of log file')
-    argparser.add_argument('-v', '--verbose', dest='debug',
-                           action='store_true', help='print debug verbose')
-    args_namespace = argparser.parse_args()
-    # print(vars(args_namespace))
-    if not os.path.isfile(args_namespace.logpath):
-        print('please input valid logpath')
-        pass
-    else:
-        main(args_namespace.platform,
-             args_namespace.logpath,
-             args_namespace.debug)
+1. `logpath`: 必填位置参数；  
+2. `-V`：查看该脚本版本号；  
+3. `-p/--platform`：指定日志平台，可选枚举值为 {0,1,2}；  
+4. `-v/--verbose`：开启调试开关，打印详细调试信息。
 
-else:
-    # print('I am being imported from another module')
-    pass
+```
+ $ python3 py/test_argparse.py
+usage: test_argparse.py [-h] [-V] [-p {0,1,2}] [-v] logpath
+test_argparse.py: error: the following arguments are required: logpath
+```
+
+`-h` 查看自动生成的帮助信息：
+
+```
+ $ python3 py/test_argparse.py -h
+usage: test_argparse.py [-h] [-V] [-p {0,1,2}] [-v] logpath
+
+MBR_Client log analyzer
+
+positional arguments:
+  logpath               path of log file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -V, --version         show program's version number and exit
+  -p {0,1,2}, --platform {0,1,2}
+                        0 for ios,
+                        1 for android,
+                        2 for windows.
+                        > guess from first line if miss.
+  -v, --verbose         print debug verbose
+
+fan@qq.com
 ```

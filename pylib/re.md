@@ -152,7 +152,7 @@ import enum
 import re
 
 
-class PLATFROM(enum.Enum):
+class PLATFORM(enum.Enum):
     ios = 0
     android = 1
     windows = 2
@@ -163,11 +163,11 @@ def try_to_guess_platform(log_line: str) -> int:
     roa = re.compile(r'\d{2}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\|')
     row = re.compile(r'"\d+","\d","\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}\:\d{3}",')
     if (roi.match(log_line)):
-        return PLATFROM.ios.value
+        return PLATFORM.ios.value
     if (roa.match(log_line)):
-        return PLATFROM.android.value
+        return PLATFORM.android.value
     if (row.match(log_line)):
-        return PLATFROM.windows.value
+        return PLATFORM.windows.value
     return -1
 ```
 
