@@ -172,3 +172,121 @@ for line in fp:
 
 文件指针已经偏移到了第11行，如果再继续执行一遍以上代码，将会打印第11-20行。  
 如果想重新打印第10行，则需要执行 `fp.seek(0, io.SEEK_SET)` 将游标移到开始位置。  
+
+## codecs
+
+### BOM
+
+可以用 hexdump 查看 UTF-8 with BOM（byte-order mark）开头的3个字节是 `0xEF 0xBB 0xBF`。
+
+[Encoding declarations](https://docs.python.org/3/reference/lexical_analysis.html#encoding-declarations):
+
+If no encoding declaration is found, the default encoding is UTF-8. In addition, if the first bytes of the file are the UTF-8 byte-order mark (`b'\xef\xbb\xbf'`), the declared file encoding is UTF-8 (this is supported, among others, by Microsoft’s **notepad**).
+
+[Reading Unicode file data with BOM chars in Python](https://stackoverflow.com/questions/13590749/reading-unicode-file-data-with-bom-chars-in-python)  
+
+Standard UTF-8 without BOM:
+
+```
+>>> b'hello'.decode('utf-8')
+'hello'
+>>> b'hello'.decode('utf-8-sig')
+'hello'
+```
+
+BOM encoded UTF-8:
+
+```
+>>> b'\xef\xbb\xbfhello'.decode('utf-8')
+'\ufeffhello'
+>>> b'\xef\xbb\xbfhello'.decode('utf-8-sig')
+'hello'
+```
+
+自动检测文件编码：
+
+```Python
+import codecs
+
+def detect_by_bom(path,default):
+    with open(path, 'rb') as f:
+        raw = f.read(4)    #will read less if the file is smaller
+    for enc,boms in \
+            ('utf-8-sig',(codecs.BOM_UTF8,)),\
+            ('utf-16',(codecs.BOM_UTF16_LE,codecs.BOM_UTF16_BE)),\
+            ('utf-32',(codecs.BOM_UTF32_LE,codecs.BOM_UTF32_BE)):
+        if any(raw.startswith(bom) for bom in boms): return enc
+    return default
+```
+
+codecs 打印 BOM 头：
+
+```
+>>> codecs.BOM_UTF8
+b'\xef\xbb\xbf'
+>>> codecs.BOM_UTF16_LE
+b'\xff\xfe'
+>>> codecs.BOM_UTF16_BE
+b'\xfe\xff'
+>>> codecs.BOM_UTF32_LE
+b'\xff\xfe\x00\x00'
+>>> codecs.BOM_UTF32_BE
+b'\x00\x00\xfe\xff'
+```
+
+---
+
+[Convert UTF-8 with BOM to UTF-8 with no BOM in Python](https://stackoverflow.com/questions/8898294/convert-utf-8-with-bom-to-utf-8-with-no-bom-in-python)  
+
+Sublime Text: File - Save with Encoding
+
+```Python
+import os
+
+# absfilepath1, add BOM
+s1 = open(absfilepath1, mode='r', encoding='utf-8').read()
+(filepath1, filename1) = os.path.split(absfilepath1)
+(relfilename1, fileext1) = os.path.splitext(filename1)
+bom_filename = relfilename1+'_bom'+fileext1
+bom_filepath = os.path.join(filepath1, bom_filename)
+open(bom_filepath, mode='w', encoding='utf-8-sig').write(s1)
+
+#rewrite without BOM
+s = open(bom_file, mode='r', encoding='utf-8-sig').read()
+open(bom_file, mode='w', encoding='utf-8').write(s)
+
+# absfilepath2, remove BOM
+s2 = open(absfilepath2, mode='r', encoding='utf-8-sig').read()
+(filepath2, filename2) = os.path.split(absfilepath2)
+(relfilename2, fileext2) = os.path.splitext(filename2)
+nobom_filename = relfilename2+'_nobom'+fileext2
+nobom_filepath = os.path.join(filepath2, nobom_filename)
+open(nobom_filepath, mode='w', encoding='utf-8').write(s2)
+```
+
+### UnicodeDecodeError
+
+```
+>>> fp1 = open('2019-09-23-06.log')
+>>> lines1 = fp1.readlines()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/local/Cellar/python/3.7.4_1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb5 in position 7312: invalid start byte
+
+>>> fp2 = open('2019-10-01-12.log')
+>>> lines2 = fp2.readlines()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/local/Cellar/python/3.7.4_1/Frameworks/Python.framework/Versions/3.7/lib/python3.7/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x8d in position 6873: invalid start byte
+```
+
+[UnicodeDecodeError: 'utf-8' codec can't decode byte](https://stackoverflow.com/questions/19699367/unicodedecodeerror-utf-8-codec-cant-decode-byte)  
+[UnicodeDecodeError: 'utf8' codec can't decode byte 0x80 in position 3131: invalid start byte](https://stackoverflow.com/questions/38518023/unicodedecodeerror-utf8-codec-cant-decode-byte-0x80-in-position-3131-invali)  
+
+The encoding was "**ISO-8859-1**", so replacing `open("u.item", encoding="utf-8")` with `open('u.item', encoding = "ISO-8859-1")` will solve the problem.
+
+> The trick is that `ISO-8859-1` or `Latin_1` is 8 bit character sets, thus all garbage has a valid value. Perhaps not useable, but if you want to ignore!
