@@ -62,7 +62,7 @@ function.
 
 ### path utilities
 
-- pathlib  
+- [pathlib](https://docs.python.org/3/library/pathlib.html)  
 - nturl2path/macurl2path  
 
 	> Macintosh-specific module for conversion between pathnames and URLs.  

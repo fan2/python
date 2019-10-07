@@ -114,6 +114,80 @@ and opendir), and leave all pathname manipulation to os.path
 (e.g., split and join).
 ```
 
+### [os.path](https://docs.python.org/3.7/library/os.path.html)
+
+Source code: `Lib/posixpath.py` (for POSIX), `Lib/ntpath.py` (for Windows NT), and `Lib/macpath.py` (for Macintosh)
+
+macOS Python REPL 中输入 `help(os.path)` 显示  posixpath：
+
+```
+Help on module posixpath:
+
+NAME
+    posixpath - Common operations on Posix pathnames.
+```
+
+[os.path Examples](https://www.dotnetperls.com/path-python)  
+
+[python文件和目录操作方法大全（含实例）](https://www.cnblogs.com/kaid/p/9252084.html)  
+
+#### property
+
+判断给定字符串是否为目录或文件：
+
+```
+os.path.isdir(path)
+    Return True if path is an existing directory. 
+    This follows symbolic links, so both islink() and isdir() can be true for the same path.
+os.path.isfile(path)
+    Return True if path is an existing regular file. 
+    This follows symbolic links, so both islink() and isfile() can be true for the same path.
+```
+
+判断给定字符串（目录或文件）是否存在：
+
+```
+os.path.exists(path)
+    Return True if path refers to an existing path or an open file descriptor. Returns False for broken symbolic links. On some platforms, this function may return False if permission is not granted to execute os.stat() on the requested file, even if the path physically exists.
+```
+
+获取指定路径下文件（目录？）的文件大小：
+
+```
+os.path.getsize(path)
+    Return the size, in bytes, of path. Raise OSError if the file does not exist or is inaccessible.
+```
+
+#### split
+
+```
+os.path.split(path)
+    Split the pathname path into a pair, (head, tail) where tail is the last pathname component and head is everything leading up to that. 
+    The tail part will never contain a slash; if path ends in a slash, tail will be empty.
+os.path.splitdrive(path)
+    Split the pathname path into a pair (drive, tail) where drive is either a mount point or the empty string. 
+    On systems which do not use drive specifications, drive will always be the empty string. In all cases, drive + tail will be the same as path.
+os.path.splitext(path)
+    Split the pathname path into a pair (root, ext) such that root + ext == path, and ext is empty or begins with a period and contains at most one period. Leading periods on the basename are ignored; splitext('.cshrc') returns ('.cshrc', '').
+```
+
+[How to split a dos path into its components in Python](https://stackoverflow.com/questions/3167154/how-to-split-a-dos-path-into-its-components-in-python)  
+[Splitting a Path into All of Its Parts](https://www.oreilly.com/library/view/python-cookbook/0596001673/ch04s16.html)  
+[Python | os.path.splitext() method](https://www.geeksforgeeks.org/python-os-path-splitext-method/)  
+
+#### join
+
+将多个部分以 `os.sep` 拼接相连。
+
+```
+os.path.join(path, *paths)
+    Join one or more path components intelligently. The return value is the concatenation of path and any members of *paths with exactly one directory separator (os.sep) following each non-empty part except the last, meaning that the result will only end in a separator if the last part is empty. If a component is an absolute path, all previous components are thrown away and joining continues from the absolute path component.
+```
+
+[Build the full path filename in Python](https://stackoverflow.com/questions/7132861/build-the-full-path-filename-in-python)  
+[Python os.path.join() on a list](https://stackoverflow.com/questions/14826888/python-os-path-join-on-a-list)  
+[Python os.path.join on Windows](https://stackoverflow.com/questions/2422798/python-os-path-join-on-windows)  
+
 ### test
 
 ```shell

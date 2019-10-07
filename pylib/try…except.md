@@ -158,3 +158,20 @@ finally:
 [Errno 2] No such file or directory: 'nosuchfile.md'
 finally
 ```
+
+### [UnicodeDecodeError](https://stackoverflow.com/questions/8898294/convert-utf-8-with-bom-to-utf-8-with-no-bom-in-python)
+
+As for guessing the encoding, then you can just loop through the encoding from most to least specific:
+
+```
+def decode(s):
+    for encoding in "utf-8-sig", "utf-16":
+        try:
+            return s.decode(encoding)
+        except UnicodeDecodeError:
+            continue
+    return s.decode("ISO-8859-1") # fallback, will always work
+```
+
+An `UTF-16` encoded file wont decode as `UTF-8`, so we try with `UTF-8` first. If that fails, then we try with `UTF-16`. 
+Finally, we use `ISO-8859-1` — this will always work since all 256 bytes are legal values in `ISO-8859-1`.
