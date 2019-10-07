@@ -239,6 +239,27 @@ alias python="/usr/local/Cellar/python3/3.6.3/Frameworks/Python.framework/Versio
 alias python="python3.6"
 ```
 
+## IDLE
+
+终端输入 idle 再 tab，有以下选项：
+
+```
+~ ᐅ idle
+idle     idle2.7  idle3    idle3.7
+```
+
+输入 idle3 或 idle3.7 将会启动 IDLE 3.app（窗口标题为 Python 3.7.4 Shell）：
+
+- `/usr/local/Cellar/python/3.7.4_1/IDLE\ 3.app`  
+
+在 REPL 运行 matplotlib 程序，将会打开 Python.app 绘制图形。
+
+- `/usr/local/Cellar/python/3.7.4_1/Frameworks/Python.framework/Versions/3.7/Resources/Python.app`）
+
+除此之外，macOS 下安装的 Python 默认也自带了一个 Python Launcher 3.app：
+
+`/usr/local/Cellar/python/3.7.4_1/Python\ Launcher\ 3.app`  
+
 ## 参考
 
 > [macOS 上如何切换默认的 Python 版本？](https://www.zhihu.com/question/30941329)  

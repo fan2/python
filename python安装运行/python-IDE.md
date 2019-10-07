@@ -1,4 +1,5 @@
 # IDE
+
 [Comparison of integrated development environments § Python](https://en.wikipedia.org/wiki/Comparison_of_integrated_development_environments#Python)
 
 raspbian 默认安装了 [IDLE](https://en.wikipedia.org/wiki/IDLE_(Python))、[Geany](https://en.wikipedia.org/wiki/Geany) 和 [Thonny](https://en.wikipedia.org/wiki/Thonny) 等 python 集成编译工具。
@@ -6,6 +7,7 @@ raspbian 默认安装了 [IDLE](https://en.wikipedia.org/wiki/IDLE_(Python))、[
 ![Programming-on-raspbian](images/Programming-on-raspbian.png)
 
 ## [IDLE](https://docs.python.org/3/library/idle.html)
+
 **IDLE** (**I**ntegrated **D**eveLopment **E**nvironment or **I**ntegrated **D**evelopment and **L**earning **E**nvironment) is an integrated development environment for Python, which has been bundled with the default implementation of the language since 1.5.2b1.  
 It is packaged as an optional part of the Python packaging with many Linux distributions.  
 
@@ -43,6 +45,7 @@ DESCRIPTION
 ```
 
 ## [thonny](http://thonny.org)
+
 Python IDE for beginners：[thonny](http://thonny.org)  
 
 在终端输入 `pip3 show thonny` 可查看 thonny 信息：
@@ -61,6 +64,7 @@ Requires:
 ```
 
 ## [pycharm](https://www.jetbrains.com/pycharm/)
+
 [download](https://www.jetbrains.com/pycharm/download/) Python IDE for Professional Developers
 
 [PyCharm](https://zh.wikipedia.org/wiki/PyCharm) 是一个用于计算机编程的集成开发环境（IDE），主要用于Python语言开发，由捷克公司JetBrains开发。  
@@ -73,6 +77,7 @@ PyCharm一个跨平台开发环境，拥有Windows, macOS 和Linux版本。社�
 > [How To Install The PyCharm Python IDE In Linux](https://www.lifewire.com/how-to-install-the-pycharm-python-ide-in-linux-4091033)  
 
 ## Sublime Text 3
+
 > [怎么用sublime text 3搭建python 的ide？](https://www.zhihu.com/question/22904994)  
 > [sublime text 3 打造成python IDE 环境](http://www.jianshu.com/p/a401a0bfddf7)  
 > [将 Sublime 3 打造成 Python/Django IDE](http://www.weiguda.com/blog/48/)  
@@ -85,17 +90,21 @@ PyCharm一个跨平台开发环境，拥有Windows, macOS 和Linux版本。社�
 [Sublime Text 2 console input](https://stackoverflow.com/questions/10604409/sublime-text-2-console-input)  
 
 ### Anaconda
+
 Anaconda 是一个终极 Python 插件，它为 ST3 增添了多项 IDE 类似的功能特性。
 
 Anaconda 是目前 Sublime 3 中最好的 Python 自动补全和语法提示插件，并且提供了"跳转到定义"、"查找使用"、"显示文档"、"自动重命名" 等 IDE 中插件的功能。
 
 ### requirementstxt
+
 [Requirementstxt](https://sublime.wbond.net/packages/requirementstxt) provides autocompletion and syntax highlight-lighting as well as a nice version management system for your *requirements.txt* files.
 
 ### Djaneiro
+
 Djaneiro 支持 Django 模版和关键字高亮以及许多实用的代码片(snippets)功能。其中的 snippets 绝对是省时神器。你可以通过很少几个关键字就能创建许多常见的 Django 代码块比如 templates，models，forms，以及 views。
 
 ### SublimeLinter
+
 SublimeLinter 是 ST3 的一个代码静态检查工具框架(linter)。
 
 这个插件本身来说并不包含任何的一个 linter，但是你可以通过在 Package Control 中输入 SublimeLinter-[linter_name] 的方式来安装一个 linter。
@@ -105,3 +114,8 @@ SublimeLinter 是 ST3 的一个代码静态检查工具框架(linter)。
 ### Jedi
 
 ### AutoPep8
+
+## refs
+
+[Windows 下有哪些比较好用的 Python IDE？](https://www.zhihu.com/question/19689474)  
+[13 Best IDE and editors for Python in 2019](https://www.dunebook.com/best-python-ide-windows-mac/)  
