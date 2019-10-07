@@ -176,6 +176,39 @@ builtins.bin  # binary string prefixed with “0b”
 builtins.oct  # octal string prefixed with “0o”  
 builtins.hex  # lowercase hexadecimal string prefixed with “0x”  
 
+[Python 数字系列-数字格式化输出](https://www.cnblogs.com/crawer-1/p/8241882.html)
+
+#### [Integer literals](https://docs.python.org/3/reference/lexical_analysis.html#integer-literals)
+
+Python 下的整形字面量可以 `_` 串联，类似千位分隔符([thousands separator](https://en.wikipedia.org/wiki/Decimal_mark))：
+
+```Python
+>>> 100_000_000
+100000000
+```
+
+311 的十六进制字面量写法为 0x137：
+
+```Python
+>>> hex(311)
+'0x137'
+>>> 0x137
+311
+```
+
+311 的二进制字面量写法为 0b100110111：
+
+```Python
+>>> bin(311)
+'0b100110111'
+>>> 0b100110111
+311
+>>> 0b_100110111
+311
+>>> 0b_1_0011_0111
+311
+```
+
 #### format()
 
 builtins.format # help('FORMATTING')  

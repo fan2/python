@@ -10,7 +10,46 @@
 1. `s=str()`: 构造一个空字符串对象。  
 2. `s=''`：定义空字符串字面量。  
 
-## definition
+## Literals
+
+参考 reference - [2.4. Literals](https://docs.python.org/3/reference/lexical_analysis.html#literals) - String and Bytes literals。
+
+One syntactic restriction not indicated by these productions is that whitespace is not allowed between the `stringprefix` or `bytesprefix` and the rest of the literal.
+
+String literals are described by the following lexical definitions:
+
+```
+stringliteral   ::=  [stringprefix](shortstring | longstring)
+stringprefix    ::=  "r" | "u" | "R" | "U" | "f" | "F"
+                     | "fr" | "Fr" | "fR" | "FR" | "rf" | "rF" | "Rf" | "RF"
+```
+
+Bytes literals are described by the following lexical definitions:
+
+```
+bytesliteral   ::=  bytesprefix(shortbytes | longbytes)
+bytesprefix    ::=  "b" | "B" | "br" | "Br" | "bR" | "BR" | "rb" | "rB" | "Rb" | "RB"
+```
+
+### 原始字符串
+
+Both string and bytes literals may optionally be prefixed with a letter `'r'` or `'R'`; such strings are called *raw* strings and treat backslashes as literal characters. As a result, in string literals, `'\U'` and `'\u'` escapes in raw strings are not treated specially.
+
+用前缀r表示原始字符串。原始字符串不会对反斜杠做特殊处理，而是让字符串包含的每个字符都保持原样。
+
+```shell
+>>> print(r'C:\nowhere')
+C:\nowhere
+```
+
+一个例外是，引号需要像通常那样进行转义，但这意味着用于执行转义的反斜杠也将包含在最终的字符串中。
+
+```shell
+>>> print(r'Let\'s go!')
+Let\'s go!
+```
+
+### str
 
 字符串有三种定义方式：
 
@@ -23,7 +62,7 @@
 其中单引号定义的字符串中可携带双引号；双引号定义的字符串中可携带单引号。  
 若想以跨行模式定义长字符串，则可考虑使用三引号，支持换行书写。  
 
-### 单引号
+#### 单引号
 
 单引号定义的字符串中可包含双引号：
 
@@ -54,7 +93,7 @@ SyntaxError: invalid syntax
 "Let's go!"
 ```
 
-### 双引号
+#### 双引号
 
 双引号定义的字符串中可包含单引号：
 
@@ -83,7 +122,7 @@ SyntaxError: invalid syntax
 '"Hello, world!" she said'
 ```
 
-### 三引号
+#### 三引号
 
 可使用三引号（三个单引号或三个双引号）来表示很长的字符串：
 
@@ -113,23 +152,73 @@ SyntaxError: invalid syntax
 Let's say "Hello, world!"
 ```
 
-### 原始字符串
+### [bytes](https://docs.python.org/3/library/stdtypes.html#bytes)
 
-用前缀r表示原始字符串。原始字符串不会对反斜杠做特殊处理，而是让字符串包含的每个字符都保持原样。
+Only ASCII characters are permitted in bytes literals (regardless of the declared source code encoding).  
+Any binary values over 127 must be entered into bytes literals using the appropriate escape sequence.
 
-```shell
->>> print(r'C:\nowhere')
-C:\nowhere
+Bytes literals are always prefixed with `'b'` or `'B'`; they produce an instance of the `bytes` type instead of the `str` type.  
+They may only contain ASCII characters; bytes with a numeric value of 128 or greater must be expressed with escapes.
+
+```
+>>> bs = b'ABC'
+>>> type(bs)
+<class 'bytes'>
+
+>>> bs
+b'ABC'
+>>> bs[0]
+65
+>>> bs[1]
+66
+>>> bs[2]
+67
 ```
 
-一个例外是，引号需要像通常那样进行转义，但这意味着用于执行转义的反斜杠也将包含在最终的字符串中。
+Since 2 hexadecimal digits correspond precisely to a single byte, hexadecimal numbers are a commonly used format for describing binary data. Accordingly, the bytes type has an additional class method to read data in that format:
 
-```shell
->>> print(r'Let\'s go!')
-Let\'s go!
+```
+classmethod fromhex(string)
+    This bytes class method returns a bytes object, decoding the given string object.  
+    The string must contain two hexadecimal digits per byte, with ASCII whitespace being ignored.
 ```
 
-参考 reference - [2.4. Literals](https://docs.python.org/3/reference/lexical_analysis.html#literals) 中的 **stringprefix**。
+```Python
+>>> dot = b'\x2E'
+>>> dot
+b'.'
+
+>>> bytes.fromhex('2Ef0 F1f2  ')
+b'.\xf0\xf1\xf2'
+```
+
+其中 ASCII 字符 `.` 的编码为 0x2E(46)：
+
+```
+>>> chr(0x2E)
+'.'
+>>> int('2E', 16)
+46
+>>> ord('.')
+46
+>>> hex(46)
+'0x2e'
+```
+
+A **reverse** conversion function exists to transform a bytes object into its hexadecimal representation.
+
+```
+hex()
+    Return a string object containing two hexadecimal digits for each byte in the instance.
+```
+
+```
+>>> b'\xf0\xf1\xf2'.hex()
+'f0f1f2'
+
+>>> bs.hex()
+'414243'
+```
 
 ## expressions
 
@@ -368,7 +457,26 @@ Python 3.2 开始还提供了 str.**format_map()** 方法，支持传入字典�
 </body>
 ```
 
-## string
+## [Formatted string literals](https://docs.python.org/3/reference/lexical_analysis.html#f-strings)
+
+A string literal with `'f'` or `'F'` in its prefix is a *formatted string literal*; see Formatted string literals.  
+The `'f'` may be combined with `'r'`, but not with `'b'` or `'u'`, therefore raw formatted strings are possible, but formatted bytes literals are not.
+
+```Python
+>>> year = 2019
+>>> f'year is {year!s}'
+'year is 2019'
+
+>>> number = 1024
+>>> f"{number:#0x}"
+'0x400'
+
+>>> today = datetime.datetime(year=2017, month=1, day=27)
+>>> f"{today:%B %d, %Y}"
+'January 27, 2017'
+```
+
+## [string](https://docs.python.org/3/library/string.html)
 
 模块 `string` 定义了一些字符类型集常量：
 
@@ -406,7 +514,21 @@ True
 
 ### Formatter
 
+Custom String Formatting
 
+The built-in string class provides the ability to do complex variable substitutions and value formatting via the [format()](https://docs.python.org/3/library/stdtypes.html#str.format) method described in [PEP 3101](https://www.python.org/dev/peps/pep-3101).  
+The Formatter class in the string module allows you to create and **customize** your own string formatting behaviors using the same implementation as the built-in `format()` method.
+
+```
+class string.Formatter
+The Formatter class has the following public methods:
+
+format(format_string, *args, **kwargs)
+    The primary API method. It takes a format string and an arbitrary set of positional and keyword arguments. It is just a wrapper that calls vformat().
+
+vformat(format_string, args, kwargs)
+    This function does the actual work of formatting. It is exposed as a separate function for cases where you want to pass in a predefined dictionary of arguments, rather than unpacking and repacking the dictionary as individual arguments using the *args and **kwargs syntax.
+```
 
 ### Template
 
