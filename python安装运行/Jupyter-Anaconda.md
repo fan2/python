@@ -1,3 +1,5 @@
+[Getting Started with Python in VS Code](https://code.visualstudio.com/docs/python/python-tutorial)  
+[Using Python environments in VS Code](https://code.visualstudio.com/docs/python/environments)  
 
 [Visual Studio Code 在 python 中的使用](https://www.jianshu.com/p/0743ad5774dc)  
 
@@ -72,3 +74,19 @@ Visualize Toolset:
 
 [那些使用VSCode写Python踩过的坑(Anaconda配置)](https://www.cnblogs.com/chaoswr/p/10148142.html)  
 [vscode设置python3.7调试环境（已更新）](https://www.cnblogs.com/dotnetcrazy/p/9095793.html)  
+
+#### macOS
+
+[MacOS下如何配置Vscode+Anaconda呢？](https://www.zhihu.com/question/265853927)
+
+修改".vscode/setting.json"文件。找到如下两个参数 "python.autoComplete.extraPaths" & "python.pythonPath"，把“site-packages” & “bin/python”的正确路径配置一下。
+
+输入：
+
+```
+"python.autoComplete.extraPaths": ["/home/**/anaconda3/lib/python3.6/site-packages"],
+"python.pythonPath": "/home/**/anaconda3/bin/python",
+```
+
+[mac vscode配置 anaconda 虚拟环境](https://blog.csdn.net/liubingjun07/article/details/88833885)  
+[Mac+Anaconda+PyCharm+VSCode环境搭建](https://blog.csdn.net/qq_28863845/article/details/82589857)  

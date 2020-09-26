@@ -1,4 +1,3 @@
-[Python模块和包](https://blog.csdn.net/u011655519/article/details/39908279)
 
 [The Python Language Reference](https://docs.python.org/3/reference/index.html) - [The import system](https://docs.python.org/3/reference/import.html#importsystem)  
 [The Python Tutorial](https://docs.python.org/3.6/tutorial/) - [Modules](https://docs.python.org/3.6/tutorial/modules.html)  

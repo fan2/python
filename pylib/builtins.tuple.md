@@ -20,6 +20,8 @@ TypeError: 'tuple' object does not support item assignment
 
 ## empty tuple
 
+元组看起来犹如列表，但使用圆括号而不是方括号来标识。
+
 1. `t=tuple()`: 构造一个空元组对象。  
 2. `t=()`：小括号定义空元组。  
 

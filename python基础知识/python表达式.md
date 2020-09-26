@@ -200,7 +200,10 @@ tutorial - [9.8. Iterators](https://docs.python.org/3.6/tutorial/classes.html#it
 
 ### iter, next
 
-任何可迭代（iterable）的对象都会定义 `__iter__` 和 `__next__` 方法。
+迭代（iterate）意味着重复多次。
+
+任何可迭代（iterable）的对象都会定义 `__iter__` 和 `__next__` 方法，即实现迭代器协议。  
+更正规的定义是：实现了方法 `__iter__` 的对象是可迭代的，而实现了方法 `__next__` 的对象是迭代器。  
 
 内置的 `iter()` 函数返回迭代器（iterator），`next()` 函数则解引用返回迭代器对应的元素。
 
@@ -231,6 +234,23 @@ next(...)
 
 以下代码片段示例了列表迭代器的用法：
 
+```
+>>> it = iter(list1[0:3])
+>>> next(it)
+1
+>>> next(it)
+2
+>>> next(it)
+3
+>>> next(it)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
+```
+
+如果迭代器没有可供返回的值，会引发 `StopIteration` 异常。
+也可基于此异常判断迭代结束：
+
 ```shell
 >>> # 取迭代器
 >>> it=iter(list1)
@@ -251,6 +271,28 @@ next(...)
 ```
 
 **注意**：字典（dict）的迭代器是针对键值进行的一维迭代。
+
+可基于 iter-next 迭代遍历上述 enumerate 结果。
+
+```
+>>> enum = enumerate(list1)
+>>> # 取迭代器
+... it=iter(enum)
+>>> while True:
+...     try:
+...         e = next(it) # 解引用元素
+...     except StopIteration: # 迭代完毕
+...         break
+...     print(e)
+... 
+(0, 1)
+(1, 2)
+(2, 3)
+(3, 4)
+(4, 5)
+(5, 6)
+(6, 7)
+```
 
 ### enumerate()
 
@@ -289,7 +331,37 @@ class enumerate(object)
 
 ```
 
-`builtins.enumerate()` 函数返回 enumerate 实例，每个元素为一个 (index, value) 二元组。
+`builtins.enumerate()` 函数返回 enumerate 对象实例，每个元素为一个 (index, value) 二元组。
+
+```shell
+>>> for e in enumerate(list1):
+...     print(e)
+...
+(0, 1)
+(1, 2)
+(2, 3)
+(3, 4)
+(4, 5)
+(5, 6)
+(6, 7)
+```
+
+也可将 for 循环拆解为索引和值对。
+
+```
+>>> for index,value in enumerate(list1):
+...     print('e[{0}] = {1}'.format(index, value))
+...
+e[0] = 1
+e[1] = 2
+e[2] = 3
+e[3] = 4
+e[4] = 5
+e[5] = 6
+e[6] = 7
+```
+
+对列表调用 `enumerate()` 可以获取每个元素的索引及其值，也可基于返回的枚举对象构造元组或列表。
 
 ```shell
 >>> type(enumerate(list1))
@@ -300,24 +372,6 @@ class enumerate(object)
 >>>
 >>> list(enumerate(list1))  # pair(index, value)
 [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 7)]
->>>
->>> enum = enumerate(list1)
->>> # 取迭代器
-... it=iter(enum)
->>> while True:
-...     try:
-...         e = next(it) # 解引用元素
-...     except StopIteration: # 迭代完毕
-...         break
-...     print(e)
-... 
-(0, 1)
-(1, 2)
-(2, 3)
-(3, 4)
-(4, 5)
-(5, 6)
-(6, 7)
 ```
 
 **注意**：字典（dict）的迭代器是针对键值进行的一维迭代，二元组的第2个元素为键而非值！
@@ -328,7 +382,7 @@ reference - [8.3. The for statement](https://docs.python.org/3/reference/compoun
 
 - `for e in s`: enumerate elements  in s.  
 
-The for statement is used to iterate over the elements of a sequence (such as a string, tuple or list) or other iterable object.
+The for statement is used to iterate over the elements of a sequence (such as a string, tuple or list) or other `iterable` object.
 
 ```
 for_stmt ::=  "for" target_list "in" expression_list ":" suite
@@ -428,6 +482,30 @@ def capwords(s, sep=None):
 > [python-列表解析之if](https://blog.csdn.net/qq_25730711/article/details/53996124)  
 > [Python列表解析（列表推导式）](https://blog.csdn.net/shingle_/article/details/55050701)  
 > [形象地解释 Python 中的列表解析](http://python.jobbole.com/83884/)  
+
+## while
+
+reference - [8.2. The while statement](https://docs.python.org/3/reference/compound_stmts.html#the-while-statement)
+
+for 循环用于针对集合中的每个元素都一个代码块，而 while 循环不断地运行，直到指定的条件不满足为止。
+
+在要求很多条件都满足才继续运行的程序中，可定义一个变量，用于判断整个程序是否处于活动状态。这个变量被称为`标志`，充当了程序的交通信号灯。  
+你可让程序在标志为 `True` 时继续运行，并在任何事件导致标志的值为 `False` 时让程序停止运行。  
+这样，在 while 语句中就只需检查一个条件——标志的当前值是否为True，并将所有测试(是否发生了应将标志设置为False的事件)都放在其他地方，从而让程序变得更为整洁。  
+
+### break
+
+A `break` statement executed in the first suite terminates the loop without executing the else clause’s suite.  
+
+要立即退出while循环，不再运行循环中余下的代码，也不管条件测试的结果如何，可使用 `break` 语句。  
+break语句用于控制程序流程，可使用它来控制哪些代码行将执行，哪些代码行不执行，从而让程序按你的要求执行你要执行的代码。  
+
+### continue
+
+A `continue` statement executed in the first suite skips the rest of the suite and goes back to testing the expression.  
+
+要返回到循环开头，并根据条件测试结果决定是否继续执行循环，可使用 `continue` 语句。  
+它不像break语句那样不再执行余下的代码并退出整个循环，而是略过当前条件继续执行下一趟循环。  
 
 ## multiple assignment 
 
