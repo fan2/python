@@ -2,15 +2,15 @@
 
 collections — Container datatypes
 
-- namedtuple(): factory function for creating tuple subclasses with named fields  
-- deque: list-like container with fast appends and pops on either end  
-- ChainMap: dict-like class for creating a single view of multiple mappings  
-- Counter: dict subclass for counting hashable objects  
-- OrderedDict: dict subclass that remembers the order entries were added  
-- defaultdict: dict subclass that calls a factory function to supply missing values  
-- UserDict: wrapper around dictionary objects for easier dict subclassing  
-- UserList: wrapper around list objects for easier list subclassing  
-- UserString: wrapper around string objects for easier string subclassing  
+- `namedtuple()`（命名元组）: factory function for creating tuple subclasses with named fields  
+- `deque`（双端队列）: list-like container with fast appends and pops on either end  
+- `ChainMap`（链接字典）: dict-like class for creating a single view of multiple mappings  
+- `Counter`（计数器）: dict subclass for counting hashable objects  
+- `OrderedDict`（有序字典）: dict subclass that remembers the order entries were added  
+- `defaultdict`: dict subclass that calls a factory function to supply missing values  
+- `UserDict`: wrapper around dictionary objects for easier dict subclassing  
+- `UserList`: wrapper around list objects for easier list subclassing  
+- `UserString`: wrapper around string objects for easier string subclassing  
 
 ## OrderedDict
 

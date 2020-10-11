@@ -98,30 +98,34 @@ ValueError: 4 is not in range
 2
 ```
 
-## slice
+## usage
 
-slice命令用法:
-
-```
-slice(start, stop[, step])
-```
-
-创建一个slice类型. slice(None) 等价于冒号 `:`，表示从头到尾。
-
-a = `[1,2,3,4,5,6,7]`，取切片 `a[1:3]` 索引范围 = [1,3)，取出的子集为 `[2, 3]`。
-
-也可以用 slice 函数指定 start、stop 和 step，构造切片索引，对序列进行切片取值。
+区间的典型应用是界定列表索引：
 
 ```
-s = slice(1,3)
-a[s] = [2,3]
+>>> a = [1, 2, 3, 4, 5, 6, 7]
+>>> a
+[1, 2, 3, 4, 5, 6, 7]
+
+>>> for i,e in enumerate(a):
+...     print('l[%d] = %d' % (i, e))
+...
+l[0] = 1
+l[1] = 2
+l[2] = 3
+l[3] = 4
+l[4] = 5
+l[5] = 6
+l[6] = 7
+
+>>> for i in range(0, len(a)): # i=[0, len(a)-1]
+...     print("a[{0}] = {1}".format(i, a[i]))
+...
+a[0] = 1
+a[1] = 2
+a[2] = 3
+a[3] = 4
+a[4] = 5
+a[5] = 6
+a[6] = 7
 ```
-
-这样使得切片范围可编程定制化，更灵活的截取子集。
-
-### refs
-
-[Python切片Slice](http://liao.cpython.org/07slice/)  
-[python中切片（Slice）操作符](https://blog.csdn.net/xiaofeiyu321/article/details/82941765)  
-[切片（Slice）在python中的运用](https://blog.csdn.net/dfshi198/article/details/80843175)  
-[Python高级特性——切片（Slice）](https://www.cnblogs.com/hiwuchong/p/8052502.html)  
