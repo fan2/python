@@ -56,6 +56,17 @@ array 相比 list 的局限在于：list 可以混合存储任意类型，而 ar
 - `e not in l`: Test e for non-membership in l.  
 - `for e in l`: enumerate elements in l.  
 
+## api
+
+在 python shell 中，构造一个空列表 l，然后输入 `l.` 再输入 tab 键自动提示可用的成员函数：
+
+```
+>>> l=list()
+>>> l.
+l.append(   l.copy(     l.extend(   l.insert(   l.remove(   l.sort(
+l.clear(    l.count(    l.index(    l.pop(      l.reverse(
+```
+
 ## add
 
 向列表中添加元素，有两种方式：
@@ -67,6 +78,50 @@ array 相比 list 的局限在于：list 可以混合存储任意类型，而 ar
 
 - 头插法：`l.insert(0,e)`;  
 - 尾追法：`l.append(e)`;  
+
+### extend
+
+`append` 一般是将单个元素追加到列表末尾，如何在已有列表后面追加（衔接）另外一个列表呢？
+
+这涉及到 extend 接口：`extend` list by appending elements from the iterable.
+
+我们创建列表 l1 及其副本 l2，接下来看看它们分别通过 append 和 extend 追加的效果。
+
+```
+>>> l1=list(range(1,5))
+>>> l1
+[1, 2, 3, 4]
+>>> l2 = l1.copy()
+>>> l2
+[1, 2, 3, 4]
+>>> l3=list(range(5,9))
+>>> l3
+[5, 6, 7, 8]
+```
+
+`l1.append(l3)` 将 l3 追加到 l1，是将列表 l3 作为一个元素追加到 l1：
+
+```
+>>> l1.append(l3)
+>>> l1
+[1, 2, 3, 4, [5, 6, 7, 8]]
+>>> len(l1)
+5
+>>> l1[4]
+[5, 6, 7, 8]
+>>> type(l1[4])
+<class 'list'>
+```
+
+`l2.extend(l3)` 则将 l3 中的列表元素逐个 append 追加到 l2 后面，实现了预期的列表衔接。
+
+```
+>>> l2.extend(l3)
+>>> l2
+[1, 2, 3, 4, 5, 6, 7, 8]
+>>> len(l2)
+8
+```
 
 ## delete
 
@@ -90,6 +145,23 @@ array 相比 list 的局限在于：list 可以混合存储任意类型，而 ar
 除了标准的 append/pop 接口，deque 还专门提供了 `appendleft`/`popleft` 接口。
 
 - 双端队列标准惯用法：入队 **enqueue** - `dq.append(e)`, 出队 **dequeue** - `e=dq.popleft()`。
+
+### remove
+
+有时候，你不知道要从列表中删除的值所处的位置。
+如果你只知道要删除的元素（的值），可调用 `list.remove(e)` 方法。
+
+> Remove first occurrence of value. Raises *ValueError* if the value is not present.
+
+```
+>>> if e in l1:
+...     l1.remove(e)
+...     print(l1)
+... else:
+...     print("{} not in list".format(e))
+```
+
+当 e=4 在列表中时，被移除；当 e=9 不在列表中时，打印提示不在列表中。
 
 ## slice
 
@@ -159,9 +231,34 @@ slice(start, stop[, step])
 [1, 2, 3, 4, 5, 6, 7]
 ```
 
+### copy slice
+
+图解LeetCode初级算法插入排序中，用到了Python的切片赋值。
+
+1. 从前子向量切片 [0:right]（结束索引为 right-1） 中查找比右子向量当前首元素 target 大的索引 left；  
+2. 将从 left 开始比 right 大的切片 [left:right]（不包括 right 对应的 target 元素）整体向右移动一位；  
+
+    > right 的值提前暂存到 target 中了，right 位置将被右移占用，左边 left 位置腾出插入 target 值。
+
+```
+def insertionSort(iList: list) -> list:
+    if len(iList) <= 1:
+        return iList
+    for right in range(1, len(iList)):
+        target = iList[right]
+        for left in range(0, right):
+            if target <= iList[left]:
+                iList[left+1:right+1] = iList[left:right] #使用Python的切片赋值
+                iList[left] = target
+                break
+        # print("第 %d 轮排序结果:" %(right), end="")
+        # print(iList)
+    return iList
+```
+
 ### copy list
 
-如果需要根据既有列表创建全新的列表（副本），可创建一个包含整个列表的切片（`[:]`），然后赋值给新列表变量，即达目的。
+如果需要根据既有列表创建全新的列表，除了可以调用源列表的 `copy` 函数创建副本外，也可创建一个包含整个列表的切片（`[:]`），然后赋值给新列表变量，即达目的。
 
 ```
 >>> b=a[:] # 深度复制 a 的副本
