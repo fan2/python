@@ -4,39 +4,55 @@
 """
 将指定目录下的 csv 文件合并成一个 excel 文件，每个 csv 文件对应一个 worksheet。
 
-# 在脚本目录下运行以下命令，拖入位置参数（dirpath）:
-python3 mergeCSVAsWorksheet.py /Users/faner/Projects/IWYU/logs/FileAssist
-# 加 -v 选项，可查看调试输出：
-python3 mergeCSVAsWorksheet.py -v /Users/faner/Projects/IWYU/logs/FileAssist
+# python3 运行该脚本，指定 csv 文件所在目录（dirpath）:
+python3 mergeCSVAsWorksheet.py dirpath
+# 添加 -v 选项，可查看调试输出：
+python3 mergeCSVAsWorksheet.py -v dirpath
 
-# 输出合并的 excel 文件：
-/Users/faner/Projects/IWYU/logs/FileAssist/FileAssist--merged.xlsx
+# dirpath 为位置参数，可拖入绝对路径或手动输入相对路径：
+python3 mergeCSVAsWorksheet.py -v /Users/faner/Projects/IWYU/IWYUPlugin/logs/FileAssist
+python3 mergeCSVAsWorksheet.py -v ~/Projects/IWYU/IWYUPlugin/logs/FileAssist
+python3 mergeCSVAsWorksheet.py -v FileAssist # 相对 pwd 的路径
+
+# 输出合并的 excel 文件到 dirpath：
+FileAssist/merged-20201111_111111.xlsx
 """
 
 import os, sys, glob
+import datetime
 import argparse
 import pandas
 
 def main(dirpath: str, debug: bool = False):
-    mergedFilename = dirpath.split(os.sep)[-1] + '-merged.xlsx'
-    mergedFilepath = os.path.join(dirpath, mergedFilename)
-    excelWriter = pandas.ExcelWriter(mergedFilepath) # Arbitrary output name
-
     if debug:
         print('csvDirPath =', dirpath)
-        print('mergedFilepath =', mergedFilepath)
         print('----------------------------------------')
 
+    # 在 dirpath 下创建输出 excel，命名引入时间戳，规避多次执行的重名冲突
+    mergedFilePrefix = 'merged'  # os.path.split(dirpath)[-1] + '-merged'
+    curDateTime = datetime.datetime.now()
+    strCurTime = curDateTime.strftime('%Y%m%d_%H%M%S')
+    mergedFileSuffix = '.xlsx'
+    mergedFilename = mergedFilePrefix + '-' + strCurTime + mergedFileSuffix
+    mergedFilepath = os.path.join(dirpath, mergedFilename)
+    mergedExcelWriter = pandas.ExcelWriter(mergedFilepath)
+
+    # glob 通配指定目录下的 csv 文件
     allCSVFiles = glob.glob(os.path.join(dirpath, "*.csv"))
     for csvFilePath in allCSVFiles:
+        csvFileName = os.path.split(csvFilePath)[-1]      # 带后缀的文件名
+        workSheetName = os.path.splitext(csvFileName)[0]  # 去除后缀的纯文件名
+        # 读取 csv 内容并保存为 excel 的 worksheet
         csvDataFrame = pandas.read_csv(csvFilePath, sep=',')
-        csvNamePrefix = os.path.splitext(csvFilePath)[0]
-        workSheetName = csvNamePrefix.split(os.sep)[-1]
+        csvDataFrame.to_excel(mergedExcelWriter, sheet_name=workSheetName)
         if debug:
             print('csvFilePath =', csvFilePath)
             print('workSheetName =', workSheetName)
-        csvDataFrame.to_excel(excelWriter, sheet_name=workSheetName)
-    excelWriter.save()
+    mergedExcelWriter.save()
+
+    if debug:
+        print('----------------------------------------')
+        print('mergedFilepath =', mergedFilepath)
 
 
 
