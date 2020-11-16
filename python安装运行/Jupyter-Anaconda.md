@@ -46,6 +46,12 @@ The open-source Anaconda Distribution is the easiest way to perform Python/R dat
 
 [macOS 安装 Anaconda 后无法在终端使用 conda 命令怎么办？](https://zhuanlan.zhihu.com/p/144550389)
 
+执行 `brew cask install anaconda` 安装 anaconda 时，提示安装位置：
+
+```
+PREFIX=/usr/local/anaconda3
+```
+
 macOS 通过 brew 安装的 python3 目前的版本为 3.9.0：
 
 ```
@@ -56,9 +62,7 @@ $ pip3 -V
 pip 20.2.4 from /usr/local/lib/python3.9/site-packages/pip (python 3.9)
 ```
 
----
-
-cd 进入 anaconda3 命令行工具包目录下，执行 `./python3 -V` 可知，anaconda3 内置的 python3 版本为 3.7.6：
+cd 进入 anaconda3 命令行工具包目录（`/usr/local/anaconda3/bin`），执行 `./python3 -V` 可知，anaconda3 内置的 python3 版本为 3.7.6：
 
 ```
 $ cd /usr/local/anaconda3/bin
@@ -86,9 +90,12 @@ pandas                             1.0.1
 
 ### conda
 
+`conda` is a tool for managing and deploying applications, environments and packages.
+
 查看 conda 版本：
 
 ```
+$ cd /usr/local/anaconda3/bin
 $ ./conda -V
 conda 4.8.2
 ```
@@ -131,6 +138,8 @@ positional arguments:
     upgrade      Alias for conda update.
 
 ```
+
+以 `conda update -h` 这种形式查看conda命令帮助。
 
 #### info
 
@@ -187,7 +196,7 @@ $ ./conda list | grep 'pandas'
 pandas                    1.0.1            py37h6c726b0_0
 ```
 
-### Toolset Suite
+##### Toolset Suite
 
 ![Anaconda-Suite](https://www.anaconda.com/wp-content/uploads/2018/11/distro-01-1.png)
 
@@ -212,7 +221,7 @@ Visualize Toolset:
 
 [Anaconda介绍、安装及使用教程](https://zhuanlan.zhihu.com/p/32925500)  
 
-#### init base
+#### base
 
 ```
 $ ./conda activate
@@ -235,6 +244,8 @@ See 'conda init --help' for more information and options.
 IMPORTANT: You may need to close and restart your shell after running 'conda init'.
 ```
 
+##### init shell
+
 根据提示执行 `./conda init zsh`，`vim ~/.zshrc` 可看到 ZSH 配置文件末尾添加了 conda initialize，主要是将 conda bin 添加到环境变量：
 
 ```
@@ -253,29 +264,34 @@ Python 3.7.6
 (base)
 ```
 
-默认的 conda base 环境携带了所有集成的组件库（Toolset Suite），可以直接导入引用，新建的子环境则需要自行按需安装。  
-如无环境隔离需求，普通简单的需求直接在 base 环境运行调试即可。  
+##### activate
 
-##### uninit
+将 conda 集成进当前 shell（zsh） 之后，再次执行 `conda activate` 可进入 conda base 环境。
+
+默认的 base 环境携带了所有集成的组件库（Toolset Suite），可以直接导入引用，新建的子环境则需要自行按需安装。  
+如无特殊的环境隔离需求，普通简单的需求直接在 base 环境运行调试即可。  
+
+##### deactivate
 
 在 conda base 环境下，执行 `conda deactivate` 可退出 base 环境，回到系统默认的 zsh-python 环境。
 
 ```
 $ conda deactivate
 
-faner at THOMASFAN-MB1 in ~
 $ python3 -V
 Python 3.9.0
 ```
 
+##### auto_activate_base
+
 由于执行 `./conda init zsh` 时改动了 ZSH 配置文件（`~/.zshrc`），导致每次启动 zsh 终端窗口，都会自动进入 conda base 环境。
 
----
-
 [怎样取消每次自动进入 conda base 环境呢](https://blog.csdn.net/u014734886/article/details/90718719)？
+
 可通过以下三种方式：
 
 **方法一**：注释掉 ZSH 配置文件（`~/.zshrc`）中的 conda initialize 相关脚本；  
+
 **方法二**：每次在命令行通过 `conda deactivate` 退出 base 环境；  
 
 **方法三**：推荐方式
@@ -286,15 +302,17 @@ Python 3.9.0
 conda config --set auto_activate_base false
 ```
 
-2. 如果要进入的话通过 `conda activate base`
+> 如果要进入的话可执行通过 `conda activate` 默认进入 base 环境
 
-3. 如果反悔了，可以恢复 `auto_activate_base` 参数值：
+2. 如果反悔了，可以再次恢复 `auto_activate_base` 参数值：
 
 ```
 conda config --set auto_activate_base true
 ```
 
-#### create
+conda config 实际上是修改 user config file : `~/.condarc`。
+
+#### create env
 
 ```
 # 创建
@@ -304,8 +322,6 @@ conda env remove -n [env_name]
 ```
 
 输入 `conda create -n Py376 python=3.7.6`，创建一个名为 Py376 的 python 3.7.6 子环境。
-
-> 由于需要下砸很多依赖包，可能耗时较长。
 
 ```
 Preparing transaction: done
@@ -347,11 +363,60 @@ done
 #     $ conda deactivate
 ```
 
-提示 WARNING - Unable to register environment，可以重新执行一遍 `sudo ./conda create -n Py376 python=3.7.6`。
+##### Path not writable
 
-Anaconda 的 Python 子环境都被安装在 `/usr/local/anaconda3/envs` 目录下。
+执行 conda 相关命令时，提示 WARNING：
 
-#### activate
+- Unable to create environments file. Path not writable.
+- Unable to register environment. Path not writable or missing.
+
+当然可以已 sudo 身份重新执行一遍，但是最好按照以下方式为 conda 工作目录添加必要的写权限。
+
+[How does one fix the issue of not writable paths with conda?](https://stackoverflow.com/questions/59619442/how-does-one-fix-the-issue-of-not-writable-paths-with-conda)
+
+ls 查看 `~/.conda` 权限为755，属组成员不可写：
+
+```
+$ ls -lhFA | grep '\.conda/'
+drwxr-xr-x    3 faner  staff    96B Nov 15 18:53 .conda/
+```
+
+为属组成员添加权限，chmod g+w 变更权限为 775：
+
+```
+$ # sudo chmod -R 775 .conda
+$ sudo chmod -R g+w .conda
+Password:
+
+$ ls -lhFA | grep '\.conda/'
+drwxrwxr-x    3 faner  staff    96B Nov 15 18:53 .conda/
+```
+
+##### env list
+
+执行 `conda env list` 可以查看所有的环境列表：
+
+```
+$ conda env list
+# conda environments:
+#
+base                  *  /usr/local/anaconda3
+Py376                    /usr/local/anaconda3/envs/Py376
+
+(base)
+```
+
+environment location: `/Users/faner/.conda/environments.txt`
+
+```
+$ cat ~/.conda/environments.txt
+/usr/local/anaconda3
+/usr/local/anaconda3/envs/Py376
+```
+
+新建的 Anaconda 子环境被安装在 `/usr/local/anaconda3/envs` 目录下。
+
+##### activate
 
 创建好子环境之后，按照提示执行 `conda activate Py376`，激活名为 Py376 的子环境。
 
@@ -367,21 +432,40 @@ $ conda deactivate
 (base)
 ```
 
-#### env list
+##### install
 
-执行 `conda env list` 可以查看所有的环境列表：
+在 Py376 下执行 conda list | grep 'pandas' 可知，新建的子环境并没有自带 base 下的 pandas 等 Toolset Suite，需要自行按需安装。
 
 ```
-$ conda env list
-# conda environments:
+conda install -n Py376 pandas
+```
+
+### conda update
+
+在 base 环境下执行 `conda update` 提示没有提供要升级的包名，并给出了升级 anaconda 本身的命令。
+
+```
+$ conda update
+
+CondaValueError: no package names supplied
+# If you want to update to a newer version of Anaconda, type:
 #
-base                  *  /usr/local/anaconda3
-Py376                    /usr/local/anaconda3/envs/Py376
-
-(base)
+# $ conda update --prefix /usr/local/anaconda3 anaconda
 ```
 
-#### + vscode
+- 执行 `conda update -n Py376 scipy` 更新 Py376 下的 scipy 包。  
+- 执行 `conda update python` 更新当前子环境（base）下的 python 包。  
+- 执行 `conda update --all` 更新当前子环境（base）下的所有包。  
+
+```
+$ conda update --all
+Collecting package metadata (current_repodata.json): done
+Solving environment: done
+
+# All requested packages already installed.
+```
+
+### + vscode
 
 [搭建 Python 轻量级编写环境（Anaconda+VSCode）](https://zhuanlan.zhihu.com/p/147336202)  
 
