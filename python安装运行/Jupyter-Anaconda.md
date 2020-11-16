@@ -1,9 +1,10 @@
 [Getting Started with Python in VS Code](https://code.visualstudio.com/docs/python/python-tutorial)  
 [Using Python environments in VS Code](https://code.visualstudio.com/docs/python/environments)  
 
+[vs code上配置python的运行环境](https://www.cnblogs.com/EtoDemerzel/p/8083313.html)  
 [Visual Studio Code 在 python 中的使用](https://www.jianshu.com/p/0743ad5774dc)  
-
-[**vs code上配置python的运行环境**](https://www.cnblogs.com/EtoDemerzel/p/8083313.html)  
+[vscode设置python3.7调试环境（已更新）](https://www.cnblogs.com/dotnetcrazy/p/9095793.html)  
+[那些使用VSCode写Python踩过的坑(Anaconda配置)](https://www.cnblogs.com/chaoswr/p/10148142.html)  
 
 ## Jupyter
 
@@ -20,15 +21,15 @@
 推荐使用 Anaconda，自带了 Numpy、Scipy、Matplotlib 等多种 python 开发包和 Jupyter Notebook！
 
 [jupyter notebook安装与配置](https://blog.51cto.com/huangyg/2315382?cid=728374)  
-[python环境搭建以及jupyter notebook的安装和启动](https://www.cnblogs.com/jiangfengtomhuo/p/7987419.html)  
 [Python Jupyter Notebook各种使用方法记录](https://blog.csdn.net/qq_25148881/article/details/83004238)  
+[python环境搭建以及jupyter notebook的安装和启动](https://www.cnblogs.com/jiangfengtomhuo/p/7987419.html)  
 
-### [VSCode 编写 Python 支持 Jupyter notebook 了](https://blog.csdn.net/qq_20084101/article/details/84146676)  
+### [jupyter-support](https://code.visualstudio.com/docs/python/jupyter-support)
 
-[Working with Jupyter Notebooks in Visual Studio Code](https://code.visualstudio.com/docs/python/jupyter-support)
+[VSCode 编写 Python 支持 Jupyter notebook 了](https://blog.csdn.net/qq_20084101/article/details/84146676)  
 
-Jupyter notebook是一个cell一个cell依次执行，那在VS Code要怎么做到这点呢？
-很简单，在你每一个cell前加上一行：`#%%`
+Jupyter notebook是逐个cell依次执行，那在VS Code要怎么做到这点呢？  
+很简单，在你每一个cell前加上一行：`#%%`  
 
 ```Python
 #%%
@@ -42,15 +43,34 @@ The World's Most Popular Python/R Data Science Platform
 
 The open-source Anaconda Distribution is the easiest way to perform Python/R data science and machine learning on Linux, Windows, and Mac OS X.
 
-### python3 & pip3
+[Anaconda Documentation](https://docs.anaconda.com/) - [Anaconda Individual Edition](https://docs.anaconda.com/anaconda/)
 
-[macOS 安装 Anaconda 后无法在终端使用 conda 命令怎么办？](https://zhuanlan.zhihu.com/p/144550389)
+Anaconda 是一个包含诸多常用科学包及其依赖项的 Python 发行版本，其开源跨平台，解决了 Python 原生包管理器 Pip 的依赖冲突问题，极大地方便了 Python 环境的管理。
+如果你使用 Python 的场景属于数据科学领域，则 Anaconda 可以被看作是标配。
 
-执行 `brew cask install anaconda` 安装 anaconda 时，提示安装位置：
+### install
+
+在 Windows 下，可通过包管理器 Chocolatey 或 Scoop 进行安装：
+
+```
+# scoop bucket add scoopet https://github.com/integzz/scoopet
+scoop install miniconda-cn
+choco install miniconda3
+```
+
+对 macOS 用户，可用 Homebrew 安装：
+
+```
+brew cask install anaconda
+```
+
+brew 安装日志提示其安装位置：
 
 ```
 PREFIX=/usr/local/anaconda3
 ```
+
+---
 
 macOS 通过 brew 安装的 python3 目前的版本为 3.9.0：
 
@@ -91,6 +111,10 @@ pandas                             1.0.1
 ### conda
 
 `conda` is a tool for managing and deploying applications, environments and packages.
+
+conda 是 Anaconda 内置的命令行工具包，[macOS 安装 Anaconda 后无法在终端使用 conda 命令怎么办？](https://zhuanlan.zhihu.com/p/144550389)
+
+cd 进入 anaconda3 命令行工具包目录（`/usr/local/anaconda3/bin`），即可执行 `./conda` 相关命令。
 
 查看 conda 版本：
 
@@ -139,14 +163,29 @@ positional arguments:
 
 ```
 
-以 `conda update -h` 这种形式查看conda命令帮助。
+执行 `conda activate -h` 查看 activate 子命令的帮助：
+
+```
+$ conda activate -h
+usage: conda activate [-h] [--[no-]stack] [env_name_or_prefix]
+
+Activate a conda environment.
+
+Options:
+
+positional arguments:
+  env_name_or_prefix    The environment name or prefix to activate. If the
+                        prefix is a relative path, it must start with './'
+                        (or '.\' on Windows).
+```
 
 #### info
 
-查看 conda 信息：
+执行 `./conda info` 命令可查看当前安装的 conda 相关配置信息。  
+conda 有个子环境的概念，默认为 `active environment : base`。  
 
 ```
-./conda info
+$ ./conda info
 
      active environment : base
     active env location : /usr/local/anaconda3
@@ -175,7 +214,7 @@ positional arguments:
 
 #### list
 
-列举 conda 环境集成的工具包：
+列举 conda 默认的 base 环境（/usr/local/anaconda3）集成的工具包：
 
 ```
 $ ./conda list | wc -l
@@ -222,6 +261,8 @@ Visualize Toolset:
 [Anaconda介绍、安装及使用教程](https://zhuanlan.zhihu.com/p/32925500)  
 
 #### base
+
+执行 `./conda activate` 尝试激活 base 环境，报错 *CommandNotFoundError*：
 
 ```
 $ ./conda activate
@@ -314,9 +355,11 @@ conda config 实际上是修改 user config file : `~/.condarc`。
 
 #### create env
 
+执行 `conda create -h` 查看 create 子命令帮助。
+
 ```
 # 创建
-conda create -n [env_name]
+conda create -n [env_name] [package_spec [package_spec ...]]
 # 删除
 conda env remove -n [env_name]
 ```
@@ -381,7 +424,7 @@ $ ls -lhFA | grep '\.conda/'
 drwxr-xr-x    3 faner  staff    96B Nov 15 18:53 .conda/
 ```
 
-为属组成员添加权限，chmod g+w 变更权限为 775：
+为属组成员添加权限，chmod -R g+w 变更权限为 775：
 
 ```
 $ # sudo chmod -R 775 .conda
@@ -394,7 +437,7 @@ drwxrwxr-x    3 faner  staff    96B Nov 15 18:53 .conda/
 
 ##### env list
 
-执行 `conda env list` 可以查看所有的环境列表：
+创建了新的子环境后，再执行 `conda env list` 可以看到环境列表多了一项：
 
 ```
 $ conda env list
@@ -422,17 +465,35 @@ $ cat ~/.conda/environments.txt
 
 > 必须执行过 `conda init`，否则执行 activate 时提示报错 `CommandNotFoundError`！
 
-此时执行 `conda activate Py376` 切换到 Py376 子环境，用完之后执行 `conda deactivate` 退回 base 环境。
+此时执行 `conda activate Py376` 切换到 Py376 子环境，可再次执行 `conda info` 确认相关配置信息：
 
 ```
 $ conda activate Py376
 (Py376)
 
+$ conda info
+
+     active environment : Py376
+    active env location : /usr/local/anaconda3/envs/Py376
+
+```
+
+用完之后执行 `conda deactivate` 退回 base 环境。
+
+```
 $ conda deactivate
 (base)
 ```
 
 ##### install
+
+执行 `conda install -h` 查看 install 子命令帮助。
+
+```
+usage: conda install [-h] [--revision REVISION] [-n ENVIRONMENT | -p PATH]
+                     [--freeze-installed | --update-deps | -S | --update-all | --update-specs]
+                     [package_spec [package_spec ...]]
+```
 
 在 Py376 下执行 conda list | grep 'pandas' 可知，新建的子环境并没有自带 base 下的 pandas 等 Toolset Suite，需要自行按需安装。
 
@@ -440,9 +501,28 @@ $ conda deactivate
 conda install -n Py376 pandas
 ```
 
+**常用包管理相关的命令如下**：
+
+```
+# 搜索某个包，会列举所有可安装版本
+conda search [package_name]
+# 为指定环境安装指定版本的包
+conda install [-n ENVIRONMENT] [package_spec] [--revision REVISION]
+# 查看已安装列表
+conda list
+# 更新某个包
+conda update [package_name]
+# 更新所有包
+conda update --all
+# 删除已安装的包
+conda remove [package_name] # remove alias as uninstall
+```
+
 ### conda update
 
-在 base 环境下执行 `conda update` 提示没有提供要升级的包名，并给出了升级 anaconda 本身的命令。
+执行 `conda update -h` 查看 update 子命令帮助。
+
+在 base 环境下执行 `conda update` 提示没有提供要升级的包名，并给出了升级 anaconda 自身的命令。
 
 ```
 $ conda update
@@ -467,20 +547,9 @@ Solving environment: done
 
 ### + vscode
 
-[搭建 Python 轻量级编写环境（Anaconda+VSCode）](https://zhuanlan.zhihu.com/p/147336202)  
+Anaconda 配合 VSCode 可以搭建一个适用于机器学习、AI、数据科学领域学习与开发的 Python 开发环境。
 
-创建Anaconda的Python子环境 - [Activating Anaconda Environment in VsCode](https://stackoverflow.com/questions/43351596/activating-anaconda-environment-in-vscode)
-
-[Anaconda+VSCode搭建python环境](https://www.jianshu.com/p/f10fb1a4cc87) - Windows  
-[Anaconda＋VSCode搭建python开发环境](https://cloud.tencent.com/developer/news/313349)  
-[windows10环境下用anaconda和VScode配置](https://blog.csdn.net/u011622208/article/details/79625908)  
-
-[vscode设置python3.7调试环境（已更新）](https://www.cnblogs.com/dotnetcrazy/p/9095793.html)  
-[那些使用VSCode写Python踩过的坑(Anaconda配置)](https://www.cnblogs.com/chaoswr/p/10148142.html)  
-
-[MacOS下如何配置Vscode+Anaconda呢？](https://www.zhihu.com/question/265853927)  
-[mac vscode配置 anaconda 虚拟环境](https://blog.csdn.net/liubingjun07/article/details/88833885)  
-[Mac+Anaconda+PyCharm+VSCode环境搭建](https://blog.csdn.net/qq_28863845/article/details/82589857)  
+[Activating Anaconda Environment in VsCode](https://stackoverflow.com/questions/43351596/activating-anaconda-environment-in-vscode)
 
 快捷键 `cmd+,` 打开 vscode 偏好设置，编辑修改（`~/Library/Application Support/Code/User/settings.json`），找到如下两个参数：
 
@@ -493,3 +562,15 @@ Solving environment: done
     "python.pythonPath": "/usr/local/anaconda3/envs/Py376/bin/python3",
     "python.autoComplete.extraPaths": ["/usr/local/anaconda3/envs/Py376/lib/python3.7/site-packages"],
 ```
+
+#### refs
+
+[搭建 Python 轻量级编写环境（Anaconda+VSCode）](https://zhuanlan.zhihu.com/p/147336202)  
+
+[Anaconda+VSCode搭建python环境](https://www.jianshu.com/p/f10fb1a4cc87) - Windows  
+[Anaconda＋VSCode搭建python开发环境](https://cloud.tencent.com/developer/news/313349) - Windows  
+[windows10环境下用anaconda和VScode配置](https://blog.csdn.net/u011622208/article/details/79625908)  
+
+[MacOS下如何配置Vscode+Anaconda呢？](https://www.zhihu.com/question/265853927)  
+[mac vscode配置 anaconda 虚拟环境](https://blog.csdn.net/liubingjun07/article/details/88833885)  
+[Mac+Anaconda+PyCharm+VSCode环境搭建](https://blog.csdn.net/qq_28863845/article/details/82589857)  
