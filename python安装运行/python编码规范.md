@@ -211,7 +211,7 @@ Your Tool For Style Guide Enforcement
 <https://github.com/PyCQA/flake8>  
 <https://pypi.python.org/pypi/flake8>  
 
-Flake8 is a wrapper around these tools:
+Flake8 is a **wrapper** around these tools:
 
 - PyFlakes  
 - pycodestyle  
@@ -266,6 +266,8 @@ Required-by:
 ```
 
 #### usage
+
+> 参考 [vscode-python](https://github.com/fan2/Text-Reader-Editor/blob/master/vscode/vscode-python.md)：在 vscode 中可配置 `flake8` 作为 python.lining 工具，配置 `autopep8`（或 yapf）作为格式化工具。
 
 flake8 同时调用 pycodestyle 和 pyflakes 分别进行代码风格检查和逻辑错误检查，使用示例：
 
@@ -330,7 +332,7 @@ SublimeLinter-flake8 自动检测 python 代码风格和逻辑错误，Sublime T
 
 <https://github.com/dreadatour/Flake8Lint>
 
-[Flake8](http://pypi.python.org/pypi/flake8) (used in “Python Flake8 Lint”) is a wrapper around these tools:
+[Flake8](http://pypi.python.org/pypi/flake8) (used in “Python Flake8 Lint”) is a **wrapper** around these tools:
 
 - [pep8](http://pypi.python.org/pypi/pep8) is a tool to check your Python code against some of the **style** conventions in PEP8.  
 - [PyFlakes](https://pypi.org/project/pyflakes/) checks only for **logical errors** in programs; it does not perform any check on style.  
