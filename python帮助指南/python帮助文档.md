@@ -15,7 +15,7 @@
 
 ## [help](https://docs.python.org/3/library/functions.html#help)
 
-```shell
+```Shell
 >>> help
 Type help() for interactive help, or help(object) for help about object.
 ```
@@ -30,7 +30,7 @@ Invoke the built-in help system. (This function is intended for interactive use.
 
 调用 `help('modules')` 可以列出当前所有已安装的模块：
 
-```shell
+```Shell
 >>> help(modules)
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
@@ -42,15 +42,15 @@ Please wait a moment while I gather a list of all available modules...
 
 ```
 
-调用 `import(module)` 导入模块后，可调用 `help(module)` 查看模块帮助：
+在 REPL 中输入 `import module` 导入模块 module 后，可调用 `help(module)` 查看模块帮助：
 
-1. 调用  `help(module.function)` 查看静态函数 function 帮助。  
-2. 调用  `help(module.class)` 查看类 class 帮助。  
-3. 调用  `help(module.class.method)` 查看类成员函数 function 帮助。  
+1. 调用  `help(module.function)` 查看 module 的静态函数 function 的帮助。  
+2. 调用  `help(module.class)` 查看 module 的类 class 帮助。  
+3. 调用  `help(module.class.method)` 查看 module 的类 class 成员函数 function 帮助。  
 
 对于内置的 builtins 模块，以上三步可省掉 module 前缀：
 
-```shell
+```Shell
 # 查看 builtins 内建的 print 函数帮助
 >>> help(print)
 
@@ -110,7 +110,7 @@ class dict(object)
 
 若想调用 `help(module)` 查看 builtins 模块或其他模块帮助及说明，还得先显式 import 导入模块。
 
-```shell
+```Shell
 >>> # help(builtins)
 >>> help(builtins)
 Traceback (most recent call last):
@@ -128,7 +128,7 @@ NAME
 
 ##### str
 
-```shell
+```Shell
 >>> # 查看 builtins.str 类的 docstring
 >>> print(str.__doc__) # help(str) 的首部概述
 str(object='') -> str
@@ -194,7 +194,7 @@ NAME
 
 如果不 import 导入模块，加引号 `help('module')` 也可以查看模块帮助。
 
-```shell
+```Shell
 >>> help('array')
 
 Help on module array:
@@ -217,6 +217,24 @@ collections.deque = class deque(builtins.object)
  |  Methods defined here:
 ```
 
+##### pdfminer
+
+导入查看 pdfminer 帮助，可以看到列出的模块（PACKAGE CONTENTS）：
+
+```
+>>> import pdfminer
+>>> help(pdfminer)
+```
+
+如果要查看具体某个模块（例如 pdfdocument）的帮助，也需要先导入再查看：
+
+```
+>>> import pdfminer.pdfdocument
+>>> help(pdfminer.pdfdocument)
+```
+
+也可通过 dir 查看其属性列表，方便略览其中定义的属性。
+
 #### quit
 
 > `help(object)` 以 less/vi 模式打开帮助 manual page，底行输入 `q` 即可退出返回控制台。  
@@ -226,7 +244,7 @@ collections.deque = class deque(builtins.object)
 
 在 python 控制台中输入 `help()` 可打开交互式（`help> prompt`）帮助系统（help utility）。
 
-```shell
+```Shell
 >>> help()
 
 Welcome to Python 3.6's help utility!
@@ -260,7 +278,7 @@ help>
 
 输入 `keywords` 可以列出 Python 语言的内置关键字：
 
-```shell
+```Shell
 help> keywords
 
 Here is a list of the Python keywords.  Enter any keyword to get more help.
@@ -283,7 +301,7 @@ continue            global              pass
 
 以下通过 `help('pass')` 获取 pass 关键字的帮助说明。
 
-```shell
+```Shell
 >>> help('pass')
 
 The "pass" statement
@@ -307,7 +325,7 @@ syntactically, but no code needs to be executed, for example:
 
 输入 `symbols` 可以列出 Python 语言的内置符号：
 
-```shell
+```Shell
 help> symbols
 
 Here is a list of the punctuation symbols which Python assigns special meaning
@@ -343,7 +361,7 @@ Please wait a moment while I gather a list of all available modules...
 
 除此之外，还可以调用 `modules time` 查看所有名称或概要信息中包含 time 的模块。
 
-```shell
+```Shell
 help> modules time
 
 Here is a list of modules whose name or summary contains 'time'.
@@ -373,7 +391,7 @@ pip._vendor.urllib3.util.timeout
 
 通过快捷键 `<C-c>` / `<C-d>` 或 **`quit`** 可退出 help utility 命令行 `help> `，回到 Python 主控制台 `>>> `。
 
-```shell
+```Shell
 help> quit
 
 You are now leaving help and returning to the Python interpreter.
@@ -404,7 +422,7 @@ The built-in function [dir()](https://docs.python.org/3.6/tutorial/modules.html#
 
 由于 builtins 模块已经内置到解释器，因此对于其中的类或函数，可省去 import，直接调用 help 或访问其 `__doc__` 查看 `dir()` 函数的说明。
 
-```shell
+```Shell
 # 也可执行 print(dir.__doc__) 查看概要
 
 >>> help(dir)
@@ -428,16 +446,31 @@ dir(...)
 
 例如执行 `dir(builtins)` 可查看模块 builtins 提供的所有属性及方法：
 
-```shell
+```Shell
 >>> import builtins
 >>> dir(builtins)
 ```
 
 	> 也可执行 `print(builtins.__dict__)` 打印 builtins 模块的符号表。
 
+以下导入 pdfminer 及其 layout，然后通过 dir 查看其属性列表，方便略览查找：
+
+```Shell
+>>> import pdfminer
+>>> dir(pdfminer)
+['__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__path__', '__spec__', '__version__', 'ascii85', 'ccitt', 'layout', 'lzw', 'pdfdocument', 'pdfparser', 'pdftypes', 'psparser', 'runlength', 'settings', 'utils']
+
+>>> import pdfminer.layout
+>>> dir(pdfminer.layout)
+['INF', 'IndexAssigner', 'LAParams', 'LTAnno', 'LTChar', 'LTComponent', 'LTContainer', 'LTCurve', 'LTExpandableContainer', 'LTFigure', 'LTImage', 'LTItem', 'LTLayoutContainer', 'LTLine', 'LTPage', 'LTRect', 'LTText', 'LTTextBox', 'LTTextBoxHorizontal', 'LTTextBoxVertical', 'LTTextContainer', 'LTTextGroup', 'LTTextGroupLRTB', 'LTTextGroupTBRL', 'LTTextLine', 'LTTextLineHorizontal', 'LTTextLineVertical', 'Plane', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'apply_matrix_pt', 'bbox2str', 'fsplit', 'get_bound', 'heapq', 'logger', 'logging', 'matrix2str', 'uniq']
+
+>>> import pdfminer.psparser
+>>> dir(pdfminer.psparser)
+```
+
 通过列表推导式将指定模块中以下划线开头的非供外部使用的名称过滤掉：
 
-```shell
+```Shell
 >>> import string
 >>> [n for n in dir(string) if not n.startswith('_')]
 ['Formatter', 'Template', 'ascii_letters', 'ascii_lowercase', 'ascii_uppercase', 'capwords', 'digits', 'hexdigits', 'octdigits', 'printable', 'punctuation', 'whitespace']
@@ -447,7 +480,7 @@ dir(...)
 
 在 python3 控制台中，对于明确类型的对象，输入引用符点号（`.`）后，再按下 tab 会列举所有可能的成员函数或属性：
 
-```shell
+```Shell
 >>> str1='hello'
 >>> str1.
 str1.capitalize(    str1.isalnum(       str1.join(          str1.rsplit(
@@ -466,3 +499,15 @@ str1.index(         str1.isupper(       str1.rpartition(    str1.zfill(
 借此特性，在编码过程中，可一览某一类别实例的可用属性、方法。
 
 对于 Sublime Text 等文本编辑器，需要借助 [Anaconda](https://www.anaconda.com/) 或 [SublimeLinter-pycodestyle](https://github.com/SublimeLinter/SublimeLinter-pycodestyle) 等插件来实现自动完成智能提示。
+
+## 定位符号所在的包模块
+
+已经通过pip3安装了pdfminer，但是通过 from import 导入 `PDFNoOutlines`、`PSLiteral`、`LTTextBox` 时，如何确定具体在哪个子模块呢？
+
+1. 方案一：逐个 help 或 dir 子模块，肉眼查找类或函数名符号在哪个子模块中。  
+
+    - 也可写个python脚本，遍历pdfminer所有模块的dir查找匹配某个符号。
+
+2. 方案二：通过 python-inspect 中介绍的 [open_python_module_code.py](../py/open_python_module_code.py) 脚本打开指定 pdfminer 包源代码进行查找。  
+
+    - python3 open_python_module_code.py pdfminer

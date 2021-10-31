@@ -274,77 +274,46 @@ AttributeError: module 'sys' has no attribute '__file__'
 
 #### openPythonModuleCode
 
-`openPythonModuleCode.py` 脚本用于打开指定名称的模块的源代码：
+[open_python_module_code.py](../py/open_python_module_code.py) 脚本打开指定名称的模块源代码进行学习。
 
-```python
-#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+1. 读取模块所在代码路径：
 
-import os
-import sys
-import importlib
+> `dynamic_module = importlib.import_module(module)` 导入指定 module，然后取其 `__file__` 属性，等效于 `module_path = inspect.getsourcefile(str_module_name)` 取其绝对路径。
 
+2. 判断文件后缀名是 `.py`：如果文件名是 `__init__.py`，则用 vscode 打开所在目录；否则用 vscode 打开py源码。
 
-def open_module_source_code(str_module_name):
-    try:
-        dynamic_module = importlib.import_module(str_module_name)
-        str_cmd = 'subl '  # 'open '
-        str_file = dynamic_module.__file__
-        dot_idx = str_file.rindex(os.extsep)
-        file_ext = str_file[(dot_idx + 1):]
-        if file_ext == 'py':
-            print('execute system command: ', str_cmd + str_file)
-            os.system(str_cmd + str_file)
-        else:  # 'module.cpython*.so'
-            # file_name_idx = str_file.rindex(os.sep)
-            # file_name = str_file[file_name_idx+1:]
-            print('module file: ', str_file)
-    except (ImportError, AttributeError, ValueError) as e:
-        print(e)
-        sys.exit()
-    pass
+以下为几组用例执行结果：
 
-
-def main(args):
-    open_module_source_code(args[0])
-    pass
-
-
-# main entry
-if __name__ == '__main__':
-    print('This program is being run by itself')
-    if len(sys.argv) < 2:
-        print('please input module name')
-    else:
-        main(sys.argv[1:])
-else:
-    print('I am being imported from another module')
-
-```
-
-以下为几组执行结果：
-
-```shell
+```Shell
 # ImportError
-faner@MBP-FAN:~/Projects/python|⇒  python3 openPythonModuleCode.py arg
+$ python3 open_python_module_code.py str
 This program is being run by itself
-No module named 'arg'
+No module named 'str'
 
 # AttributeError
-faner@MBP-FAN:~/Projects/python|⇒  python3 openPythonModuleCode.py builtins
+$ python3 open_python_module_code.py builtins
 This program is being run by itself
 module 'builtins' has no attribute '__file__'
 
 # cpython.so
-faner@MBP-FAN:~/Projects/python|⇒  python3 openPythonModuleCode.py array
+$ python3 open_python_module_code.py array
 This program is being run by itself
-module file:  /usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/array.cpython-36m-darwin.so
+module file:  /usr/local/Cellar/python@3.9/3.9.7/Frameworks/Python.framework/Versions/3.9/lib/python3.9/lib-dynload/array.cpython-39-darwin.so
 
-# python
-faner@MBP-FAN:~/Projects/python|⇒  python3 openPythonModuleCode.py argparse
+# python sourcefile
+$ python3 open_python_module_code.py string
 This program is being run by itself
-execute system command:  subl /usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/argparse.py
+code /usr/local/Cellar/python@3.9/3.9.7/Frameworks/Python.framework/Versions/3.9/lib/python3.9/string.py
 
+# python sourcefile
+$ python3 open_python_module_code.py argparse
+This program is being run by itself
+code /usr/local/Cellar/python@3.9/3.9.7/Frameworks/Python.framework/Versions/3.9/lib/python3.9/argparse.py
+
+# python dir
+$ python3 open_python_module_code.py pdfminer
+This program is being run by itself
+code /usr/local/lib/python3.9/site-packages/pdfminer
 ```
 
 ### inspect

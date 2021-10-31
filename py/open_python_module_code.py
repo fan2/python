@@ -9,13 +9,20 @@ import importlib
 def open_module_source_code(str_module_name):
     try:
         dynamic_module = importlib.import_module(str_module_name)
-        str_cmd = 'subl '  # 'open '
-        str_file = dynamic_module.__file__
-        dot_idx = str_file.rindex(os.extsep)
-        file_ext = str_file[(dot_idx + 1):]
-        if file_ext == 'py':
-            print('execute system command: ', str_cmd + str_file)
-            os.system(str_cmd + str_file)
+        str_cmd = 'code '  # 'open ' # 'subl '
+        # module_path = inspect.getsourcefile(str_module_name)
+        str_file = dynamic_module.__file__  # 绝对路径
+        (file_path, file_name) = os.path.split(str_file)
+        # dot_idx = str_file.rindex(os.extsep)
+        # file_ext = str_file[(dot_idx + 1):]
+        (file_name_prefix, file_name_suffix) = os.path.splitext(file_name)
+        if file_name_suffix == '.py':  # ext
+            if file_name_prefix == '__init__':
+                print(str_cmd + file_path)
+                os.system(str_cmd + file_path)  # vscode打开目录
+            else:
+                print(str_cmd + str_file)
+                os.system(str_cmd + str_file)  # vscode打开文件
         else:  # 'module.cpython*.so'
             # file_name_idx = str_file.rindex(os.sep)
             # file_name = str_file[file_name_idx+1:]
