@@ -68,6 +68,22 @@ ArgumentParser.add_argument 方法定义应该如何解析一个命令行参数�
 - metavar - 参数在帮助信息中的名字。  
 - dest - 给 parse_args() 返回的对象要添加的属性名称。  
 
+#### version
+
+最新的 argparser 不支持直接赋值 `.version = '1.0'`，而是通过 `--version` 指定。
+
+[Python's argparse to show program's version with prog and version string formatting](https://stackoverflow.com/questions/15405636/pythons-argparse-to-show-programs-version-with-prog-and-version-string-formatt)
+
+以下是官网示例：
+
+```Python
+import argparse
+parser = argparse.ArgumentParser(prog='PROG')
+parser.add_argument('--version', action='version', version='%(prog)s 2.0')
+parser.parse_args(['--version'])
+PROG 2.0
+```
+
 #### Name or Flags
 
 Setting the Name or Flags of the Arguments
@@ -102,7 +118,7 @@ For example, consider the cp command on Linux (or the copy command in Windows).
 Here’s the standard usage:
 
 ```
-faner@THOMASFAN-MB1 (master)✗ [64] % cp -h
+faner@FAN-MB1 (master)✗ [64] % cp -h
 cp: illegal option -- h
 usage: cp [-R [-H | -L | -P]] [-fi | -n] [-apvXc] source_file target_file
        cp [-R [-H | -L | -P]] [-fi | -n] [-apvXc] source_file ... target_directory
@@ -118,11 +134,22 @@ Syntactically, the difference between positional and optional arguments is that 
 
 To add an optional argument, you just need to call `.add_argument()` again and name the new argument with a starting `-`.
 
+位置参数一般在前，为普通单词，为必填；可选参数一般在后，短线字母或双短线单词格式（-c, --count），可不填。
+
 test_argparse.py 中的 `logpath` 为位置参数； `-p/--platform` 为可选参数。
 
 ```Python
     argparser.add_argument('logpath', type=str, help='path of log file')
     argparser.add_argument('-p', '--platform', type=int)
+```
+
+#### action
+
+当输入 `-v` 开关时，将打开调试开关，等效于赋值 debug=true（store true to dest var）。
+
+```Python
+    argparser.add_argument('-v', '--verbose', dest='debug',
+                           action='store_true', help='print debug verbose')
 ```
 
 #### argparse.FileType

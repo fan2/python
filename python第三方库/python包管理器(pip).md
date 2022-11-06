@@ -25,7 +25,7 @@ Github Page: [pypa](https://github.com/pypa) / [setuptools](https://github.com/p
 macOS 下使用 brew 安装 python3 时，默认已安装 pip3 和 setuptools。
 
 ```shell
-faner@THOMASFAN-MB0:~|⇒  pip3 list
+faner@FAN-MB0:~|⇒  pip3 list
 DEPRECATION: The default format will switch to columns in the future. You can use --format=(legacy|columns) (or define a format=(legacy|columns) in your pip.conf under the [list] section) to disable this warning.
 pip (9.0.1)
 setuptools (36.5.0)
@@ -37,7 +37,7 @@ wheel (0.30.0)
 可通过 `pip3 show setuptools` 命令查看 setuptools 包信息。
 
 ```shell
-faner@THOMASFAN-MB0:~|⇒  pip3 show setuptools
+faner@FAN-MB0:~|⇒  pip3 show setuptools
 Name: setuptools
 Version: 36.5.0
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
@@ -59,7 +59,7 @@ A **wheel** is a ZIP-format archive with a specially formatted filename and the 
 macOS 下使用 brew 安装 python3 时，默认已安装 pip3 和 wheel3。
 
 ```shell
-faner@THOMASFAN-MB0:~|⇒  wheel3 -V
+faner@FAN-MB0:~|⇒  wheel3 -V
 usage: wheel3 [-h]
               {keygen,sign,unsign,verify,unpack,install,install-scripts,convert,version,help}
               ...
@@ -69,7 +69,7 @@ wheel3: error: unrecognized arguments: -V
 可通过 `pip3 show wheel` 命令查看 wheel 包信息。
 
 ```shell
-faner@THOMASFAN-MB0:~|⇒  pip3 show wheel     
+faner@FAN-MB0:~|⇒  pip3 show wheel     
 Name: wheel
 Version: 0.30.0
 Summary: A built-package format for Python.
@@ -102,13 +102,13 @@ Easy Install is a python module (`easy_install`) bundled with `setuptools` that 
 - 输入 `easy_install-3.6 --version`（`easy_install3 --version`）可查看 Python 3.* 对应的 easy_install 的版本号。  
 
 ```shell
-faner@THOMASFAN-MB0:~|⇒  easy_install
+faner@FAN-MB0:~|⇒  easy_install
 easy_install      easy_install-2.6  easy_install-2.7  easy_install-3.6
 
-faner@THOMASFAN-MB0:~|⇒  easy_install --version
+faner@FAN-MB0:~|⇒  easy_install --version
 setuptools 18.5 from /System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python (Python 2.7)
 
-faner@THOMASFAN-MB0:~|⇒  easy_install-3.6 --version
+faner@FAN-MB0:~|⇒  easy_install-3.6 --version
 setuptools 36.5.0 from /usr/local/lib/python3.6/site-packages (Python 3.6)
 ```
 
@@ -158,9 +158,9 @@ python get-pip.py
 ```shell
 # macOS
 
-faner@THOMASFAN-MB0:~|⇒  pip3 -V
+faner@FAN-MB0:~|⇒  pip3 -V
 pip 9.0.1 from /usr/local/lib/python3.6/site-packages (python 3.6)
-faner@THOMASFAN-MB0:~|⇒  which pip3
+faner@FAN-MB0:~|⇒  which pip3
 /usr/local/bin/pip3
 ```
 
@@ -223,6 +223,22 @@ Commands:
 > [pip安装使用详解](http://www.ttlsa.com/python/how-to-install-and-use-pip-ttlsa/) / [python pip常用命令](http://www.cnblogs.com/xueweihan/p/4981704.html)  
 > [常用的python模块及安装方法](http://blog.chinaunix.net/uid-24567872-id-3926986.html)  
 > [不得不知的几个 python 开源项目](http://lukejin.iteye.com/blog/608230)  
+
+另外也可以 `python3 -m pip` 执行 pip 模块来安装包。
+
+> `-m mod` : run library module as a script
+
+```Shell
+# macOS
+python3 -m pip install matplotlib
+
+# Windows (may require elevation)
+python -m pip install matplotlib
+
+# Linux (Debian)
+apt-get install python3-tk
+python3 -m pip install matplotlib
+```
 
 #### [upgrade pip](https://pip.pypa.io/en/stable/installing/#upgrading-pip)
 

@@ -2,8 +2,8 @@
 macOS 的 Xcode 自带安装的 Python 在 `/System/Library/Frameworks/Python.framework/` 目录下：
 
 ```Shell
-faner@THOMASFAN-MB0:~|⇒  cd /System/Library/Frameworks/Python.framework/Versions/
-faner@THOMASFAN-MB0:/System/Library/Frameworks/Python.framework/Versions|
+faner@FAN-MB0:~|⇒  cd /System/Library/Frameworks/Python.framework/Versions/
+faner@FAN-MB0:/System/Library/Frameworks/Python.framework/Versions|
 ⇒  ls
 2.3     2.5     2.6     2.7     Current
 ```
@@ -18,7 +18,7 @@ macOS 的 Current Python 版本为 2.7，终端输入 `Python` 启动的是 2.7 
 在 macOS 终端输入 `brew search python3` 即可搜索 Python3 安装包：
 
 ```Shell
-faner@THOMASFAN-MB0:~|⇒  brew search python3
+faner@FAN-MB0:~|⇒  brew search python3
 ==> Searching local taps...
 python3 ✔
 ==> Searching taps on GitHub...
@@ -28,7 +28,7 @@ python3 ✔
 在 macOS 终端输入 `brew info python3` 即可查询 Python3 安装包信息：
 
 ```Shell
-faner@THOMASFAN-MB0:~|⇒  brew info python3
+faner@FAN-MB0:~|⇒  brew info python3
 python3: stable 3.6.3 (bottled), devel 3.7.0a1, HEAD
 Interpreted, interactive, object-oriented programming language
 https://www.python.org/
@@ -45,16 +45,16 @@ Not installed
 安装 python3 后，执行 `python3 -V`（`python3 --version`）可查看安装的 python3  的版本号。  
 
 ```Shell
-faner@THOMASFAN-MB0:~|⇒  python -V
+faner@FAN-MB0:~|⇒  python -V
 Python 2.7.10
-faner@THOMASFAN-MB0:~|⇒  which python
+faner@FAN-MB0:~|⇒  which python
 /usr/bin/python
-faner@THOMASFAN-MB0:~|⇒  whereis python
+faner@FAN-MB0:~|⇒  whereis python
 /usr/bin/python
 
-faner@THOMASFAN-MB0:~|⇒  python3 --version
+faner@FAN-MB0:~|⇒  python3 --version
 Python 3.6.3
-faner@THOMASFAN-MB0:~|⇒  which python3
+faner@FAN-MB0:~|⇒  which python3
 /usr/local/bin/python3
 ```
 
@@ -78,21 +78,21 @@ pi@raspberrypi:~ $ which python3
 macOS 通过 brew 安装的 python3 默认在 `/usr/local/Cellar/python3/` 目录下，然后软链（symlink）到 `/usr/local/bin/` 目录下。
 
 ```Shell
-faner@THOMASFAN-MB0:~|⇒  echo $PATH
+faner@FAN-MB0:~|⇒  echo $PATH
 /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
 ```
 
 通过 `ls -l` 命令可显示 python3 的原身：
 
 ```Shell
-faner@THOMASFAN-MB0:~|⇒  ls -al /usr/local/bin/python3
+faner@FAN-MB0:~|⇒  ls -al /usr/local/bin/python3
 lrwxr-xr-x  1 faner  admin  35 Nov  3 08:09 /usr/local/bin/python3 -> ../Cellar/python3/3.6.3/bin/python3
 ```
 
 进一步通过 `ls -l` 命令查找  python3  的终极原身：
 
 ```Shell
-faner@THOMASFAN-MB0:~|⇒  ls -al /usr/local/Cellar/python3/3.6.3/bin/python3 
+faner@FAN-MB0:~|⇒  ls -al /usr/local/Cellar/python3/3.6.3/bin/python3 
 lrwxr-xr-x  1 faner  admin  55 Nov  3 08:09 /usr/local/Cellar/python3/3.6.3/bin/python3 -> ../Frameworks/Python.framework/Versions/3.6/bin/python3
 ```
 
@@ -122,7 +122,7 @@ python shell 前导符（primary prompt）为3个大于号 `>>>`（类似 bash s
 在 python(2) 下输入 `>>> print "Hello World from Python2"`，在 python3 下输入 `>>> print("Hello World from Python3")` 可打印 `Hello World from Python*`。
 
 ```Shell
-faner@THOMASFAN-MB0:~|⇒  python
+faner@FAN-MB0:~|⇒  python
 Python 2.7.10 (default, Feb  7 2017, 00:08:15) 
 [GCC 4.2.1 Compatible Apple LLVM 8.0.0 (clang-800.0.34)] on darwin
 Type "help", "copyright", "credits" or "license" for more information.
@@ -130,7 +130,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 Hello World from Python2
 >>> ^D
 
-faner@THOMASFAN-MB0:~|⇒  python3
+faner@FAN-MB0:~|⇒  python3
 Python 3.6.3 (default, Nov  3 2017, 08:08:42) 
 [GCC 4.2.1 Compatible Apple LLVM 9.0.0 (clang-900.0.35)] on darwin
 Type "help", "copyright", "credits" or "license" for more information.

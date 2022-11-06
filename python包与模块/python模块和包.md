@@ -79,6 +79,14 @@ If the list of identifiers is replaced by a star ('`*`'), all public names defin
 
 The wild card form of import — `from module import *` — is only allowed at the **module** level. Attempting to use it in class or function definitions will raise a SyntaxError.
 
+### isort
+
+[isort](https://marketplace.visualstudio.com/items?itemName=ms-python.isort): Import Organization support for python files.
+
+如果 import 库顺序混乱，则可能警告提示：Imports are incorrectly sorted and/or formatted.isort(E)
+
+Quick Fix 将调用 isort Sort Python import definitions alphabetically within logical sections.
+
 ## [`__main__`](https://docs.python.org/3/library/__main__.html#module-__main__)
 
 '`__main__`' is the name of the scope in which top-level code executes. A module’s `__name__` is set equal to '`__main__`' when read from standard input, a script, or from an interactive prompt.

@@ -73,6 +73,10 @@ def repeater(value):
         if new is not None: value = new
 ```
 
+[深入理解Python中的None](https://zhuanlan.zhihu.com/p/65193194)  
+[python 中None，is和==的深入探讨](https://www.jianshu.com/p/627232777efd)  
+[python - What is the difference between "is None" and "== None"](https://stackoverflow.com/questions/3257919/what-is-the-difference-between-is-none-and-none)  
+
 ### not
 
 ```shell
