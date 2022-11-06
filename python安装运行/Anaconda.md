@@ -1,41 +1,3 @@
-[Getting Started with Python in VS Code](https://code.visualstudio.com/docs/python/python-tutorial)  
-[Using Python environments in VS Code](https://code.visualstudio.com/docs/python/environments)  
-
-[vs code上配置python的运行环境](https://www.cnblogs.com/EtoDemerzel/p/8083313.html)  
-[Visual Studio Code 在 python 中的使用](https://www.jianshu.com/p/0743ad5774dc)  
-[vscode设置python3.7调试环境（已更新）](https://www.cnblogs.com/dotnetcrazy/p/9095793.html)  
-[那些使用VSCode写Python踩过的坑(Anaconda配置)](https://www.cnblogs.com/chaoswr/p/10148142.html)  
-
-## Jupyter
-
-[VSCode配置jupyter逐行语句运行python](https://blog.csdn.net/cowry5/article/details/79764954)  
-
-[Jupyter](https://jupyter.org/install) 插件已经 Deprecated，只需要安装 [Microsoft Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) 插件即可。
-
-### Jupyter Notebook
-
-[Python的做笔记神器](https://blog.csdn.net/weixin_38168620/article/details/79576970)
-
-自从Jupyter Notebook 1.0发布以来，越来越多科学家、研究者、教师使用IPython Notebook处理数据、写研究报告、甚至编写书籍。
-
-推荐使用 Anaconda，自带了 Numpy、Scipy、Matplotlib 等多种 python 开发包和 Jupyter Notebook！
-
-[jupyter notebook安装与配置](https://blog.51cto.com/huangyg/2315382?cid=728374)  
-[Python Jupyter Notebook各种使用方法记录](https://blog.csdn.net/qq_25148881/article/details/83004238)  
-[python环境搭建以及jupyter notebook的安装和启动](https://www.cnblogs.com/jiangfengtomhuo/p/7987419.html)  
-
-### [jupyter-support](https://code.visualstudio.com/docs/python/jupyter-support)
-
-[VSCode 编写 Python 支持 Jupyter notebook 了](https://blog.csdn.net/qq_20084101/article/details/84146676)  
-
-Jupyter notebook是逐个cell依次执行，那在VS Code要怎么做到这点呢？  
-很简单，在你每一个cell前加上一行：`#%%`  
-
-```Python
-#%%
-msg = 'hello, world'
-print(msg)
-```
 
 ## [Anaconda](https://www.anaconda.com/distribution/)
 
@@ -237,7 +199,7 @@ pandas                    1.0.1            py37h6c726b0_0
 
 ##### Toolset Suite
 
-![Anaconda-Suite](https://www.anaconda.com/wp-content/uploads/2018/11/distro-01-1.png)
+![Anaconda-Suite](https://assets.anaconda.com/production/Products/Distro01.png?w=700&q=80&auto=format&fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.5&dm=1647546929&s=7a22f8ac8ef3c673d6522750d19073e5)
 
 - [Jupyter](https://jupyter.org/): *Jupyter* is a non-profit, open-source project, born out of the [IPython Project](https://ipython.org/) in 2014 as it evolved to support interactive data science and scientific computing across all programming languages.  
 
@@ -311,6 +273,16 @@ Python 3.7.6
 
 默认的 base 环境携带了所有集成的组件库（Toolset Suite），可以直接导入引用，新建的子环境则需要自行按需安装。  
 如无特殊的环境隔离需求，普通简单的需求直接在 base 环境运行调试即可。  
+
+activate 后进入 conda base prompt 环境，查看内置的 python 版本和路径：
+
+```Shell
+$ conda activate
+$ (base) python -V
+Python 3.9.7
+$ (base) which python
+/usr/local/anaconda3/bin/python
+```
 
 ##### deactivate
 
@@ -544,33 +516,3 @@ Solving environment: done
 
 # All requested packages already installed.
 ```
-
-### + vscode
-
-Anaconda 配合 VSCode 可以搭建一个适用于机器学习、AI、数据科学领域学习与开发的 Python 开发环境。
-
-[Activating Anaconda Environment in VsCode](https://stackoverflow.com/questions/43351596/activating-anaconda-environment-in-vscode)
-
-快捷键 `cmd+,` 打开 vscode 偏好设置，编辑修改（`~/Library/Application Support/Code/User/settings.json`），找到如下两个参数：
-
-1. python.pythonPath；  
-2. python.autoComplete.extraPaths；  
-
-修改为 conda 子环境下对应的 bin/python 和 side-packages：
-
-```
-    "python.pythonPath": "/usr/local/anaconda3/envs/Py376/bin/python3",
-    "python.autoComplete.extraPaths": ["/usr/local/anaconda3/envs/Py376/lib/python3.7/site-packages"],
-```
-
-#### refs
-
-[搭建 Python 轻量级编写环境（Anaconda+VSCode）](https://zhuanlan.zhihu.com/p/147336202)  
-
-[Anaconda+VSCode搭建python环境](https://www.jianshu.com/p/f10fb1a4cc87) - Windows  
-[Anaconda＋VSCode搭建python开发环境](https://cloud.tencent.com/developer/news/313349) - Windows  
-[windows10环境下用anaconda和VScode配置](https://blog.csdn.net/u011622208/article/details/79625908)  
-
-[MacOS下如何配置Vscode+Anaconda呢？](https://www.zhihu.com/question/265853927)  
-[mac vscode配置 anaconda 虚拟环境](https://blog.csdn.net/liubingjun07/article/details/88833885)  
-[Mac+Anaconda+PyCharm+VSCode环境搭建](https://blog.csdn.net/qq_28863845/article/details/82589857)  
