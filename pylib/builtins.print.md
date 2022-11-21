@@ -1,10 +1,20 @@
 # print
 
+- builtins.repr  
+- builtins.print  
+
 在 Python 2 中，print 为关键字；在 Python 3 中，print 为内置函数（builtins.print）。
+
+builtins 的 print() 函数：
+
+```Shell
+    print(...)
+        print(value, ..., sep=' ', end='\n', file=sys.stdout, flush=False)
+```
 
 在 Python 3 中可执行 `help(print)` 查看 print 函数说明：
 
-```shell
+```Shell
 >>> help(print)
 
 Help on built-in function print in module builtins:
@@ -22,7 +32,7 @@ print(...)
 
 Python3 已经不支持 print 的非函数格式了，必须使用 `print()` 函数调用格式。
 
-```shell
+```Shell
 >>> print 'hello,world!'
   File "<stdin>", line 1
     print 'hello,world!'
@@ -104,62 +114,9 @@ for line in mbr_border_lines:
 
 ## expr
 
-`print(object)` 输出类型或描述信息。
-
-```shell
-#######################################
-# 打印模块信息
-#######################################
-# python3
->>> print(builtins)
-<module 'builtins' (built-in)>
-
->>> print(array)
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-NameError: name 'array' is not defined
->>> import array
-
-# python2
->>> print(array)
-<module 'array' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-dynload/array.so'>
-
-# python3
->>> print(array)
-<module 'array' from '/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/array.cpython-36m-darwin.so'>
-
-#######################################
-# 打印模块类型信息
-#######################################
-
-# python2
->>> print(list)
-<type 'list'>
-
-# python3
->>> print(list)
-<class 'list'>
-
->>> print(len)
-<built-in function len>
-
->>> print(hex)
-<built-in function hex>
-
-#######################################
-# 打印对象实例描述（__repr__）
-#######################################
-
->>> print(sys.version_info)
-sys.version_info(major=3, minor=6, micro=5, releaselevel='final', serial=0)
-
->>> print(sys.thread_info)
-sys.thread_info(name='pthread', lock='mutex+cond', version=None)
-```
-
 `print(var)` 或 `print(expr)` 打印变量或表达式的值。
 
-```shell
+```Shell
 >>> start=1
 >>> stop=10
 >>> step=2
@@ -184,11 +141,96 @@ range(1, 10, 2)
 
 ```
 
+## repr
+
+`print(object)` 输出类型或描述信息。
+
+```Shell
+#######################################
+# 打印模块信息
+#######################################
+# python3
+>>> print(builtins)
+<module 'builtins' (built-in)>
+
+>>> print(array)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'array' is not defined
+>>> import array
+
+# python2
+>>> print(array)
+<module 'array' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-dynload/array.so'>
+
+# python3
+>>> print(array)
+<module 'array' from '/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/lib-dynload/array.cpython-36m-darwin.so'>
+```
+
+除此之外，调用 `repr(obj)` 可以获取该 obj 对象实例的描述信息。
+
+repr 实际上调用的是 obj 的 `__repr__` 方法：`repr(obj) = obj.__repr__()`
+
+```
+>>> help(repr)
+
+Help on built-in function repr in module builtins:
+
+repr(obj, /)
+    Return the canonical string representation of the object.
+    
+    For many object types, including most builtins, eval(repr(obj)) == obj.
+```
+
+部分示例如下：
+
+
+```
+#######################################
+# 打印模块类型信息
+#######################################
+
+>>> print(list)
+<class 'list'>
+
+>>> repr(list)
+"<class 'list'>"
+
+>>> print(len)
+<built-in function len>
+
+>>> repr(len)
+'<built-in function len>'
+
+>>> print(hex)
+<built-in function hex>
+
+>>> repr(hex)
+'<built-in function hex>'
+
+#######################################
+# 打印对象实例描述（__repr__）
+#######################################
+
+>>> print(sys.version_info)
+sys.version_info(major=3, minor=6, micro=5, releaselevel='final', serial=0)
+
+>>> repr(sys.version_info)
+"sys.version_info(major=3, minor=9, micro=13, releaselevel='final', serial=0)"
+
+>>> print(sys.thread_info)
+sys.thread_info(name='pthread', lock='mutex+cond', version=None)
+
+>>> repr(sys.thread_info)
+"sys.thread_info(name='pthread', lock='mutex+cond', version=None)"
+```
+
 ## list vars
 
 逗号后直接接变量，Python 2 下输出 tuple；Python 3 将自动拼接前半句字面量和后面的变量，以空格（space-separated with `sep=' '`）隔开。
 
-```shell
+```Shell
 >>> start=0
 >>> stop=30
 >>> step=5
@@ -206,11 +248,28 @@ start is 0
 start, stop is 0 30
 ```
 
-## [printf-style String Formatting](https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting)
+变量也可穿插在中间：
+
+```Shell
+>>> name = "John"
+>>> score = 85
+>>> print("Total score for", name, "is", score)
+Total score for John is 85
+```
+
+## format
+
+可参考 builtins.format 和 str.format 函数，输入 `help('FORMATTING')` 可查看字符串格式化相关议题。
+
+- 参考 [builtins.str.format](./builtins.str.format.md)、[builtins.string](./builtins.string.md)。
+
+### printf-style
+
+[printf-style String Formatting](https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting)
 
 C printf 风格，使用 `%` 格式符标识占位，
 
-```shell
+```Shell
 # start 可加括号
 >>> print('start is %d' % start)
 start is 0
@@ -220,50 +279,9 @@ start,stop is 0, 30
 
 ```
 
-## format
+以下采用 C-printf-style，控制字符串截断输出：
 
-可参考 builtins.format 和 str.format 函数，输入 `help('FORMATTING')` 可查看字符串格式化相关议题。
-
-[Format String Syntax](https://docs.python.org/3/library/string.html#format-string-syntax)  
-[Format Specification Mini-Language](https://docs.python.org/3/library/string.html#formatspec)  
-
-### format specifier
-
-在占位序号或关键字之后可以 `:` 来设置填充（fill）、对齐（align）、位宽（width）、进制（base）等格式控制。
-
-> An optional '`:`' and format specifier can follow the field name. This allows greater control over how the value is formatted.
-
-1. 设置打印进制格式
-
-```shell
->>> # format also supports binary numbers
->>> "int: {0:d};  hex: {0:x};  oct: {0:o};  bin: {0:b}".format(42)
-'int: 42;  hex: 2a;  oct: 52;  bin: 101010'
-
->>> # with 0x, 0o, or 0b as prefix:
->>> "int: {0:d};  hex: {0:#x};  oct: {0:#o};  bin: {0:#b}".format(42)
-'int: 42;  hex: 0x2a;  oct: 0o52;  bin: 0b101010'
-
-```
-
-2. 设置浮点数位数
-
-```shell
->>> import math
->>> print('The value of PI is approximately {0:.3f}.'.format(math.pi))
-The value of PI is approximately 3.142.
-
->>> '{0:6.2f}'.format(math.pi)
-'  3.14'
->>> '{0:>6.2f}'.format(math.pi)
-'  3.14'
->>> '{0:<6.2f}'.format(math.pi)
-'3.14  '
-```
-
-3. 字符串截断输出
-
-```shell
+```Shell
 >>> 'i love %s' % 'python'
 'i love python'
 >>> 'i love %.2s' % 'python'
@@ -286,11 +304,45 @@ The value of PI is approximately 3.142.
 'i love py         !'
 ```
 
-4. 设置输出宽度及填充格式
+### format specifier
+
+在占位序号或关键字之后可以 `:` 来设置填充（fill）、对齐（align）、位宽（width）、进制（base）等格式控制。
+
+> An optional '`:`' and format specifier can follow the field name. This allows greater control over how the value is formatted.
+
+1. 设置打印进制格式(str.format)
+
+```Shell
+>>> # format also supports binary numbers
+>>> "int: {0:d};  hex: {0:x};  oct: {0:o};  bin: {0:b}".format(42)
+'int: 42;  hex: 2a;  oct: 52;  bin: 101010'
+
+>>> # with 0x, 0o, or 0b as prefix:
+>>> "int: {0:d};  hex: {0:#x};  oct: {0:#o};  bin: {0:#b}".format(42)
+'int: 42;  hex: 0x2a;  oct: 0o52;  bin: 0b101010'
+
+```
+
+2. 设置浮点数位数(str.format)
+
+```Shell
+>>> import math
+>>> print('The value of PI is approximately {0:.3f}.'.format(math.pi))
+The value of PI is approximately 3.142.
+
+>>> '{0:6.2f}'.format(math.pi)
+'  3.14'
+>>> '{0:>6.2f}'.format(math.pi)
+'  3.14'
+>>> '{0:<6.2f}'.format(math.pi)
+'3.14  '
+```
+
+3. 设置输出宽度及填充格式(str.format)
 
 	> Aligning the text and specifying a width
 
-```shell
+```Shell
 # default align left, fill right with spaces
 >>> '{:30}'.format('left aligned')
 'left aligned                  '
@@ -308,7 +360,7 @@ The value of PI is approximately 3.142.
 
 > Passing an integer after the '`:`' will cause that field to be a minimum number of characters wide. This is useful for making tables pretty.
 
-```shell
+```Shell
 # position:{width}{base}
 >>> table = {'Sjoerd': 4127, 'Jack': 4098, 'Dcab': 7678}
 >>> for name, phone in table.items():
@@ -319,9 +371,9 @@ Jack       ==>       4098
 Dcab       ==>       7678
 ```
 
-5. 逗号千位分隔（Using the comma as a thousands separator）
+4. 逗号千位分隔（Using the comma as a thousands separator）
 
-```shell
+```Shell
 # 对整数进行千位分隔
 >>> str1 = '{:,}'.format(1234567890)
 >>> str1
@@ -332,9 +384,9 @@ Dcab       ==>       7678
 1234567890
 ```
 
-6. 输出百分数
+5. 输出百分数(str.format)
 
-```shell
+```Shell
 >>> points = 19
 >>> total = 22
 >>> 'Correct answers: {:.2%}'.format(points/total)
