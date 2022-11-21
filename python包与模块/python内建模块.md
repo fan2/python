@@ -1,6 +1,6 @@
 打印 `sys.builtin_module_names` 可查看 python 解释器自带的基础模块：
 
-```shell
+```Shell
 >>> import sys
 >>> sys.builtin_module_names
 ('_ast', '_codecs', '_collections', '_functools', '_imp', '_io', '_locale', '_operator', '_signal', '_sre', '_stat', '_string', '_symtable', '_thread', '_tracemalloc', '_warnings', '_weakref', 'atexit', 'builtins', 'errno', 'faulthandler', 'gc', 'itertools', 'marshal', 'posix', 'pwd', 'sys', 'time', 'xxsubtype', 'zipimport')
@@ -13,7 +13,7 @@
 在 python help utility 交互控制台中，直接输入 builtins 可查看模块帮助。  
 在 python 交互控制台中，则先执行 `import builtins` 导入 builtins 模块，再调用 `help(builtins)` 查看模块帮助。
 
-```shell
+```Shell
 >>> import builtins
 >>> help(builtins)
 
@@ -29,7 +29,7 @@ DESCRIPTION
 
 - 执行 `print(builtins.__doc__)` 查看模块概要：
 
-```shell
+```Shell
 >>> import builtins
 >>> print(builtins.__doc__)
 Built-in functions, exceptions, and other objects.
@@ -39,12 +39,14 @@ Noteworthy: None is the `nil' object; Ellipsis represents `...' in slices.
 
 - 执行 `dir(builtins)` 查看模块：
 
-```shell
+```Shell
 >>> import builtins
 >>> dir(builtins)
 ```
 
 	> 也可执行 `print(builtins.__dict__)` 打印 builtins 模块的符号表。
+
+[Understanding Data Types in Python](https://jakevdp.github.io/PythonDataScienceHandbook/02.01-understanding-data-types.html)
 
 ## [FUNCTIONS](https://docs.python.org/3/library/functions.html)
 
@@ -52,7 +54,7 @@ builtins 模块提供了一些常用的内置函数，大概分为 vars、math�
 
 ### vars
 
-```shell
+```Shell
     globals()
         Return the dictionary containing the current scope's global variables.
 
@@ -95,140 +97,18 @@ builtins 模块提供了一些常用的内置函数，大概分为 vars、math�
 
 更多可参考 [math](https://docs.python.org/3/library/math.html)、[cmath](https://docs.python.org/3/library/cmath.html#module-cmath) 等 C 标准的数学库模块，或安装更专业的第三方科学计算库 [SciPy](https://www.scipy.org/) 组织提供的 SciPy 和 NumPy。  
 
-### utility
-
-#### print
-
-在 Python 2 中，print 为关键字；在 Python 3 中，print 为内置函数（builtins.print）。
-
-builtins 的 print() 函数：
-
-```shell
-    print(...)
-        print(value, ..., sep=' ', end='\n', file=sys.stdout, flush=False)
-```
-
-> [Python print函数用法](http://blog.csdn.net/zanfeng/article/details/52164124)  
-> [python格式化输出](http://blog.csdn.net/wchoclate/article/details/42297173)  
-
----
-
-对很多应用程序来说，使用模块 logging 来写入日志比使用 print 更合适。
-
-> 相关模块参考：syslog, logging。
-
-#### bin(), hex()
-
-```shell
-    bin(number, /)
-        Return the binary representation of an integer.
-
-    hex(number, /)
-        Return the hexadecimal representation of an integer.
-
-    oct(number, /)
-        Return the octal representation of an integer.
-```
-
-python 内置的 `bin()`、`oct()`、`hex()` 函数支持将十进制数转换为对应的二进制、八进制、十六进制字符串。
-
-```Shell
->>> bin(2017)
-'0b11111100001'
->>> oct(2017)
-'0o3741'
->>> print(hex(2017))
-0x7e1
->>> print(0x7e1)
-2017
-```
-
-或者通过 `print()` 函数的占位符 `%o`、`%x` 格式化输出十进制数对应的八进制和十六进制格式：
-
-```Shell
->>> x=2017
->>> print('oct=%o' %(x))
-oct=3741
->>> print('hex=%x' %(2017))
-hex=7e1
-```
-
-#### len
-
-```shell
-    len(obj, /)
-        Return the number of items in a container.
-```
-
-对于字符串（str）、数组（array）、列表（list）、元组（tuple）、集合（set）、字典（dict）等常用序列或集合，均可调用 len 取其大小（本质上是调用类的 `__len__()` 方法）。
-
-```shell
-# len(str)：返回字符串中的字符个数。等效于调用 str.__len__()
->>> str1='hello,world!'
->>> len(str1)
-12
-
->>> str2='"Isn\'t," she said.'
->>> print(str2)
-"Isn't," she said.
->>> len(str2)
-18
-
-# len(array)：返回数组中的元素个数。等效于调用 array.__len__()
->>> a=array.array('i', [2018,5,4])
->>> len(a)
-3
-
-# len(list)：返回列表中的元素个数（以逗号分隔）。等效于调用 list.__len__()
->>> squares = [1, 4, 9, 16, 25]
->>> len(squares)
-5
-
->>> len(dir(builtins))
-152
->>> len(dir(str))
-77
-
-# len(tuple)：返回元组中的元素个数（以逗号分隔）。等效于调用 tuple.__len__()
->>> t = 12345, 54321, 'hello!'
->>> print(t)
-(12345, 54321, 'hello!')
->>> len(t)
-3
-
->>> v = ([1, 2, 3], [3, 2, 1])
->>> len(v)
-2
-
-# len(set)：返回集合中的元素个数（以逗号分隔，自动去重）。等效于调用 set.__len__()
->>> basket = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'}
->>> len(basket)
-4
-
-# len(dict)：返回字典中的元素个数（以逗号分隔，键值对数）。等效于调用 dict.__len__()
->>> tel={'sape': 4139, 'guido': 4127, 'jack': 4098}
->>> len(tel)
-3
-
->>> len(builtins.__dict__)
-152
->>> len(str.__dict__)
-68
-
-```
-
 ### inspect.isbuiltin
 
 通过 `inspect.isbuiltin(object)` 可判断 object 是否为内置函数：
 
-```shell
+```Shell
 inspect.isbuiltin(object)
 Return true if the object is a built-in function or a bound built-in method.
 ```
 
 示例如下：
 
-```shell
+```Shell
 >>> inspect.isbuiltin(print)
 True
 >>> inspect.isbuiltin(len)
@@ -245,7 +125,7 @@ False
 
 builtins 模块还提供了一些常用的基础类：
 
-```shell
+```Shell
 
 CLASSES
     object
@@ -312,7 +192,7 @@ CLASSES
 
 两个相邻的字符串字面量会自动连接：
 
-```shell
+```Shell
 >>> str1='Py' 'thon'
 >>> str1
 'Python'
@@ -326,7 +206,7 @@ CLASSES
 
 当书写长字符串时，使用 `()` 定义多个字面量部分，换行时自动跨行续接，直到反括号结束：
 
-```shell
+```Shell
 # 小括号定义多个字面量拼接
 >>> text=('Put several strings within parentheses '
 ... 'to have them joined together.')
@@ -370,7 +250,7 @@ CLASSES
 
 > 其中 e 可以为基本类型或 tuple、list、set、dict 等复合类型
 
-```shell
+```Shell
 # [整形,字符串,元组,列表,集合,字典]
 >>> list1=[1,'2',(3,4),[5,6],{7,8},{'a':9,'b':10}]
 >>> len(list1)
@@ -389,7 +269,7 @@ CLASSES
 
 > 其中 e 可以为基本类型或 tuple、list、set、dict 等复合类型
 
-```shell
+```Shell
 # (整形,字符串,元组,列表,集合,字典)
 >>> tuple1=(1,'2',(3,4),[5,6],{7,8},{'a':9,'b':10})
 >>> len(tuple1)
@@ -398,7 +278,7 @@ CLASSES
 
 内置函数 [enumerate()](https://docs.python.org/3/library/functions.html#enumerate) 产生的结果为 `list<tuple>`，每个列表元素为 `(index, value)` 二元组（2-tuples）。
 
-```shell
+```Shell
 >>> help(enumerate)
 
 Help on class enumerate in module builtins:
@@ -413,7 +293,7 @@ class enumerate(object)
 
 以下为具体示例：
 
-```shell
+```Shell
 >>> seasons = ['Spring', 'Summer', 'Fall', 'Winter']
 >>> list(enumerate(seasons))
 [(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
@@ -430,7 +310,7 @@ class enumerate(object)
 
 > start 默认为0；step 默认为1。
 
-```shell
+```Shell
 >>> list(range(10))
 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -443,7 +323,7 @@ class enumerate(object)
 
 `range(start,stop,step)` 可用 while 循环等效实现：
 
-```shell
+```Shell
 >>> start=0
 >>> stop=30
 >>> step=5
@@ -473,7 +353,7 @@ v[5] = 25
 
 典型应用是 stop 取 len(list)，基于索引循环遍历列表：
 
-```shell
+```Shell
 >>> for i in range(len(list1)):\
 ...     print(list1[i])
 ... 
@@ -495,7 +375,7 @@ v[5] = 25
 
 > 其中 e 可以为基本类型或 tuple 类型
 
-```shell
+```Shell
 >>> set1={1,'2',(3,4)}
 >>> len(set1)
 3
@@ -503,7 +383,7 @@ v[5] = 25
 
 set 中的元素必须提供 `__hash__()` 方法，为 hashable（has a hash value），否则报错 `TypeError: unhashable type:`
 
-```shell
+```Shell
 >>> set2={1,'2',(3,4),[5,6]}
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
@@ -530,7 +410,7 @@ TypeError: unhashable type: 'dict'
 - key 必须为 arbitrary（hashable），list、set、dict 等 unhashable 类型不能作为键；  
 - value 可为 not hashable 或 hashable。  
 
-```shell
+```Shell
 >>> dict1[squares]=3
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
