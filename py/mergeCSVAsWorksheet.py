@@ -18,10 +18,12 @@ python3 mergeCSVAsWorksheet.py -v FileAssist # 相对 pwd 的路径
 FileAssist/merged-20201111_111111.xlsx
 """
 
-import os, sys, glob
+import os
+import glob
 import datetime
 import argparse
 import pandas
+
 
 def main(dirpath: str, debug: bool = False):
     if debug:
@@ -55,7 +57,6 @@ def main(dirpath: str, debug: bool = False):
         print('mergedFilepath =', mergedFilepath)
 
 
-
 # main entry
 if __name__ == '__main__':
     # print('This program is being run by itself')
@@ -71,7 +72,6 @@ if __name__ == '__main__':
                                         formatter_class=argparse.
                                         RawTextHelpFormatter,
                                         epilog='fan@qq.com')
-    argparser.version = '1.0'
     argparser.add_argument('-V', '--version', action='version')
     argparser.add_argument('dirpath', type=str, help='dir of csv files')
     argparser.add_argument('-v', '--verbose', dest='debug',
