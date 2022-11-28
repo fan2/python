@@ -53,6 +53,61 @@ printable -- a string containing all ASCII characters considered printable
 
 **注意**：先要 import module。
 
+#### pprint
+
+在 py 目录下执行 `python3 open_python_module_code.py pprint` 打开 pprint.py 源码，第11~35行为模块的docstring（模块概要）。
+第50、59、65行为函数 pprint、pformat、pp 的docstring（函数说明）。
+
+![pprint.docstring](./../images/pprint.docstring.png)
+
+模块代码文件开头定义的 `pprint.__doc__` 即为 help(pprint) 帮助命令输出的 DESCRIPTION 部分：
+
+```Shell
+>>> import pprint
+>>> pprint.__doc__
+"Support to pretty-print lists, tuples, & dictionaries recursively.\n\nVery simple, but useful, especially in debugging data structures.\n\nClasses\n-------\n\nPrettyPrinter()\n    Handle pretty-printing operations onto a stream using a configured\n    set of formatting parameters.\n\nFunctions\n---------\n\npformat()\n    Format a Python object into a pretty-printed representation.\n\npprint()\n    Pretty-print a Python object to a stream [default is sys.stdout].å\n\nsaferepr()\n    Generate a 'standard' repr()-like value, but protect against recursive\n    data structures.\n\n"
+
+>>> help(pprint)
+
+Help on module pprint:
+
+NAME
+    pprint - Support to pretty-print lists, tuples, & dictionaries recursively.
+
+DESCRIPTION
+    Very simple, but useful, especially in debugging data structures.
+
+    Classes
+    -------
+
+    PrettyPrinter()
+        Handle pretty-printing operations onto a stream using a configured
+        set of formatting parameters.
+
+    Functions
+    ---------
+
+    pformat()
+        Format a Python object into a pretty-printed representation.
+
+    pprint()
+        Pretty-print a Python object to a stream [default is sys.stdout].å
+
+    saferepr()
+        Generate a 'standard' repr()-like value, but protect against recursive
+        data structures.
+```
+
+以下查看 `pprint.pprint.__doc__`：
+
+```
+>>> import pprint
+>>> pprint.pprint.__doc__
+'Pretty-print a Python object to a stream [default is sys.stdout].'
+```
+
+#### string
+
 > `string.__doc__` 即 string.docstring 截图中定义在模块代码 `string.py` 首部三引号包括的多行注释部分（[Multi-line Docstrings](https://www.python.org/dev/peps/pep-0257/#id17)）—— ①。  
 > 结合 help() 输出可知，包括紧随三引号后的 NAME 部分，以及间隔空行后的 DESCRIPTION 部分。  
 
