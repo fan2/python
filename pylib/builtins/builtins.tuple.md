@@ -4,6 +4,30 @@
 然而，有时候你需要创建一系列不可修改的元素， 元组可以满足这种需求。  
 Python将不能修改的值称为`不可变的`，而不可变的列表被称为**元组**。  
 
+## help
+
+```Shell
+>>> help(tuple)
+
+Help on class tuple in module builtins:
+
+class tuple(object)
+ |  tuple(iterable=(), /)
+ |
+ |  Built-in immutable sequence.
+ |
+ |  If no argument is given, the constructor returns an empty tuple.
+ |  If iterable is specified the tuple is initialized from iterable's items.
+ |
+ |  If the argument is a tuple, the return value is the same object.
+ |
+ |  Built-in subclasses:
+ |      asyncgen_hooks
+ |      UnraisableHookArgs
+```
+
+## demo
+
 ```shell
 >>> range1=range(1,8)
 >>> tuple1=tuple(range1)

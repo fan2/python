@@ -1,5 +1,19 @@
 # [Set Types — set, frozenset](https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset)
 
+## help
+
+```Shell
+>>> help(set)
+
+Help on class set in module builtins:
+
+class set(object)
+ |  set() -> new empty set object
+ |  set(iterable) -> new set object
+ |
+ |  Build an unordered collection of unique elements.
+```
+
 ## empty set
 
 `st=set()`: 构造一个空集合对象。  

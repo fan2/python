@@ -20,6 +20,22 @@ True
 True
 ```
 
+## help
+
+```Shell
+>>> help(list)
+
+Help on class list in module builtins:
+
+class list(object)
+ |  list(iterable=(), /)
+ |
+ |  Built-in mutable sequence.
+ |
+ |  If no argument is given, the constructor creates a new empty list.
+ |  The argument must be an iterable if specified.
+```
+
 ## why not [array](https://docs.python.org/3/library/array.html) ?
 
 `array` — Efficient arrays of numeric values

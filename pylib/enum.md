@@ -1,6 +1,33 @@
 
 [Python中枚举的使用](https://blog.csdn.net/m0_38061927/article/details/76058133)
 
+## help
+
+```Shell
+>>> import enum
+>>> help(enum)
+
+Help on module enum:
+
+NAME
+    enum
+
+CLASSES
+    builtins.int(builtins.object)
+        IntEnum(builtins.int, Enum)
+        IntFlag(builtins.int, Flag)
+    builtins.object
+        Enum
+            Flag
+                IntFlag(builtins.int, Flag)
+            IntEnum(builtins.int, Enum)
+        auto
+    builtins.type(builtins.object)
+        EnumMeta
+```
+
+## usage
+
 ```
 from enum import Enum
 

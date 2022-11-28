@@ -1,6 +1,31 @@
 
 ## [re](https://docs.python.org/3/library/re.html)
 
+### help
+
+```Shell
+>>> import re
+>>> help(re)
+
+Help on module re:
+
+NAME
+    re - Support for regular expressions (RE).
+
+DESCRIPTION
+    This module provides regular expression matching operations similar to
+    those found in Perl.  It supports both 8-bit and Unicode strings; both
+    the pattern and the strings being processed can contain null bytes and
+    characters outside the US ASCII range.
+
+    Regular expressions can contain both special and ordinary characters.
+    Most ordinary characters, like "A", "a", or "0", are the simplest
+    regular expressions; they simply match themselves.  You can
+    concatenate ordinary characters, so last matches the string 'last'.
+```
+
+### howto
+
 [regex-howto](https://docs.python.org/3/howto/regex.html#regex-howto)
 
 The sequence

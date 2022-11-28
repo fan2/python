@@ -2,6 +2,8 @@
 
 `str` 是 built-in string class，`string` 是 A collection of string constants。
 
+### help
+
 模块 [string](https://docs.python.org/3/library/string.html) 定义了一些字符类型集常量：
 
 ```Shell

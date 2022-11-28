@@ -12,6 +12,9 @@ Bytes objects are **immutable** sequences of single bytes.
 class bytes 构造声明如下：
 
 ```
+```Shell
+>>> help(bytes)
+
 class bytes(object)
  |  bytes(iterable_of_ints) -> bytes
  |  bytes(string, encoding[, errors]) -> bytes

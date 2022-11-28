@@ -5,7 +5,11 @@
 
 [7.2. Reading and Writing Files](https://docs.python.org/3.7/tutorial/inputoutput.html#reading-and-writing-files)
 
-```
+## help
+
+```Shell
+>>> help(open)
+
 Help on built-in function open in module io:
 
 open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)
