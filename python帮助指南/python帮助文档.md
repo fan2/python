@@ -13,7 +13,9 @@
 
 [查看python的模块和函数帮助文档方法](http://blog.csdn.net/u013810296/article/details/55509284)  
 
-## [help](https://docs.python.org/3/library/functions.html#help)
+## help
+
+[help](https://docs.python.org/3/library/functions.html#help)
 
 ```Shell
 >>> help
@@ -347,7 +349,9 @@ to. Enter any symbol to get more help.
 **=                 <                   ]                   
 ```
 
-#### [modules](https://docs.python.org/3.6/tutorial/modules.html)
+#### modules
+
+[modules](https://docs.python.org/3.6/tutorial/modules.html)
 
 输入 `modules` 可以列出当前所有已安装的模块：
 
@@ -404,7 +408,9 @@ has the same effect as typing a particular string at the help> prompt.
 
 退回到 `>>>` 中输入`help(module)`、`help(module.function)`、`help(module.class)`、`help(module.class.method)` 可查看等效帮助。  
 
-## [dir()](https://docs.python.org/3/library/functions.html#dir)
+## dir() & __all__
+
+[dir()](https://docs.python.org/3/library/functions.html#dir)
 
 The built-in function [dir()](https://docs.python.org/3.6/tutorial/modules.html#the-dir-function) is used to find out which names a module defines. It returns a sorted list of strings:
 
@@ -415,7 +421,7 @@ The built-in function [dir()](https://docs.python.org/3.6/tutorial/modules.html#
 
 可导入 builtins 模块，然后调用 `help(builtins.dir)` 查看帮助：
 
-```
+```Shell
 >>> import builtins
 >>> help(builtins.dir)
 ```
@@ -468,7 +474,8 @@ dir(...)
 >>> dir(pdfminer.psparser)
 ```
 
-通过列表推导式将指定模块中以下划线开头的非供外部使用的名称过滤掉：
+调用 dir 列举模块内容，会包含一些以下划线开头不希望向外公开导出的符号。
+可以通过简单列表推导式将以下划线开头的非供外部使用的名称过滤掉：
 
 ```Shell
 >>> import string
@@ -476,9 +483,19 @@ dir(...)
 ['Formatter', 'Template', 'ascii_letters', 'ascii_lowercase', 'ascii_uppercase', 'capwords', 'digits', 'hexdigits', 'octdigits', 'printable', 'punctuation', 'whitespace']
 ```
 
+在 dir 列出的完整清单中，包含名称 `__all__`。这个变量包含一个列表，与上述列表推导过滤的结果一致，旨在定义模块的公有接口。
+它告诉解释器，从这个模块导入所有的名称意味着什么，具体来说 `from string import *` 后可调用 `string.__all__` 中声明导出的符号。
+
+```Shell
+>>> string.__all__
+['ascii_letters', 'ascii_lowercase', 'ascii_uppercase', 'capwords', 'digits', 'hexdigits', 'octdigits', 'printable', 'punctuation', 'whitespace', 'Formatter', 'Template']
+```
+
 ### autocompletion
 
-在 python3 控制台中，对于明确类型的对象，输入引用符点号（`.`）后，再按下 tab 会列举所有可能的成员函数或属性：
+在 python3 控制台中，对于明确类型的对象，输入引用符点号（`.`）后，再按下 tab 会列举所有可能的成员函数或属性。
+
+例如定义了字符串 str1，尝试点引用并按tab键将自动列出 str 对象支持的方法：
 
 ```Shell
 >>> str1='hello'
@@ -494,6 +511,15 @@ str1.find(          str1.isprintable(   str1.rfind(         str1.title(
 str1.format(        str1.isspace(       str1.rindex(        str1.translate(
 str1.format_map(    str1.istitle(       str1.rjust(         str1.upper(
 str1.index(         str1.isupper(       str1.rpartition(    str1.zfill(
+```
+
+例如定义构造列表对象 l，尝试点引用并按tab键将自动列出 list 对象支持的方法：
+
+```Shell
+>>> l = list()
+>>> l.
+l.append(    l.copy()     l.extend(    l.insert(    l.remove(    l.sort(
+l.clear()    l.count(     l.index(     l.pop(       l.reverse()
 ```
 
 借此特性，在编码过程中，可一览某一类别实例的可用属性、方法。

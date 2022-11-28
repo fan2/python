@@ -99,7 +99,18 @@ builtins 模块提供了一些常用的内置函数，大概分为 vars、math�
 
 ### inspect.isbuiltin
 
-通过 `inspect.isbuiltin(object)` 可判断 object 是否为内置函数：
+由于 python3 控制台 REPL 默认导入了 builtins 模块，因此可以直接输入函数符号名，如下显示则为内置函数：
+
+```Shell
+>>> len
+<built-in function len>
+>>> open
+<built-in function open>
+>>> print
+<built-in function print>
+```
+
+另外，也可通过 `inspect.isbuiltin(object)` 判断 object 是否为内置函数：
 
 ```Shell
 inspect.isbuiltin(object)
@@ -120,6 +131,48 @@ False
 >>> inspect.isbuiltin(string)
 False
 ```
+
+### inspect in builtins
+
+由于 python3 控制台 REPL 默认导入了 builtins 模块，因此可以直接输入类名，根据输出的提示信息判断是否为内建模块：
+
+
+```
+>>> str
+<class 'str'>
+
+>>> string
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'string' is not defined
+
+>>> enum
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'enum' is not defined
+
+>>> enumerate
+<class 'enumerate'>
+
+>>> date
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'date' is not defined
+
+>>> datetime
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'datetime' is not defined
+
+```
+
+除此之外，还可以通过 in dir(builtins) 判断是否在dir列表中，来判断符号是否在内置命名空间 builtins 中。
+
+```Shell
+>>> 'list' in [n for n in dir(builtins) if not n.startswith('_')]
+```
+
+或者尝试执行 `help(list)` 或 `dir(list)`，看是否正常输出从而判断是否包含在内置命名空间 builtins 中。
 
 ## [CLASSES](https://docs.python.org/3/library/stdtypes.html#)
 
