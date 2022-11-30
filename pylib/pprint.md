@@ -1,21 +1,35 @@
 [pprint — Data pretty printer](https://docs.python.org/3/library/pprint.html)  
 [pprint --- 数据美化输出](https://docs.python.org/zh-cn/3/library/pprint.html)  
 
-从 help(pprint.pprint) 中的函数原型来看，当信息超过80个字符时将分行显示，还可通过 ident 设置分行缩进。
+从 help(pprint) 中的函数原型来看：
+
+1. `pprint` 当信息超过80个字符时将分行显示，还可通过 ident 设置分行缩进。
+2. 如果不需要指定 stream、indent、width、depth、compact 等控制信息，可采用简易接口 `pp` 即可。
 
 ```Shell
->>> help(pprint.pprint)
+>>> help(pprint)
 
-Help on function pprint in module pprint:
+FUNCTIONS
 
-pprint(object, stream=None, indent=1, width=80, depth=None, *, compact=False, sort_dicts=True, underscore_numbers=False)
-    Pretty-print a Python object to a stream [default is sys.stdout].
+    pp(object, *args, sort_dicts=False, **kwargs)
+        Pretty-print a Python object
+
+    pprint(object, stream=None, indent=1, width=80, depth=None, *, compact=False, sort_dicts=True)
+        Pretty-print a Python object to a stream [default is sys.stdout].
 ```
 
 - [Python - Pretty Print Numbers](https://www.tutorialspoint.com/python_text_processing/python_pretty_prints.htm)
 - [打印 Python 的一切 —— pprint & beeprint](https://zhuanlan.zhihu.com/p/42504137)
 
 ## list
+
+以下示例，通过简单列表推导，调用 pprint.pp 打印内建模块 builtins 中的符号列表。
+
+```Shell
+>>> import builtins, pprint
+>>> builtin_sym=[n for n in dir(builtins) if not n.startswith('_')]
+>>> pprint.pp(builtin_sym)
+```
 
 以下示例，通过简单列表推导，过滤列表list公用接口，并分别用 print、pprint 打印符号列表。
 
@@ -25,7 +39,7 @@ import pprint
 
 list_all = [n for n in dir(list) if not n.startswith('_')]
 print(list_all)
-pprint.pprint(list_all)
+pprint.pp(list_all)
 ```
 
 print 在一行打印整个列表，而 pprint 则在每一行输出一个列表项：
@@ -54,24 +68,24 @@ import string
 
 
 print(string.__all__)
-pprint.pprint(string.__all__)
+pprint.pprint(string.__all__, indent=4)
 ```
 
 ```
 ['ascii_letters', 'ascii_lowercase', 'ascii_uppercase', 'capwords', 'digits', 'hexdigits', 'octdigits', 'printable', 'punctuation', 'whitespace', 'Formatter', 'Template']
 
-['ascii_letters',
- 'ascii_lowercase',
- 'ascii_uppercase',
- 'capwords',
- 'digits',
- 'hexdigits',
- 'octdigits',
- 'printable',
- 'punctuation',
- 'whitespace',
- 'Formatter',
- 'Template']
+[   'ascii_letters',
+    'ascii_lowercase',
+    'ascii_uppercase',
+    'capwords',
+    'digits',
+    'hexdigits',
+    'octdigits',
+    'printable',
+    'punctuation',
+    'whitespace',
+    'Formatter',
+    'Template']
 ```
 
 以下示例，分别用 print、pprint 打印 sys.path：
@@ -82,7 +96,7 @@ import sys
 
 
 print(sys.path)
-pprint.pprint(sys.path)
+pprint.pp(sys.path)
 ```
 
 对于长列表，pprint 更方便地逐行查看每个元素：

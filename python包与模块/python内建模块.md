@@ -136,6 +136,7 @@ False
 
 由于 python3 控制台 REPL 默认导入了 builtins 模块，因此可以直接输入类名，根据输出的提示信息判断是否为内建模块：
 
+str 为内建类型（在 builtins 模块中），string 不是内建类型（但是标准库）：
 
 ```
 >>> str
@@ -145,7 +146,11 @@ False
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 NameError: name 'string' is not defined
+```
 
+enumerate 为内建类型，enum 不是内建类型：
+
+```
 >>> enum
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
@@ -153,7 +158,11 @@ NameError: name 'enum' is not defined
 
 >>> enumerate
 <class 'enumerate'>
+```
 
+date 和 datetime 非内建类型：
+
+```
 >>> date
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
@@ -163,13 +172,14 @@ NameError: name 'date' is not defined
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 NameError: name 'datetime' is not defined
-
 ```
 
 除此之外，还可以通过 in dir(builtins) 判断是否在dir列表中，来判断符号是否在内置命名空间 builtins 中。
 
 ```Shell
+>>> import builtins
 >>> 'list' in [n for n in dir(builtins) if not n.startswith('_')]
+True
 ```
 
 或者尝试执行 `help(list)` 或 `dir(list)`，看是否正常输出从而判断是否包含在内置命名空间 builtins 中。

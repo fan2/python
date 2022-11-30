@@ -273,6 +273,22 @@ s=`-2**15+u` => u=`2**15+s` => u=`2**15-12345`=20423 => hex(u)='0x4fc7'，
 b'\xff\xff\xcf\xc7'
 ```
 
+## float
+
+```Shell
+>>> help(float)
+
+ |  fromhex(string, /) from builtins.type
+ |      Create a floating-point number from a hexadecimal string.
+```
+
+```Shell
+>>> float.fromhex('0x1.ffffp10')
+2047.984375
+>>> float.fromhex('-0x1p-1074')
+-5e-324
+```
+
 ## struct
 
 [struct — Interpret bytes as packed binary data](https://docs.python.org/3/library/struct.html) - [struct --- 将字节串解读为打包的二进制数据](https://docs.python.org/zh-cn/3/library/struct.html)
@@ -341,6 +357,8 @@ P | void | 整数 | N/A | (5)
 
 ### 示例
 
+#### hhi -> hhq
+
 ```Python
 #%%
 import struct
@@ -368,7 +386,12 @@ b'\x00\x01\x00\x02\x00\x00\x00\x03'
 b'0001000200000003'
 ```
 
-将 `hhi` 换成 `hhl`，字节顺序、大小、对齐方式按原字节，short s1+short s2共占4个字节，补充4个字节填0与后面long l的8个字节对齐。
+将 `hhi` 换成 `hhl`：
+
+1. 字节顺序、大小、对齐方式按原字节，short s1+short s2共占4个字节，补充4个字节填0与后面long l按原字节是8个字节对齐，结构体整体size=16。
+2. 指定大端字节顺序，short s1+short s2共占4个字节，无对齐标准大小，紧接着l(long)也占4个字节，结构体整体size=8。
+
+> 注意：q(long)才占8个字节！
 
 ```
 16
@@ -379,7 +402,12 @@ b'\x00\x01\x00\x02\x00\x00\x00\x03'
 b'0001000200000003'
 ```
 
-等效的C语言测试代码：
+将 `hhi` 换成 `hhq`，calcsize 分别是 16、12（=标准大小=2+2+8）。
+
+`hhi` 和 `hhq` 等效的C语言测试代码，sizeof 分别输出：4,8,8,16。
+
+1. S1：s1+s2共占4个字节，与i占的4个字节对齐，无需填充，结构体整体size=8。
+2. S2：s1+s2共占4个字节，需补充4个字节，与l占的8个字节对齐，结构体整体size=16。
 
 ```C
 #include <stdio.h>
@@ -402,42 +430,113 @@ int main(int argc, char** argv) {
     printf("sizeof S1 = %lu\n", sizeof(S1));
     printf("sizeof S2 = %lu\n", sizeof(S2));
 
-    // hexdump bytearray of S2
+    return 0;
+}
+```
+
+#### hhq,hqh,qhh
+
+需要注意的是，struct.calcsize 计算的尺寸和C语言中的struct布局占用的字节数可能不一致：
+
+```Python
+# %%
+import struct
+import binascii
+
+
+print(struct.calcsize('hhq'))
+packed = struct.pack('hqh', 1, 2, 3)
+print(packed)
+print(binascii.hexlify(packed))
+
+print(struct.calcsize('hqh'))
+packed = struct.pack('hqh', 1, 2, 3)
+print(packed)
+print(binascii.hexlify(packed))
+
+print(struct.calcsize('qhh'))
+packed = struct.pack('hqh', 1, 2, 3)
+print(packed)
+print(binascii.hexlify(packed))
+```
+
+运行结果：
+
+- struct.calcsize('hhq') = 16 = 2+2+(4)+8
+- struct.calcsize('hqh') = 18 = 2+(6)+8+2
+- struct.calcsize('qhh') = 12 = 8+2+2
+
+**分析**：前面的短字节填充对齐后面的长字节，长字节后面的短字节不用再对齐。
+
+---
+
+等效的C语言测试代码，sizeof 分别为 16, 24, 16。
+
+```C
+#include <stdio.h>
+
+typedef unsigned char *byte_pointer;
+
+void show_bytes(byte_pointer start, size_t len) {
+    size_t i;
+    printf("0x");
+    for (i=0; i<len; i++)
+        printf("%.2x", start[i]);
+    printf("\n");
+}
+
+// hhq
+typedef struct tagS2 {
+    short s1;
+    short s2;
+    long l;
+} S2;
+
+// hqh
+typedef struct tagS3 {
+    short s1;
+    long l;
+    short s2;
+} S3;
+
+// qhh
+typedef struct tagS4 {
+    long l;
+    short s1;
+    short s2;
+} S4;
+
+int main(int argc, char** argv) {
+    // hexdump bytearray
+    printf("sizeof S2 = %lu\n", sizeof(S2));
     S2 s2 = {1, 2, 3};
-    S2 *ps2 = &s2;
-    int i = 0;
-    for (i=0; i<sizeof(s2); i++) {
-        printf("0x%02x\n", ((unsigned char*)ps2)[i]);
-    }
+    show_bytes((byte_pointer)&s2, sizeof(S2));
+
+    printf("sizeof S3 = %lu\n", sizeof(S3));
+    S3 s3 = {1, 2, 3};
+    show_bytes((byte_pointer)&s3, sizeof(S3));
+
+    printf("sizeof S4 = %lu\n", sizeof(S4));
+    S4 s4 = {1, 2, 3};
+    show_bytes((byte_pointer)&s4, sizeof(S4));
 
     return 0;
 }
 ```
 
-需要注意的是，struct.calcsize 计算的尺寸和C语言中的struct布局占用的字节数可能不一致：
+在 macOS（litte-endian）上的运行结果如下：
 
-```Python
-struct.calcsize('hhl') # 16
-struct.calcsize('hlh') # 18
-struct.calcsize('lhh') # 12
+```
+sizeof S2 = 16
+0x01000200000000000300000000000000
+sizeof S3 = 24
+0x010000000000000002000000000000000300000000000000
+sizeof S4 = 16
+0x01000000000000000200030000000000
 ```
 
-sizeof 分别是 16, 24, 16。
+对 sizeof struct 长度的简析：
 
-```C
-struct {
-    short s1;
-    short s2;
-    long l;
-};
-struct {
-    short s1;
-    long l;
-    short s2;
-};
-struct {
-    long l;
-    short s1;
-    short s2;
-};
-```
+- 16=2+2+(4)+8
+- 24=2+(6)+8+2+(6)
+- 16=8+2+2+(4)

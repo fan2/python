@@ -164,6 +164,8 @@ Using the comma as a thousands separator:
 
 ## DecHexBin
 
+[Bin, Hex, Dec Converter](https://g2384.github.io/collection/Hex_Calc_IEEE754_conversion.html)
+
 ### print format
 
 通过 `print()` 函数的占位符 `%o`、`%x` 格式化输出十进制数对应的八进制和十六进制格式：
@@ -191,7 +193,7 @@ hex=7e1
 
 ### bin(), hex()
 
-value representation：打印数值的二进制、八进制、十六进制表示（字符串）：
+value representation：打印整形（integer）数值的二进制、八进制、十六进制表示（字符串）：
 
 binary/octal/hexadecimal representation：
 
@@ -231,6 +233,62 @@ python 内置的 `bin()`、`oct()`、`hex()` 函数支持将十进制数转换�
 >>> 0x137
 311
 ```
+
+### float.hex()
+
+In Python float is always double-precision.
+
+根据 IEEE-754 浮点数标准，单精度浮点格式（C语言中的float）中，s、exp 和 frac 字段分别占位 1、k=8 和 n=23。
+在双精度浮点数格式（C语言中的double）中，s、exp 和 frac 字段分别占位 1、k=11 和 n=52。
+
+具体可在 [Floating Point to Hex Converter](https://gregstoll.com/~gregstoll/floattohex/) 中查看浮点数的二进制位图布局。
+
+```Shell
+>>> help(float)
+
+ |  hex(self, /)
+ |      Return a hexadecimal representation of a floating-point number.
+
+```
+
+```Shell
+>>> (-0.1).hex()
+'-0x1.999999999999ap-4'
+>>> 3.14159.hex()
+'0x1.921f9f01b866ep+1'
+
+>>> (1.25).hex()
+'0x1.4000000000000p+0'
+>>> float.hex(-1.25)
+'-0x1.4000000000000p+0'
+>>> (123.456).hex()
+'0x1.edd2f1a9fbe77p+6'
+>>> float.hex(-123.456)
+'-0x1.edd2f1a9fbe77p+6'
+```
+
+1.25 的十六进制表示为 '0x1.4000000000000p+0'。
+
+p+后面的0为阶码值（E=e-Bias），即 E=0。
+0x1.4000000000000 = 1+0x4000000000000 = (1+4/0x10)*(2**0) = 1.25
+
+小数部分（frac）的二进制推导：
+
+bin(0x4000000000000)='0b100000000000000000000000000000000000000000000000000'
+二进制高位补零凑成52位，则小数位f=0b0100000000000000000000000000000000000000000000000000/(2**52)=0.25
+规格化情况，尾数定义为M=1+f=1.25，V=`M*(2**E)`=`(1+0.25)*(2**0)`=1.25
+
+参考：
+
+- [How to convert a float into hex](https://stackoverflow.com/questions/23624212/how-to-convert-a-float-into-hex)  
+- [Convert float to hex in Python](https://www.codespeedy.com/convert-float-to-hex-in-python/)
+- [Python的 Convert Hex to Float value](https://andy851220.medium.com/python%E7%9A%84hex-to-float-value-ce228d90bc6b)  
+- [Python中hex与float互转](https://blog.csdn.net/wq_0708/article/details/121102261)  
+
+在线转换演位图示：
+
+- [Floating Point to Hex Converter](https://gregstoll.com/~gregstoll/floattohex/)
+- [IEEE-754 Floating Point Converter](https://www.h-schmidt.net/FloatConverter/IEEE754.html)
 
 ### bit_length
 

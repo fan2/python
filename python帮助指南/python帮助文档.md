@@ -486,7 +486,10 @@ dir(...)
 在 dir 列出的完整清单中，包含名称 `__all__`。这个变量包含一个列表，与上述列表推导过滤的结果一致，旨在定义模块的公有接口。
 它告诉解释器，从这个模块导入所有的名称意味着什么，具体来说 `from string import *` 后可调用 `string.__all__` 中声明导出的符号。
 
+> `string.__all__` 等效于以上列表推导过滤。
+
 ```Shell
+>>> import string
 >>> string.__all__
 ['ascii_letters', 'ascii_lowercase', 'ascii_uppercase', 'capwords', 'digits', 'hexdigits', 'octdigits', 'printable', 'punctuation', 'whitespace', 'Formatter', 'Template']
 ```
