@@ -215,8 +215,23 @@ builtins.hex  # lowercase hexadecimal string prefixed with “0x”
 python 内置的 `bin()`、`oct()`、`hex()` 函数支持将十进制数转换为对应的二进制、八进制、十六进制字符串。
 
 ```Shell
+>>> bin(5)
+'0b101'
 >>> bin(2017)
 '0b11111100001'
+```
+
+如果想精确控制按byte输出二进制位，不足高位补0，则可尝试使用 numpy.binary_repr 支持指定 width。
+
+```Shell
+>>> import numpy
+>>> numpy.binary_repr(5, width=8)
+'00000101'
+>>> numpy.binary_repr(2017, width=16)
+'0000011111100001'
+```
+
+```Shell
 >>> oct(2017)
 '0o3741'
 >>> print(hex(2017))
