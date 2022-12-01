@@ -1,31 +1,4 @@
 
-## vscode
-
-[Jupyter Notebooks in VS Code](https://code.visualstudio.com/docs/python/jupyter-support)
-
-[Jupyter](https://jupyter.org/install) 插件已经 Deprecated，只需要安装 [Microsoft Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) 插件即可，微软官方提供了 Python 插件已经内嵌打包了 Jupyter 插件。
-
-1. `Python`: IntelliSense (Pylance), Linting, Debugging (multi-threaded, remote), Jupyter Notebooks, code formatting, refactoring, unit tests, and more.
-
-    - Extension Pack: `Pylance`, `Jupyter` and `isort`.
-
-2. `Jupyter`: Jupyter notebook support, interactive programming and computing that supports Intellisense, debugging and more.
-
-    - Extension Pack: `Jupyter Keymap`, `Jupyter Notebook Renderers`, `Jupyter Slide Show`, `Jupyter Cell Tags`.
-
-
-[VSCode配置jupyter逐行语句运行python](https://blog.csdn.net/cowry5/article/details/79764954)  
-[VSCode 编写 Python 支持 Jupyter notebook 了](https://blog.csdn.net/qq_20084101/article/details/84146676)  
-
-Jupyter notebook是逐个cell依次执行，那在VS Code要怎么做到这点呢？  
-很简单，在你每一个cell前加上一行：`#%%`  
-
-```Python
-#%%
-msg = 'hello, world'
-print(msg)
-```
-
 ## Jupyter Notebook
 
 `Jupyter Notebook`: The Classic Notebook Interface
@@ -46,7 +19,7 @@ Jupyter Notebook 相当于在浏览器中完成python编程任务，不仅可以
 
 ### launch
 
-在 Anaconda IDE 中点击启动 Jupyter Notebook 会开一个终端Terminal并启动 python webServer，然后在浏览器中输入本地 localhost url 即可访问web界面。
+在 Anaconda Navigator 中点击启动 Jupyter Notebook 会开一个终端Terminal并启动 python webServer。
 
 ```Shell
 $ /usr/local/anaconda3/bin/jupyter_mac.command ; exit;
@@ -60,19 +33,66 @@ $ /usr/local/anaconda3/bin/jupyter_mac.command ; exit;
 [C 10:17:13.220 NotebookApp] 
 ```
 
+将会在默认浏览器中打开 http://localhost:8890/tree 。
+
 ### usage
 
 New | Notebook - Python 3 (ipykernel)，将新建一个 Notebook Tab页面：
 
-![jupyter-New](../images/jupyter-New.png)
+![jupyter-New](../../images/jupyter-New.png)
 
 在打开的 Jupyter Notebook 中的单元格中输入 Python 代码，按下 control+command（^⌘）快捷键即可执行：
 
-![jupyter-Cell](../images/jupyter-Cell.png)
+![jupyter-Cell](../../images/jupyter-Cell.png)
 
 > 按下组合键 shift+command（⇧⌘）将在执行当前单元格后，在下面新开一个Cell并聚焦输入。
 
 点击 `➕` 可在下面插入新单元格。
+
+### nbextensions
+
+[jupyter notebook中设置代码的自动补全功能](https://blog.csdn.net/qq_45154565/article/details/109113838)
+
+```Shell
+# 安装对应所需模块
+pip install jupyter_contrib_nbextensions
+
+# 启用用户配置
+jupyter contrib nbextension install --user
+```
+
+[JupyterNotebook代码提示与自动补齐](https://blog.csdn.net/maoyuanming0806/article/details/109744284)
+
+```Shell
+pip install jupyter_contrib_nbextensions
+jupyter contrib nbextension install --user
+
+pip install jupyter_nbextensions_configurator
+jupyter nbextensions_configurator enable --user
+```
+
+配置之后重启jupyter，后面多出来一项菜单 `Nbextensions`，点开勾选上 Codefolding（折叠代码块）和 Hinterland（代码自动补全）即可。
+
+### import
+
+当有多个Cell时，由于每个Cell都是可以独立执行，可能会import导入重复的模块。
+
+可考虑将第一个 Cell 专用作 import Cell，后面其他 Cell 所需的模块都集中在此 import。
+每当导入了新模块后，运行使得导入生效，后续就无需重复导入了。
+
+- [Importing Jupyter Notebooks as Modules](https://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/Importing%20Notebooks.html)
+
+## JetBrains Datalore
+
+在 Anaconda-Navigator 启动面板中，除了 Jupyter Notebook 和 JupyterLab，还可使用 JetBrains 的 Datalore。
+
+https://www.anaconda.com/datalore_navigator 重定向到 https://www.jetbrains.com/datalore/
+
+个人用户点击【Start for free】->【For Yourself】->【Community Plan】，然后使用Google账号登录即可。
+
+Datalore 相较 Jupyter Notebook 和 JupyterLab，自带的代码提示比较强大！
+
+[How to Get the Best Autocomplete in Jupyter Notebooks and More](https://blog.jetbrains.com/datalore/2022/07/14/how-to-get-the-best-autocomplete-in-jupyter-notebooks-and-more/)
 
 ## Notebook vs. Lab
 

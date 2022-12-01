@@ -25,7 +25,7 @@
 
 [Select a Python interpreter](https://code.visualstudio.com/docs/python/python-tutorial#_select-a-python-interpreter)
 
-![select-python-interpreter](./python-select-interpreter.png)
+![select-python-interpreter](./../images/python-select-interpreter.png)
 
 1. `Recommended` 为 vscode settings 中配置的 defaultInterpreterPath。
 2. 当在 vscode settings 中配置了 CondaPath，会在此处出现 `Conda` 子环境的解释器版本。

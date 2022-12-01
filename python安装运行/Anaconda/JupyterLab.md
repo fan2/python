@@ -4,9 +4,6 @@
 
 > JupyterLab is the latest web-based interactive development environment for notebooks, code, and data. Its flexible interface allows users to configure and arrange workflows in data science, scientific computing, computational journalism, and machine learning. A modular design invites extensions to expand and enrich functionality.
 
-在 JupyterLab 中 New Launcher 支持创建 Notebook - Python 3 (ipykernel) 和 Console - Python 3 (ipykernel)。
-还可创建 Other 文件类型。
-
 ### docs
 
 [Jupyter Project Documentation](https://docs.jupyter.org/en/latest/)
@@ -28,6 +25,14 @@ The default workspace is the main `/lab` URL:
 ```
 http(s)://<server:port>/<lab-location>/lab
 ```
+
+### launch
+
+在 Anaconda Navigator 中点击启动 JupyterLab 会开一个终端Terminal并启动 python webServer。
+将会在默认浏览器中打开 http://localhost:8888/lab 。
+
+在 JupyterLab 中 New Launcher 支持创建 Notebook - Python 3 (ipykernel) 和 Console - Python 3 (ipykernel)。
+还可创建 Other 文件类型。
 
 ### URLs
 
