@@ -1,7 +1,9 @@
+
+[TOC]
+
 ## SciPy
 
-- [NumPy](https://numpy.org/): NumPy is the fundamental package for scientific computing with Python.  
-- [SciPy](https://www.scipy.org/): is a Python-based ecosystem of open-source software for mathematics, science, and engineering.  
+[SciPy](https://www.scipy.org/): is a Python-based ecosystem of open-source software for mathematics, science, and engineering.  
 
 In particular, these are some of the core packages under SciPy:
 
@@ -11,6 +13,12 @@ In particular, these are some of the core packages under SciPy:
 - IPython: Enhanced Interactive Console  
 - Sympy: Symbolic mathematics  
 - pandas: Data structures & analysis  
+
+### docs
+
+### refs
+
+## vs. NumPy
 
 [SciPy and NumPy](https://www.fullstackpython.com/scipy-numpy.html)  
 [Relationship between SciPy and NumPy](https://stackoverflow.com/questions/6200910/relationship-between-scipy-and-numpy)  
