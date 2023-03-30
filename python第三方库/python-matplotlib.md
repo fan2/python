@@ -1,15 +1,19 @@
 
 # [matplotlib](https://matplotlib.org/)
 
-[NumPy for MATLAB users](https://numpy.org/doc/stable/user/numpy-for-matlab-users.html)
+[Matplotlib: Visualization with Python](https://matplotlib.org/)
 
-[matplotlib-tutorial](https://github.com/rougier/matplotlib-tutorial)  
+- [documentation](https://matplotlib.org/stable/index.html)
+- [Tutorials](https://matplotlib.org/stable/tutorials/)
+- [API Reference](https://matplotlib.org/stable/api/)
 
-[python 绘图工具 matplotlib 入门](https://yq.aliyun.com/articles/343938?spm=a2c4e.11155472.0.0.47192cbb5PCeJX)  
+[matplotlib-tutorial](https://github.com/rougier/matplotlib-tutorial)
+
+## 绘图基础
 
 [python绘图基础](https://blog.csdn.net/xiaobaicai4552/article/details/79060995)  
 
-[python matplotlib绘图基础](https://blog.csdn.net/alawaka2018/article/details/80374475)  
+[matplotlib绘图基础](https://blog.csdn.net/pipisorry/article/details/37742423)  
 
 [Python基础-画图：matplotlib](https://www.cnblogs.com/xianhan/p/9131156.html)  
 
@@ -24,3 +28,24 @@ Matplotlib is building the font cache using fc-list. This may take a moment.
 - `/usr/local/Cellar/python/3.7.4_1/Frameworks/Python.framework/Versions/3.7/Resources/Python.app`
 
 问题：如何绘制复数旋转图？
+
+## 函数曲线
+
+[Plot Mathematical Expressions in Python using Matplotlib](https://www.geeksforgeeks.org/plot-mathematical-expressions-in-python-using-matplotlib/)
+
+[Plotting Equations with Python](https://medium.com/future-vision/plotting-equations-in-python-d0edd9f088c8)
+
+[Python绘制参数方程图](https://cloud.tencent.com/developer/article/1825601)
+
+## 线性方程
+
+[Trying to plot a system of linear equation using matplotlib in a 2D plane](https://stackoverflow.com/questions/54744340/trying-to-plot-a-system-of-linear-equation-using-matplotlib-in-a-2d-plane)
+
+[Matplotlib: Graph/Plot a Straight Line](https://scriptverse.academy/tutorials/python-matplotlib-plot-straight-line.html)
+
+[Solve Linear Equation and return 3D Graph in Python](https://www.geeksforgeeks.org/solve-linear-equation-and-return-3d-graph-in-python/)
+
+## numpy
+
+[NumPy for MATLAB users](https://numpy.org/doc/stable/user/numpy-for-matlab-users.html)
+[NumPy Matplotlib](https://www.runoob.com/numpy/numpy-matplotlib.html)
