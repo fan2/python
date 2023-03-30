@@ -273,7 +273,7 @@ slice(start, stop[, step])
 
     > right 的值提前暂存到 target 中了，right 位置将被右移占用，左边 left 位置腾出插入 target 值。
 
-```
+```Python
 def insertionSort(iList: list) -> list:
     if len(iList) <= 1:
         return iList
@@ -311,3 +311,18 @@ def insertionSort(iList: list) -> list:
 [python中切片（Slice）操作符](https://blog.csdn.net/xiaofeiyu321/article/details/82941765)  
 [切片（Slice）在python中的运用](https://blog.csdn.net/dfshi198/article/details/80843175)  
 [Python高级特性——切片（Slice）](https://www.cnblogs.com/hiwuchong/p/8052502.html)  
+
+## comprehension
+
+[**list comprehension**](https://docs.python.org/3/glossary.html?highlight=list%20comprehension) : A compact way to process all or part of the elements in a sequence and return a list with the results.
+
+**需求**：PDF文档，实际页数和文档标记页数存在误差，如何快速计算每一章节的准确跳转页码？
+**方案**：先看看标记第一页和实际第一页之间的偏移offset。然后，通过TOC查看每章的标记页码，遍历加上偏移量即可得到每章的实际跳转页码。
+
+[Adding K to each element in a list of integers](https://www.geeksforgeeks.org/python-adding-k-to-each-element-in-a-list-of-integers/)
+
+```Python
+page_no = [3,11,45,65,69,85,109,127,141,163,191,195,203,227]
+offset=25
+correct_page_no = [i + offset for i in page_no]
+```
