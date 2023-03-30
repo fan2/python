@@ -214,6 +214,8 @@ choices(population, weights=None, *, cum_weights=None, k=1) method of random.Ran
 
 长度为5的列表 mylist 不包含重复元素，可调用 choices 生成包含重复元素的扩容序列，`weights` 设置（重复）出现的概率。
 
+> 从结果看，choices 无法保证每个元素都至少出现一次。
+
 ```Shell
 >>> mylist=[1,3,5,7,9]
 >>> random.choices(mylist, weights=[1,4,6,3,5], k=10)
@@ -267,6 +269,8 @@ sample(population, k, *, counts=None) method of random.Random instance
     in selection order so that all sub-slices will also be valid random
     samples.  This allows raffle winners (the sample) to be partitioned
     into grand prize and second place winners (the subslices).
+
+    Repeated elements can be specified one at a time or with the optional keyword-only counts parameter. 
 ```
 
 从 population 中随机抽取5个元素，作为一个片断（子序列）返回。
@@ -280,6 +284,27 @@ sample(population, k, *, counts=None) method of random.Random instance
 >>> slice = random.sample(list, 5)
 >>> slice
 [2, 6, 3, 7, 10]
+```
+
+如果 k>len(population)，则会报错：`ValueError: Sample larger than population or is negative`。
+
+```Shell
+>>> l = list(range(1,10,2))
+>>> l
+[1, 3, 5, 7, 9]
+>>> import random
+>>> random.sample(l, k=10)
+    raise ValueError("Sample larger than population or is negative")
+ValueError: Sample larger than population or is negative
+```
+
+此时，可通过 `counts` 参数指定每个元素出现的次数。
+l=[1,3,5,7,9]，指定 counts=[1,2,2,2,3]，则1出现1次，3、5、7各出现2次，9出现三次。
+
+```Shell
+l = list(range(1,10,2))
+>>> random.sample(l, k=10, counts=[1,2,2,2,3])
+[7, 9, 5, 9, 9, 1, 5, 3, 3, 7]
 ```
 
 ## 实战示例
@@ -300,26 +325,37 @@ sample(population, k, *, counts=None) method of random.Random instance
 ```Python
 import random
 
-def randomList(n: int) -> list:
-    iList = []
-    # 方法一：基于 for 循环和 randrange
+def randomList(n: int = 5, min: int = 1, max: int = 10) -> list:
+    '''返回一个长度为n的整数列表'''
+    if min > max or n>=max-min+1:
+        return []
+
+    # 方法一：基于 for 循环和 randrange，数值范围较小时很容易重复
+    # iList = []
     # for i in range(n):
-    #     iList.append(random.randrange(1000))
-    # 方法二：基于 sample，从 range(0,1000) 中抽取 n 个
-    iList = random.sample(range(0,1000), n)
+    #     iList.append(random.randint(min, max))
+    # 方法二：基于 sample，抽样不重复
+    iList = random.sample(range(min,max+1), n)
     return iList
 
 if __name__ == "__main__":
-    # 随机生成长度为6的整数序列
+    # 从[1,100]中随机挑选10个数
+    iList = randomList(10, 1, 100)
+    print(iList)
+    # 从[1,10]中随机挑选6个数
     iList1 = randomList(6)
-    # manipulate with iList1: countingSort(iList1)
+    # manipulate with iList: countingSort(iList1)
     print(iList1)
     iList2 = iList1.copy()
     random.shuffle(iList2)
     print(iList2)
     # manipulate with iList2: countingSort(iList2)
-    # 扩容生成长度为10的新序列，以便包含重复元素
+    # 扩容生成长度为10的新序列，以便包含重复元素（有些元素可能不包含）
     iList3 = random.choices(iList2, weights=[1,2,3,4,5,6], k=10)
     print(iList3)
     # manipulate with iList3: countingSort(iList3)
+    # 扩容生成长度为10的新序列，counts 指定每个元素出现次数
+    iList4 = random.sample(iList2, k=10, counts=[1,2,1,2,3,1])
+    print(iList4)
+    # manipulate with iList3: countingSort(iList4)
 ```
