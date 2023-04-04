@@ -149,3 +149,44 @@ a[4] = 5
 a[5] = 6
 a[6] = 7
 ```
+
+### negative step
+
+如果 `step>0`，则 `start+n*step` 终止条件为 `<stop`。
+
+> 当顺序遍历数组时，索引范围是 [0, len-1]，终止条件为 `<len`。
+
+如果 `step<0`，则 `start+n*step` 终止条件为 `>stop`。
+
+> 当逆向遍历数组时，索引范围是 [len-1, 0]，终止条件为 `>-1`。
+
+---
+
+C语言中 `for (i=len-1; i>=1; i--)` 的等效实现：
+
+> 冒泡升序排序中每轮的冒泡位置
+
+```Python
+A=[1,3,5,7,9]
+for i in range(len(A)-1, 0, -1): # >0
+    print(i, end=' ') # 4,3,2,1
+```
+
+C语言中 `for (i=len-1; i>=0; i--)` 的等效实现：
+
+```Python
+A=[1,3,5,7,9]
+for i in range(len(A)-1, -1, -1): # >-1
+    print(i, end=' ') # 4,3,2,1,0
+```
+
+C语言中 `for (int k=i; k>=offset; k-=offset)` 的等效实现：
+
+> 希尔升序排序中
+
+```Python
+i=6; offset=2
+# i=7; offset=2
+for k in range(i, offset-1, -offset): # >offset-1
+    print(k, end=' ')
+```
