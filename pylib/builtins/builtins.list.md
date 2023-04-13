@@ -85,6 +85,8 @@ l.clear(    l.count(    l.index(    l.pop(      l.reverse(
 
 ## add
 
+### append, insert
+
 向列表中添加元素，有两种方式：
 
 1. 调用 `l.append(e)`，将新元素 e 添加到列表 l 的末尾；  
@@ -92,8 +94,8 @@ l.clear(    l.count(    l.index(    l.pop(      l.reverse(
 
     > 原来索引 i 及其后的元素顺势后移一位，新元素 e 占据索引 i 的位置。
 
-- 头插法：`l.insert(0,e)`;  
 - 尾追法：`l.append(e)`;  
+- 头插法：`l.insert(0,e)`;  
 
 ### extend
 
@@ -141,26 +143,21 @@ l.clear(    l.count(    l.index(    l.pop(      l.reverse(
 
 ## delete
 
-1. `del(l[i])` 或 `del l[i]`：从列表l中移除索引 i 处的元素；  
+### del
 
-    > 当然也可以 `del l[i:j:k]` 移除切片子集
+调用内置的 `del` 函数，可以删除列表中的元素，被删位置自动排空。
 
-2. `l.pop(i)`：从列表l中移除索引 i 处元素，并弹出其值；  
+1. `del(l[i])` 或 `del l[i]`：从列表l中移除索引 i 处的元素；
+2. 当然也可以 `del l[i:j:k]` 移除切片子集。
 
-    > 特殊地不指定索引 i，默认弹出刚刚 append 到队尾（栈顶）的元素。  
-    > `l.pop(0)`，弹出队头（*栈底*）元素。  
+### pop
 
----
+list 本身自带的 pop 函数，支持弹出指定位置元素。
 
-以下总结 python 中的列表通用结构，按照栈和队列的惯用法：
+`e=l.pop(i)`：从列表l中弹出索引i处的元素到变量e，等效于 `e=l[i]; del(l[i])`；  
 
-- 栈 LIFO 惯例用法: `l.append(e)`, `e=l.pop()`  
-- 队列 FIFO 惯例用法：`l.append(e)`, `e=l.pop(0)`  
-
-如果需要频繁对序列做先出先进（FIFO）的操作，双端队列（collections.`deque`）的速度应该会更快。  
-除了标准的 append/pop 接口，deque 还专门提供了 `appendleft`/`popleft` 接口。
-
-- 双端队列标准惯用法：入队 **enqueue** - `dq.append(e)`, 出队 **dequeue** - `e=dq.popleft()`。
+- `l.pop()`：不指定索引，默认弹出上一次 append 到队尾（栈顶）的元素。  
+- `e=l.pop(0)`：弹出队头（*栈底*）元素到变量e。  
 
 ### remove
 
@@ -311,6 +308,27 @@ def insertionSort(iList: list) -> list:
 [python中切片（Slice）操作符](https://blog.csdn.net/xiaofeiyu321/article/details/82941765)  
 [切片（Slice）在python中的运用](https://blog.csdn.net/dfshi198/article/details/80843175)  
 [Python高级特性——切片（Slice）](https://www.cnblogs.com/hiwuchong/p/8052502.html)  
+
+## stack
+
+list 模拟队列 FIFO 的惯用法：
+
+- 尾部入列：list.append(e)
+- 头部出列：e=l.pop(0)
+
+list 模拟栈的 LIFO 惯用法：
+
+- 尾部压栈：list.append(e)
+- 访问尾部：e=list[len-1]
+- 尾部出栈：e=list.pop()
+- 替换：先读取按需修改，再 pop 后 append
+
+另外也可单向访问双端队列（collections.deque）遵循栈的 LIFO 用法。
+
+如果需要频繁对序列做先出先进（FIFO）的操作，双端队列（collections.`deque`）的速度应该会更快。  
+除了标准的 append/pop 接口，deque 还专门提供了 `appendleft`/`popleft` 接口。
+
+- 双端队列标准惯用法：入队 **enqueue** - `dq.append(e)`, 出队 **dequeue** - `e=dq.popleft()`。
 
 ## comprehension
 
