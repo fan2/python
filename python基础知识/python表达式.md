@@ -350,21 +350,6 @@ class enumerate(object)
 (6, 7)
 ```
 
-也可将 for 循环拆解为索引和值对。
-
-```
->>> for index,value in enumerate(list1):
-...     print('e[{0}] = {1}'.format(index, value))
-...
-e[0] = 1
-e[1] = 2
-e[2] = 3
-e[3] = 4
-e[4] = 5
-e[5] = 6
-e[6] = 7
-```
-
 对列表调用 `enumerate()` 可以获取每个元素的索引及其值，也可基于返回的枚举对象构造元组或列表。
 
 ```shell
@@ -384,7 +369,7 @@ e[6] = 7
 
 reference - [8.3. The for statement](https://docs.python.org/3/reference/compound_stmts.html#the-for-statement)  
 
-- `for e in s`: enumerate elements  in s.  
+- `for e in s`: enumerate elements in s.
 
 The for statement is used to iterate over the elements of a sequence (such as a string, tuple or list) or other `iterable` object.
 
@@ -435,63 +420,124 @@ The expression list is evaluated once; it should yield an iterable object. An **
 
 列表解析式形如 `expression comp_for [comp_if]`，或更清晰一点 `expr for iter_var in iterable [if cond_expr]`，其中的条件过滤器 if 语句是可选的。如果没有 if 过滤，则默认遍历所有元素执行转换。
 
-> The if clause is optional. If omitted, all elements in  comp_for are processed.
+> The if clause is optional. If omitted, all elements in comp_for are processed.
 
-列表解析将 for 循环和创建新元素的代码合并成一行，使此类代码块的书写紧凑简约。  
+以下示例for循环遍历可枚举对象，遍历元素为value，表达式 value**2 计算平方，整个列表解析用于创建1到10的平方。
 
-```shell
+```Shell
 >>> squares = [value**2 for value in range(1,11)]
 >>> print(squares)
 [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 ```
 
-`x in y` 的展开等效式 `any(x is e or x == e for e in y)` 即为典型的列表解析模式。
+还可以针对 for 循环添加过滤条件，筛选出符合条件的元素，再执行复合计算。
 
-```shell
->>> list1
-[1, 2, 3, 4, 5, 6, 7]
->>> # 过滤出 list1 中大于4的元素，返回新列表 list2
->>> list2 = [e for e in list1 if e>4]
->>> list2
+```Shell
+# 过滤出 list1 中大于4的元素，返回新列表 list2
+>>> [e for e in range(1,8) if e>4]
 [5, 6, 7]
->>> # 过滤出 list1 中大于4的元素，对于≤4的数替换为1，返回新列表 list2
->>> list3 = [e if e>4 else 1 for e in list1]
->>> list3
-[1, 1, 1, 1, 5, 6, 7]
 ```
 
-string.py 中 string.capwords 函数的定义为典型的列表解析表达式写法：
+更多参考 [builtins.list](../pylib/builtins/builtins.list.md) 中的相关说明和例程。
 
-```python
-# Capitalize the words in a string, e.g. " aBc  dEf " -> "Abc Def".
-def capwords(s, sep=None):
-    return (sep or ' ').join(x.capitalize() for x in s.split(sep))
+## if
+
+reference - [8.1. The if statement](https://docs.python.org/3/reference/compound_stmts.html#the-if-statement)
+
+if 表达式用来执行条件分支，可使用 if-elif-else 结构执行多条件分支。
+
+```Python
+if_stmt ::=  "if" assignment_expression ":" suite
+             ("elif" assignment_expression ":" suite)*
+             ["else" ":" suite]
 ```
 
-以下示例通过列表推导将指定模块中以下划线开头的非供外部使用的名称过滤掉：
+### 三元表达式
 
-```shell
->>> import copy
->>> [n for n in dir(copy) if not n.startswith('_')]
-['Error', 'copy', 'deepcopy', 'dispatch_table', 'error']
->>> 
->>> import string
->>> [n for n in dir(string) if not n.startswith('_')]
-['Formatter', 'Template', 'ascii_letters', 'ascii_lowercase', 'ascii_uppercase', 'capwords', 'digits', 'hexdigits', 'octdigits', 'printable', 'punctuation', 'whitespace']
+以下代码片段，用于判断整数x的奇偶性，并将其保存到even变量。
+
+```Python
+even = 0
+if x%2 == 0:
+    even = 1
+else:
+    even = 0
 ```
 
-关于 dict comprehension/set comprehension 等话题，参考 [6.2.4. Displays for lists, sets and dictionaries](https://docs.python.org/3/reference/expressions.html#displays-for-lists-sets-and-dictionaries)。
+在C语言中，对这种if-else非此即彼的条件赋值，可改用三目运算符来简化书写：
 
-> [python知识点: 列表解析](https://blog.csdn.net/reallocing1/article/details/63409400)  
-> [python-列表解析之if](https://blog.csdn.net/qq_25730711/article/details/53996124)  
-> [Python列表解析（列表推导式）](https://blog.csdn.net/shingle_/article/details/55050701)  
-> [形象地解释 Python 中的列表解析](http://python.jobbole.com/83884/)  
+> even = x%2==0 ? 1 : 0;
+
+Python没有像C语言中那样的三目运算符，但提供了基于if的三元表达式支持。
+
+```
+#如果条件为真，返回 exp1，否则返回 exp2
+exp1 if contion else exp2
+```
+
+> even = 1 if x%2==0 else 0
+
+可以使用嵌套的三元表达式，构造更加复杂的复合表达式。
+
+在嵌套时需要注意 if 和 else 的配对，例如：
+
+```Shell
+a if a>b else c if c>d else d
+```
+
+应该理解为：
+
+```Shell
+a if a>b else ( c if c>d else d )
+```
+
+### switch(match)
+
+Python 中未提供其他语言中的 switch 关键字，可使用多 elif 等效实现。
+
+```Python
+def switch(lang):
+    if lang == "JavaScript":
+        return "You can become a web developer."
+    elif lang == "PHP":
+        return "You can become a backend developer."
+    elif lang == "Python":
+        return "You can become a Data Scientist."
+    elif lang == "Solidity":
+        return "You can become a Blockchain developer."
+    elif lang == "Java":
+        return "You can become a mobile app developer."
+```
+
+在最新的 Python 3.10 中，可使用 match 和 case 关键字实现 Switch 效果。
+
+```
+lang = 'JavaScript'
+match lang:
+    case "JavaScript":
+        print("You can become a web developer.")
+    case "PHP":
+        print("You can become a backend developer.")
+    case "Python":
+        print("You can become a Data Scientist.")
+    case "Solidity":
+        print("You can become a Blockchain developer.")
+    case "Java":
+        print("You can become a mobile app developer.")
+    case _:
+        print("unknown language")
+```
 
 ## while
 
 reference - [8.2. The while statement](https://docs.python.org/3/reference/compound_stmts.html#the-while-statement)
 
-for 循环用于针对集合中的每个元素都一个代码块，而 while 循环不断地运行，直到指定的条件不满足为止。
+```Python
+while_stmt ::=  "while" assignment_expression ":" suite
+                ["else" ":" suite]
+```
+
+for 循环用于针对集合中的每个元素都执行一个代码块，而 while 循环不断地运行，直到指定的条件不满足为止。
 
 在要求很多条件都满足才继续运行的程序中，可定义一个变量，用于判断整个程序是否处于活动状态。这个变量被称为`标志`，充当了程序的交通信号灯。  
 你可让程序在标志为 `True` 时继续运行，并在任何事件导致标志的值为 `False` 时让程序停止运行。  
@@ -510,6 +556,40 @@ A `continue` statement executed in the first suite skips the rest of the suite a
 
 要返回到循环开头，并根据条件测试结果决定是否继续执行循环，可使用 `continue` 语句。  
 它不像break语句那样不再执行余下的代码并退出整个循环，而是略过当前条件继续执行下一趟循环。  
+
+### vs. for
+
+以下C语言代码片段中，for循环最后一趟i=9满足条件，然后i++自增为10时不再满足条件，结束退出时i=10。
+
+```C
+    int i=0;
+    for (; i<10; i++)
+        printf("%d ", i);
+    // 自然结束时，i=10
+```
+
+而在 Python 中，for-in 循环中没有先自增后比较的操作，而是遍历已知枚举中的元素，最后一个元素即是循环变量最终的值。
+
+```Python
+for i in range(0,10):
+    print(i)
+# 自然结束时，i=9
+```
+
+可改用while实现C语言类似效果，while支持条件判断，满足条件判断执行逻辑，并自增i继续下一轮循环。
+因此，i最终的值是自增到不满足条件的边界值10。
+
+```Python
+i=0
+while i<10:
+    print(i)
+    i += 1
+# 自然结束时，i=10
+```
+
+简单地说，Python 中 for 循环常用于不带条件的枚举，因此结束时的循环变量仍然是合法值。
+而 while 是带条件的循环，循环结束时变量为第一个不满足条件的边界值。
+明确了然这个微小区别，对于某些特定场景至关重要。
 
 ## multiple assignment 
 
@@ -681,6 +761,72 @@ An asterisk `*` denotes *iterable unpacking*. Its operand must be an [iterable](
 >>> tuple2 = *set1,
 >>> tuple2
 (1, 2, 3, 4, 5, 6, 7)
+```
+
+### Destructuring
+
+在 ES6 中，允许按照一定模式从数组和对象中提取值，然后对变量进行赋值，这被称为**解构**（Destructuring）。
+在 Python 中，通过星号也支持类似的按照“模式匹配”读取匹配位置模式的值。
+
+例如对于二元tuple，可按位置解构出二元值对。
+
+```Shell
+>>> tp = (1,6)
+>>> t1,t2 = tp
+>>> t1
+1
+>>> t2
+6
+```
+
+for 循环枚举出的 tuple 也可用解构赋值接收值对。
+
+```Shell
+>>> for index,value in enumerate(l):
+        print('e[{0}] = {1}'.format(index, value))
+
+e[0] = 1
+e[1] = 2
+e[2] = 3
+e[3] = 4
+e[4] = 5
+e[5] = 6
+e[6] = 7
+```
+
+以下字典返回的 items，也可基于位置解构 tuple 二元值对。
+
+```Shell
+>>> for e in favorite_languages.items():
+        print(e)
+
+('jen', 'python')
+('sarah', 'c')
+('edward', 'ruby')
+('phil', 'python')
+
+>>> for k,v in favorite_languages.items():
+        print('{}: {}'.format(k,v))
+
+jen: python
+sarah: c
+edward: ruby
+phil: python
+```
+
+对于多元tuple或多于两个元素的list，当我们只想析取指定位置部分时，可以使用星号实现。
+
+对于列表l，`a,*b,c = l` 指定a、c接收首尾元素，中间部分用星号解构接收到变量b。
+
+```Shell
+>>> l=[*range(1,8)]
+>>> a,*b,c = l
+>>> a
+1
+>>> b
+[2, 3, 4, 5, 6]
+>>> c
+7
 ```
 
 ## with

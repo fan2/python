@@ -56,23 +56,51 @@ a=array.array('i', [1, 2, 3, 4, 5])
 array 相比 list 的局限在于：list 可以混合存储任意类型，而 array 在构造时必须指定确定的数值类型。
 一般 list 用的场合比较多。
 
-## empty list
+## common
+
+### initialization
 
 1. `l=list()`: 构造一个空列表对象。  
-2. `l=[]`：中括号定义空列表。  
 
-多个元素之间以逗号分隔，例如 `l1=[1,2,3,4]`。  
+   - `l=list(range(1,5))`：基于range构造list。
+
+2. `l=[]`：中括号定义空列表。  
+3. `l=[10]`：定义只有一个元素列表。
+
+   - 注意C语言中表示生命size=10的数组。  
+
+4. `l1=[1,2,3,4]`：定义包含多个元素的列表，多个元素之间以逗号分隔。
+
+5. `l=[*range(1,5)]`：使用星号对可枚举对象range进行解包，生成列表。
 
 列表支持基于脚标索引访问元素（access through subscripted index）。
 
-## expressions
+此外，有些场合可能需要预分配指定尺寸的数组（列表），以便按索引设值而不用担心越界访问。
+
+- `[None]*10`: 初始化长度为10的列表，所有元素初始化为空对象None。
+- `[0]*10`: 初始化包含10个的列表。
+
+```Shell
+>>> l1=[None]*10
+>>> l1
+[None, None, None, None, None, None, None, None, None, None]
+>>> l2=[0]*10
+>>> l2
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+```
+
+例如计数排序（[Counting Sort](https://www.geeksforgeeks.org/counting-sort/)）中，预先声明一个和源列表相同尺寸的数组，用于接收排序结果。
+
+> B = [None]*len(A)
+
+### expressions
 
 - `len(l)`: Return the number of elements in list l.  
 - `e in l`: Test e for membership in l.  
 - `e not in l`: Test e for non-membership in l.  
 - `for e in l`: enumerate elements in l.  
 
-## api
+### api overview
 
 在 python shell 中，构造一个空列表 l，然后输入 `l.` 再输入 tab 键自动提示可用的成员函数：
 
@@ -334,6 +362,34 @@ list 模拟栈的 LIFO 惯用法：
 
 [**list comprehension**](https://docs.python.org/3/glossary.html?highlight=list%20comprehension) : A compact way to process all or part of the elements in a sequence and return a list with the results.
 
+**列表解析式** 是遍历一个列表中的元素，过滤筛选出符合一定条件的元素，执行必要地转换后追加到另一个列表并返回这个新的列表的表达式。  
+
+列表解析式形如 `expression comp_for [comp_if]`，或更清晰一点 `expr for iter_var in iterable [if cond_expr]`，其中的条件过滤器 if 语句是可选的。如果没有 if 过滤，则默认遍历所有元素执行转换。
+
+> The if clause is optional. If omitted, all elements in comp_for are processed.
+
+### without if
+
+`x in y` 的列表解析等效表达式：`any(x is e or x == e for e in y)`。
+
+string.py 中 string.capwords 函数的定义为典型的列表解析表达式写法：
+
+```Python
+# Capitalize the words in a string, e.g. " aBc  dEf " -> "Abc Def".
+def capwords(s, sep=None):
+    return (sep or ' ').join(x.capitalize() for x in s.split(sep))
+```
+
+以下示例for循环遍历原始可枚举对象，对遍历元素value执行 value**2 计算平方，整体效果是生成1到10的平方值列表。
+
+```Shell
+>>> squares = [value**2 for value in range(1,11)]
+>>> print(squares)
+[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+```
+
+来看一个日常生活中基于列表解析的实际应用案例。
+
 **需求**：PDF文档，实际页数和文档标记页数存在误差，如何快速计算每一章节的准确跳转页码？
 **方案**：先看看标记第一页和实际第一页之间的偏移offset。然后，通过TOC查看每章的标记页码，遍历加上偏移量即可得到每章的实际跳转页码。
 
@@ -344,3 +400,43 @@ page_no = [3,11,45,65,69,85,109,127,141,163,191,195,203,227]
 offset=25
 correct_page_no = [i + offset for i in page_no]
 ```
+
+以下示例将列表解析返回的元素传入三目运算，判断偶数为1，奇数为0，返回奇偶性标识列表。
+
+```Shell
+>>> [1 if e%2==0 else 0 for e in range(1,11)]
+[0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
+```
+
+以下还是列表解析结合三目运算，遍历range(1,8)，对于≤4的数替换为1，生成新列表。
+
+```Shell
+>>> [e if e>4 else 1 for e in range(1,8)]
+[1, 1, 1, 1, 5, 6, 7]
+```
+
+### with if
+
+还可以针对 for 循环添加过滤条件，筛选出符合条件的元素，再执行复合计算。
+
+以下示例通过列表推导将指定模块中以下划线开头的非供外部使用的名称过滤掉：
+
+```shell
+>>> import copy
+>>> [n for n in dir(copy) if not n.startswith('_')]
+['Error', 'copy', 'deepcopy', 'dispatch_table', 'error']
+>>> 
+>>> import string
+>>> [n for n in dir(string) if not n.startswith('_')]
+['Formatter', 'Template', 'ascii_letters', 'ascii_lowercase', 'ascii_uppercase', 'capwords', 'digits', 'hexdigits', 'octdigits', 'printable', 'punctuation', 'whitespace']
+```
+
+### refs
+
+关于 dict comprehension/set comprehension 等话题，参考 [6.2.4. Displays for lists, sets and dictionaries](https://docs.python.org/3/reference/expressions.html#displays-for-lists-sets-and-dictionaries)。
+
+- [python知识点: 列表解析](https://blog.csdn.net/reallocing1/article/details/63409400)  
+- [python-列表解析之if](https://blog.csdn.net/qq_25730711/article/details/53996124)  
+- [Python列表解析（列表推导式）](https://blog.csdn.net/shingle_/article/details/55050701)  
+- [形象地解释 Python 中的列表解析](http://python.jobbole.com/83884/)  
+- [推导式 Comprehension](https://eastlakeside.gitbook.io/interpy-zh/comprehensions)

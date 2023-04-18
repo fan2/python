@@ -30,3 +30,58 @@ class set(object)
 - `e in st`: Test e for membership in st.  
 - `e not in st`: Test e for non-membership in st.  
 - `for e in st`: enumerate elements in st.  
+
+## api overview
+
+```Shell
+>>> set.
+set.add(                          set.intersection(                 set.pop(
+set.clear(                        set.intersection_update(          set.remove(
+set.copy(                         set.isdisjoint(                   set.symmetric_difference(
+set.difference(                   set.issubset(                     set.symmetric_difference_update(
+set.difference_update(            set.issuperset(                   set.union(
+set.discard(                      set.mro()                         set.update(
+```
+
+基于 set 提供的丰富接口，可执行常见的集合运算。
+
+## set vs. list
+
+集合 set 相对 list 的最大区别是，集合 set 中的元素必须是独一无二的，add重复元素无效。
+
+```Shell
+ |  add(...)
+ |      Add an element to a set.
+ |
+ |      This has no effect if the element is already present.
+```
+
+```Shell
+>>> lt=[1,2]
+>>> lt.add(2)
+>>> lt.append(2)
+>>> lt
+[1, 2, 2]
+
+>>> st={1,2}
+>>> st
+{1, 2}
+>>> st.add(2)
+>>> st
+{1, 2}
+```
+
+可以基于list构造set，移除相同的元素实现去重：
+
+```Shell
+>>> lt=[1,2,2]
+>>> set(lt)
+{1, 2}
+```
+
+此外，set 支持常规集合运算：
+
+- 集合包含关系：issuperset、issubset
+- 计算并集：union
+- 计算交集：intersection
+- 计算差集：difference

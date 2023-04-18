@@ -37,7 +37,7 @@ class range(object)
 >>> tuple(r)
 (1, 3, 5, 7, 9)
 
->>> list(r)
+>>> list(r) # or [*r]
 [1, 3, 5, 7, 9]
 ```
 
