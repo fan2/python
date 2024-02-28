@@ -65,7 +65,6 @@
 
 ```
 
-
 ## ascii
 
 builtins.ascii  
@@ -147,6 +146,8 @@ Using the comma as a thousands separator:
 '100,000,000'
 >>> '{:_}'.format(100000000)
 '100_000_000'
+>>> f'{100000000:,}'
+'100,000,000'
 ```
 
 311 的二进制字面量写法为 0b100110111：
@@ -345,6 +346,38 @@ builtins.abs # math.fabs
 builtins.sum # math.fsum  
 
 builtins.round # 四舍五入保留指定浮点数  
+
+### sum
+
+builtins.sum 的帮助说明：支持对数值序列进行迭代求和。
+
+```Shell
+>>> help(sum)
+
+help on built-in function sum in module builtins:
+
+sum(iterable, /, start=0)
+    Return the sum of a 'start' value (default: 0) plus an iterable of numbers
+
+    When the iterable is empty, return the start value.
+    This function is intended specifically for use with numeric values and may
+    reject non-numeric types.
+```
+
+以下示例给 sum 传入 range,tuple,list,set 数值序列进行求和。
+
+```Shell
+>>> sum(range(1,10,2))
+25
+>>> sum((1,3,5,7,9))
+25
+>>> sum([1,3,5,7,9])
+25
+>>> sum({1,3,5,7,9})
+25
+```
+
+当然，也可以调用 math.fsum 对浮点数值序列的进行叠加求和。
 
 ### floor & ceil
 
