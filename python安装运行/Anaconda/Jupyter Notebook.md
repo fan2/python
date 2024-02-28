@@ -73,14 +73,16 @@ jupyter nbextensions_configurator enable --user
 
 配置之后重启jupyter，后面多出来一项菜单 `Nbextensions`，点开勾选上 Codefolding（折叠代码块）和 Hinterland（代码自动补全）即可。
 
-### import
+### import/run across cells
 
 当有多个Cell时，由于每个Cell都是可以独立执行，可能会import导入重复的模块。
 
 可考虑将第一个 Cell 专用作 import Cell，后面其他 Cell 所需的模块都集中在此 import。
-每当导入了新模块后，运行使得导入生效，后续就无需重复导入了。
+每当第一个 Cell 导入了新模块后，重新运行该 Cell 导入更新生效，后续就无需重复导入了。
 
 - [Importing Jupyter Notebooks as Modules](https://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/Importing%20Notebooks.html)
+
+运行过的Cell代码，已经导入到同一上下文中，因此可以执行跨Cell相互调用（类/函数），或在一个Cell中为其他Cell编写单元测试。
 
 ## JetBrains Datalore
 
@@ -104,3 +106,4 @@ Jupyter Notebook 是一个款以网页为基础的交互计算环境，可以创
 
 JupyterLab 是包括了Notebook的下一代用户界面。有模块化的界面，可以在同一个窗口同时打开好几个notebook或文件（HTML, TXT, Markdown等等），都以标签的形式展示，于是就更像是一个IDE。
 
+建议使用 JupyterLab 或者 vscode + Jupyter Notebook。

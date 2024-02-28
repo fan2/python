@@ -83,3 +83,11 @@ JupyterLab provides a command-line interface for workspace `import` and `export`
 $ jupyter lab workspaces export
 $ jupyter lab workspaces export > ~/Downloads/jupyter_workspaces.json
 ```
+
+### Debugger
+
+[Debugger — JupyterLab 4.1.2 documentation](https://jupyterlab.readthedocs.io/en/latest/user/debugger.html)
+
+### vs. Notebook
+
+JupyterLab 是包括了 Notebook 的下一代 IDE，因此建议使用 JupyterLab 或者 vscode + Jupyter Notebook。

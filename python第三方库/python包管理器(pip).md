@@ -34,7 +34,7 @@ wheel (0.30.0)
 
 > [How can I get a list of locally installed Python modules?](https://stackoverflow.com/questions/739993/how-can-i-get-a-list-of-locally-installed-python-modules)  
 
-可通过 `pip3 show setuptools` 命令查看 setuptools 包信息。
+可通过 `pip3 show setuptools` 命令查看已安装的 setuptools 包信息。
 
 ```shell
 faner@FAN-MB0:~|⇒  pip3 show setuptools
@@ -47,6 +47,13 @@ Author-email: distutils-sig@python.org
 License: UNKNOWN
 Location: /usr/local/lib/python3.6/site-packages
 Requires:
+```
+
+如果想查看的包未安装，会提示 not found：
+
+```Shell
+$ pip3 show ipykernel
+WARNING: Package(s) not found: ipykernel
 ```
 
 ### Wheel
