@@ -26,13 +26,32 @@ class dict(object)
  |
 ```
 
-## empty dict
+## init dict
 
 1. `d=dict()`: 构造一个空字典对象。  
 2. `d={}`：大括号定义空字典。  
 
 字典的键值以冒号分隔，`d1={1:2}` 等效于 `d1=dict();d1[1]=2`。  
 多对键值以逗号分隔，例如 `d1={1:2, 3:4}`。  
+
+通过传入 positional argument 初始化字典：
+
+```Shell
+>>> d1={1:2, 3:4}
+>>> d1
+{1: 2, 3: 4}
+>>> d1={1:'2', 3:4}
+>>> d1
+{1: '2', 3: 4}
+```
+
+通过传入 keyword argument 初始化构造字典（keyword必须是字符串）：
+
+```Shell
+>>> d = dict(k1=1, k2=2, k3=3)
+>>> d
+{'k1': 1, 'k2': 2, 'k3': 3}
+```
 
 字典支持基于脚标键值访问值（access through subscripted index）。
 
@@ -43,9 +62,28 @@ class dict(object)
 - `e not in d`: Test e for non-membership in d.keys.  
 - `for e in d`: enumerate elements in d.keys.  
 
+## copy dict
+
+dict 和 list 都是可变的（mutable），将字典赋给新的变量时，新的变量并不会执行深拷贝，而将指向同一个原始字典。
+
+```Python
+d = {'k1':'v1', 'k2':'v2'}
+d2 = d
+d2 is d # True
+```
+
+如果需要根据既有字典创建全新的字典，可以调用源字典的 `copy` 函数创建副本。
+
+```Python
+d3 = d.copy()
+d3 is d # False
+```
+
+**注意**：在将字典作为参数传递给函数后，函数内部修改形参所指，将直接影响原件。
+
 ## enumerate
 
-```
+```Shell
 >>> favorite_languages.keys()
 dict_keys(['jen', 'sarah', 'edward', 'phil'])
 >>> favorite_languages.values()

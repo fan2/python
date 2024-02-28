@@ -42,7 +42,7 @@ TypeError: 'tuple' object does not support item assignment
 >>>
 ```
 
-## empty tuple
+## init
 
 元组看起来犹如列表，但使用圆括号而不是方括号来标识。
 
@@ -51,7 +51,78 @@ TypeError: 'tuple' object does not support item assignment
 
 多个元素之间以逗号分隔，例如 `t1=(1,2,3,4)`。  
 
+定义 tuple 时，也可不加小括号：
+
+```Python
+labels = 'first', 'middle', 'last'
+type(labels) # <class 'tuple'>
+labels # ('first', 'middle', 'last')
+```
+
+以下基于内置函数format、str的C printf格式化和f-string打印255的三种十六进制，在一行中用逗号分隔，输出 tuple:
+
+```Shell
+>>> format(255, '#x'), format(255, 'x'), format(255, 'X')
+('0xff', 'ff', 'FF')
+
+>>> '%#x' % 255, '%x' % 255, '%X' % 255
+('0xff', 'ff', 'FF')
+
+>>> f'{255:#x}', f'{255:x}', f'{255:X}'
+('0xff', 'ff', 'FF')
+```
+
 元组支持基于脚标索引访问元素（access through subscripted index）。
+
+## zip
+
+```Shell
+Help on class zip in module builtins:
+
+class zip(object)
+ |  zip(*iterables, strict=False) --> Yield tuples until an input is exhausted.
+ |
+ |     >>> list(zip('abcdefg', range(3), range(4)))
+ |     [('a', 0, 0), ('b', 1, 1), ('c', 2, 2)]
+ |
+ |  The zip object yields n-length tuples, where n is the number of iterables
+ |  passed as positional arguments to zip().  The i-th element in every tuple
+ |  comes from the i-th iterable argument to zip().  This continues until the
+ |  shortest argument is exhausted.
+```
+
+内置函数 zip 将传入的可迭代序列，每个序列选取一个元素生成tuple。
+
+```Shell
+>>> list(zip('abc', '123', [4,5,6]))
+[('a', '1', 4), ('b', '2', 5), ('c', '3', 6)]
+
+# 第一个参数多出一个元素
+>>> list(zip('abcd', '123', [4,5,6]))
+[('a', '1', 4), ('b', '2', 5), ('c', '3', 6)]
+
+# 第二个参数多出一个元素
+>>> list(zip('abc', '1234', [4,5,6]))
+[('a', '1', 4), ('b', '2', 5), ('c', '3', 6)]
+
+# 第二、三个参数各多出一个元素
+>>> list(zip('abc', '1234', [4,5,6,7]))
+[('a', '1', 4), ('b', '2', 5), ('c', '3', 6)]
+```
+
+以下是应用 zip 函数的另外一个案例：
+
+```Shell
+>>> labels = 'first', 'middle', 'last'
+>>> full_name = 'Magnus Lie Hetland'
+>>> names = full_name.split()
+>>> for label, name in zip(labels, names):
+...     print('{}: {}'.format(label, name))
+...
+first: Magnus
+middle: Lie
+last: Hetland
+```
 
 ## expressions
 

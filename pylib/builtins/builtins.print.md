@@ -389,6 +389,6 @@ Dcab       ==>       7678
 ```Shell
 >>> points = 19
 >>> total = 22
->>> 'Correct answers: {:.2%}'.format(points/total)
-'Correct answers: 86.36%'
+>>> 'Correct rate of answers: {:.2%}'.format(points/total)
+'Correct rate of answers: 86.36%'
 ```

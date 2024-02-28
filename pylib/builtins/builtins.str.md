@@ -242,6 +242,23 @@ hex()
 '414243'
 ```
 
+## assign copy
+
+[Python Strings | Python Education - Google for Developers](https://developers.google.com/edu/python/strings)
+
+> Python strings are "immutable" which means they cannot be changed after they are created.  
+> Since strings can't be changed, we construct *new* strings as we go to represent computed values.  
+
+由于 str 是 immutable 的，赋值是拷贝（duplicate）副本（copy）。
+
+```Python
+mr = 'Mr. Entity'
+mrs = mr # duplicate
+mrs = 'Mrs. Entity'
+print(mr) # remain unchanged
+print(mr is mrs) # False
+```
+
 ## sequential access
 
 access through subscripted index
@@ -351,6 +368,8 @@ str.splitlines([keepends])
 ```
 
 capitalize 将首字母大写；title 将每个单词首字母大写；upper/lower将全部字母大写/小写。
+
+> 由于 str 是 immutable 的，这些大小写操作函数都是基于副本操作，返回处理后的副本，不影响原件(str1)。
 
 ```Shell
 #%%

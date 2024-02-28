@@ -125,6 +125,20 @@ l.clear(    l.count(    l.index(    l.pop(      l.reverse(
 - 尾追法：`l.append(e)`;  
 - 头插法：`l.insert(0,e)`;  
 
+以下为基于 list.append 方法实现斐波那契列表。
+
+```Python
+def fibs(n: int) -> list:
+    if n < 2:
+        print('To make sense, n should be bigger than 2.')
+        return None
+    else:
+        r = [0, 1]
+        for i in range(n-2):
+            r.append(r[-2]+r[-1])
+        return r
+```
+
 ### extend
 
 `append` 一般是将单个元素追加到列表末尾，如何在已有列表后面追加（衔接）另外一个列表呢？
@@ -316,9 +330,30 @@ def insertionSort(iList: list) -> list:
 
 ### copy list
 
+list 是 mutable sequence，将列表赋给新的变量时，新的变量并不会执行深拷贝，而将指向同一个原始列表。
+
+以下示例演示了在不使用切片（副本）的情况下复制列表操作的非预期灾难性后果：
+
+```Python
+# 朋友和我相同的美食爱好
+my_foods = ['pizza', 'falafel', 'carrot cake']
+
+friend_foods = my_foods
+
+# 定制我和朋友各自喜欢的美食
+my_foods.append('cannoli')
+friend_foods.append('ice cream')
+
+print("My favorite foods are:")
+print(my_foods)
+print("\nMy friend's favorite foods are:")
+print(friend_foods)
+```
+
+如果后续过程处理不想影响原件，可考虑拷贝原始列表的副本，然后针对副本操作。
 如果需要根据既有列表创建全新的列表，除了可以调用源列表的 `copy` 函数创建副本外，也可创建一个包含整个列表的切片（`[:]`），然后赋值给新列表变量，即达目的。
 
-```
+```Shell
 >>> b=a[:] # 深度复制 a 的副本
 >>> b
 [1, 2, 3, 4, 5, 6, 7]
@@ -328,6 +363,46 @@ def insertionSort(iList: list) -> list:
 [2, 3, 4, 5, 6, 7]
 >>> a # b 的改动不影响 a，a 不变
 [1, 2, 3, 4, 5, 6, 7]
+```
+
+具体到上述定制美食清单案例中，拷贝一份我的美食清单，副本作为朋友自己的美食清单，再进行定制即符合预期：
+
+```Python
+# 拷贝一份我的美食清单，副本作为朋友自己的美食清单
+friend_foods = my_foods[:] # my_foods.copy()
+
+# 基于我和朋友各自的美食清单，开始定制
+```
+
+修改前，指向复用 friend_foods is my_foods = True；修改后，拷贝解耦 friend_foods is my_foods = False。
+
+对于列表，形参和实参这两个变量将指向同一个列表，相当于C语言中的引用或指针传参，函数内部对该变量的操作将直接影响原始变量。
+
+```Python
+def try_to_change_list1(l):
+    l = list(range(6)) # 形参另有所指，与实参分离，不影响原件
+
+def try_to_change_list2(l):
+    l.append(6) # 修改形参所指，直接影响原件
+
+l = list(range(5))
+try_to_change_list1(l)
+print(l)
+
+try_to_change_list2(l)
+print(l)
+```
+
+如果传入列表，只是想看看函数处理的结果，而不希望影响外面的原始列表，可以考虑通过全切片拷贝（[:] 或 copy）传入副本。
+
+```Python
+def try_to_change_list(l):
+    l.append(6)
+
+l = list(range(5))
+m = l[:] # l.copy()
+try_to_change_list(m)
+print(l)
 ```
 
 ### refs

@@ -51,6 +51,15 @@ If format requires a single argument, *values* may be a single non-tuple object.
 
 C printf 风格，使用 `%` 格式符标识占位。
 
+直接字符串字面值表达式：
+
+```Shell
+>>> '%#x' % 255, '%x' % 255, '%X' % 255
+('0xff', 'ff', 'FF')
+```
+
+使用 print 函数打印输出：
+
 ```Shell
 # start 可加括号
 >>> print('start is %d' % start)
@@ -64,11 +73,6 @@ age = 23
 score = 85
 print("Total score for", name, "is", score)
 print("%s is %d years old." % (name, age))
-```
-
-```Shell
->>> '%#x' % 255, '%x' % 255, '%X' % 255
-('0xff', 'ff', 'FF')
 ```
 
 也支持命名占位参数，后面以大括号字典形式给出（参数key对应）：
@@ -138,6 +142,7 @@ Accessing arguments by position:
 hello world
 >>> print('{} {}'.format('hello','world'))
 hello world
+# 重复使用某一位置序号
 >>> print('{0} {1} {0}'.format('hello','world'))
 hello world hello
 ```
@@ -236,11 +241,47 @@ A string literal with `'f'` or `'F'` in its prefix is a *formatted string litera
 
 语法和效果，有点类似 JavaScript 中 ES2015 引入的 [Template literals (Template strings)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)。
 
+If a conversion is specified, the result of evaluating the expression is converted before formatting. Conversion '`!s`' calls `str`() on the result, '`!r`' calls `repr`(), and '`!a`' calls `ascii`().
+
+!r 对整数变量调用str字符串化输出：
+
+> 此处不带这个，默认也会转换。
+
 ```Shell
 >>> year = 2019
->>> f'year is {year!s}'
+>>> f'year is {year!s}' # 等效于 f'year is {str(year)}'
 'year is 2019'
 ```
+
+!r 对字符串变量调用repr，保持原始字符串输出（包括引号）：
+
+```Shell
+>>> name = "Fred"
+>>> f"He said his name is {name}."
+'He said his name is Fred.'
+>>> f"He said his name is {name!r}." # f"He said his name is {repr(name)}."
+"He said his name is 'Fred'."
+```
+
+或者用 `=` 来实现类似的效果：
+
+```Shell
+>>> f"He said his {name = }."
+"He said his name = 'Fred'."
+```
+
+对于 iterable 类型，实际上是 iter next 调用多次：
+
+```Shell
+>>> a=["a", "b", "c"]
+>>> print(f"List a contains:\n{"\n".join(a)}")
+List a contains:
+a
+b
+c
+```
+
+**参考资料**：
 
 - [Python 3's f-Strings: An Improved String Formatting Syntax](https://realpython.com/python-f-strings/)
 - [String formatting for dictionary with f-string in Python](https://bobbyhadz.com/blog/python-string-formatting-dictionary-f-string)
@@ -252,8 +293,10 @@ A string literal with `'f'` or `'F'` in its prefix is a *formatted string litera
 
 ```Shell
 >>> today = datetime.datetime(year=2017, month=1, day=27)
->>> f"{today:%B %d, %Y}"
+>>> f"{today:%B %d, %Y}"  # using date format specifier
 'January 27, 2017'
+>>> f"{today=:%B %d, %Y}" # using date format specifier and debugging
+'today=January 27, 2017'
 ```
 
 对数字进行快捷转换，按指定进制/格式输出：
@@ -279,6 +322,8 @@ Because f-strings are evaluated at *runtime*, you can put any and all valid Pyth
 
 >>> x=10
 >>> y=3
+>>> f'{x/y = :.2f}'
+'x/y = 3.33'
 >>> f'{x}/{y} = {x/y:.2f}'
 '10/3 = 3.33'
 ```
@@ -306,7 +351,7 @@ message = (f"Hi {name}. "
            f"You were in {affiliation}.")
 print(message)
 
-# f加三引号，则按照拍板输出，包括换行缩进
+# f加三引号，则按照排版输出，包括换行缩进
 message = f"""Hi {name}. 
 You are a {profession}. 
 You were in {affiliation}."""
