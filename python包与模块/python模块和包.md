@@ -157,6 +157,10 @@ To be better portable users can use `#!/usr/bin/env python3` which will use the 
 
 当以 `python code.py` 或 `python3 code.py` 显式指定调用 python(2.7) 或 python3 进行解释执行时，将忽略首行的 shebang。
 
+如果py脚本开头没有指定 Shebang - `#!/usr/bin/env python3`，则 vscode Run Code 执行 `python -u test.py`，可能提示找不到 python 命令。
+
+> macOS 自 Monterey（April 2022）后移除了 Python 2.7。
+
 ## test
 
 1. test_module.py  

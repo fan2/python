@@ -130,3 +130,35 @@ last: Hetland
 - `e in t`: Test e for membership in t.  
 - `e not in t`: Test e for non-membership in t.  
 - `for e in t`: enumerate elements in t.  
+
+## comparison
+
+Python 中支持直接对数值tuple序列比较大小：
+
+```Shell
+>>> t1=(1,3,5)
+>>> t2=(2,4,6)
+>>> t1<t2
+True
+>>> t3=(1,2,6)
+>>> t1<t3
+False
+```
+
+通过 sys 获取 python 版本号：tuple(sys.version_info) = (3, 9, 6, 'final', 0)，可直接与预期版本tuple进行比较匹配。
+
+```Python
+tuple(sys.version_info) > (3, 9, 6)
+```
+
+实际上，Python 中也支持直接对数值list序列比较大小：
+
+```Shell
+>>> l1=[1,3,5]
+>>> l2=[2,4,6]
+>>> l1<l2
+True
+>>> l3=[1,2,6]
+>>> l1<l3
+False
+```

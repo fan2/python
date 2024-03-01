@@ -226,6 +226,7 @@ choices(population, weights=None, *, cum_weights=None, k=1) method of random.Ran
 如果要不放回取样抽取不重复的子序列，建议采用 `random.sample` 函数。
 
 ```Shell
+# 从[0,9]九个数中放回取样5个，可能存在重复。
 >>> random.choices(range(0,10), k=5)
 [9, 1, 9, 7, 4]
 ```

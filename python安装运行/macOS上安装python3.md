@@ -1,4 +1,5 @@
 ## macOS/Xcode 自带的 Python.framework
+
 macOS 的 Xcode 自带安装的 Python 在 `/System/Library/Frameworks/Python.framework/` 目录下：
 
 ```Shell
@@ -15,6 +16,7 @@ macOS 的 Current Python 版本为 2.7，终端输入 `Python` 启动的是 2.7 
 ## brew 安装 Python3
 
 ### brew search python3
+
 在 macOS 终端输入 `brew search python3` 即可搜索 Python3 安装包：
 
 ```Shell
@@ -25,6 +27,7 @@ python3 ✔
 ```
 
 ### brew info python3
+
 在 macOS 终端输入 `brew info python3` 即可查询 Python3 安装包信息：
 
 ```Shell
@@ -36,11 +39,13 @@ Not installed
 ```
 
 ### brew install python3
+
 在 macOS 终端输入 `brew install python3` 即可安装 Python3。
 
 ## 使用 python3
 
 ### python3 --version
+
 执行 `python -V`（`python --version`）查看 macOS/Xcode 自带的 python2 的版本号。  
 安装 python3 后，执行 `python3 -V`（`python3 --version`）可查看安装的 python3  的版本号。  
 
@@ -75,6 +80,7 @@ pi@raspberrypi:~ $ which python3
 > [python和numpy的版本、安装位置](http://www.cnblogs.com/klchang/p/4543032.html)  
 
 ### python3 Orignial
+
 macOS 通过 brew 安装的 python3 默认在 `/usr/local/Cellar/python3/` 目录下，然后软链（symlink）到 `/usr/local/bin/` 目录下。
 
 ```Shell
@@ -97,6 +103,7 @@ lrwxr-xr-x  1 faner  admin  55 Nov  3 08:09 /usr/local/Cellar/python3/3.6.3/bin/
 ```
 
 ### Hello World from Python3
+
 新安装的 Python3 与系统自带的旧版 Python2 并存，使用时指明版本号即可。
 
 在安装并配置好环境变量的系统终端中输入 `python` 默认进入 python2 的命令行编辑交互控制台。若显式指定 `python3`（或 python3.6），则可启动运行版本 3。
@@ -207,6 +214,7 @@ Hello World from Python3
 ```
 
 ### comment
+
 python 控制台及脚本中均支持开头或语句尾部以 `#` 开始的注释。
 
 ```shell
@@ -221,6 +229,7 @@ python 控制台及脚本中均支持开头或语句尾部以 `#` 开始的注�
 ```
 
 ### quit/exit
+
 按下 `<C-d>`（windows 下为 `<C-z>`）或输入 `quit()`/`exit()` 即可退出 python shell，退回到系统 shell。
 
 > Typing an end-of-file character (`Control-D` on Unix, `Control-Z` on Windows) at the primary prompt causes the interpreter to exit with a zero exit status. If that doesn’t work, you can exit the interpreter by typing the following command: `quit()`.
@@ -260,7 +269,7 @@ idle     idle2.7  idle3    idle3.7
 
 `/usr/local/Cellar/python/3.7.4_1/Python\ Launcher\ 3.app`  
 
-## 参考
+## deprecate 2.7
 
 > [macOS 上如何切换默认的 Python 版本？](https://www.zhihu.com/question/30941329)  
 > [macOS 上最简单配置python3开发环境](https://segmentfault.com/a/1190000006118856)  
@@ -279,3 +288,26 @@ idle     idle2.7  idle3    idle3.7
 > [macOS 上 Python 从2.x升级到3.x的艰苦历程](http://blog.csdn.net/ssgx1989/article/details/50603801)  
 
 > [Mac下自带Python安装Tensorflow的问题](http://blog.csdn.net/quincuntial/article/details/52792429)
+
+### remove
+
+[How to remove python 2.7 from MacBook Pro 14? - Apple Community](https://discussions.apple.com/thread/253800176?sortBy=best)
+
+[Apple Finally Removing Python 2 in macOS 12.3 - MacRumors](https://www.macrumors.com/2022/01/28/apple-removing-python-2-in-macos-12-3/)
+
+[Apple removing Python 2.7 on Mac - What does this mean for IT admins?](https://www.hexnode.com/blogs/apple-removing-python-2-7-on-mac-what-does-this-mean-for-it-admins/#:~:text=Back%20in%202019%2C%20Apple%20announced,that%20run%20on%20Python%202.7.)
+
+Back in 2019, Apple announced its plans to deprecate the Python 2.7 scripting language. With the release of macOS Monterey, Apple made good on that promise. macOS devices that are on versions 12.3 and above will no longer be able to execute scripts and operations that run on Python 2.7.
+
+But what about apps and scripts that use the Python 3 runtime? Here too, users may encounter a slight hiccup. At least, during the first run.
+
+Python 3 does not come automatically installed on macOS devices (even on those above versions 12.3). Hence, if the user tries to run a software, app, or script that calls on Python 3, a notification is triggered, which prompts the user to install XCode and developer tools.
+
+### alias
+
+如果py脚本开头没有指定 Shebang - `#!/usr/bin/env python3`，则 vscode Run Code 执行 `python -u test.py`，可能提示找不到 python 命令。
+
+> macOS 自 Monterey（April 2022）后移除了 Python 2.7。
+
+macOS 在安装 Xcode command-lines tools 时会安装 Python3，默认路径为 /usr/bin/python3，而使用 brew 安装的 python3 的路径一般为 /usr/local/bin/python3。
+既然 python（2.7）不再，可考虑在 ~/.zshrc 中添加 `alias python=/usr/bin/python3`，这样 python 指向系统自带的 python3 版本，作为 fallback。

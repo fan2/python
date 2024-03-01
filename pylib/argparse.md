@@ -185,8 +185,8 @@ nargs：设置参数个数
 
 [Python-argparse-命令行与参数解析](https://zhuanlan.zhihu.com/p/34395749)  
 
-```
-#!/usr/bin/env python
+```Python
+#!/usr/bin/env python3
 # encoding: utf-8
 
 import argparse

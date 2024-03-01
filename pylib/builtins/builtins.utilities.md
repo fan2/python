@@ -126,6 +126,59 @@ class int(object)
 11
 ```
 
+## map
+
+Python 内建模块 builtins 中的 map 类支持将序列中的元素做迭代映射转换。
+
+```Shell
+Help on class map in module builtins:
+
+class map(object)
+ |  map(func, *iterables) --> map object
+ |
+ |  Make an iterator that computes the function using arguments from
+ |  each of the iterables.  Stops when the shortest iterable is exhausted.
+```
+
+上面谈到可以调用 int(str) 将字符串转为整数，也可调用 map 对序列 iterables 逐个迭代调用 func 进行转换。
+
+1. sysconfig.get_python_version() 输出 '3.9'，platform.python_version() 输出 '3.9.6'。
+
+`version_str2tuple` 函数将版本号字符串按点号（`.`）分割成字符数组，再对字符数组调用 int 逐一映射为整数。
+
+```Python
+def version_str2tuple(vs:str):
+    return tuple(map(int, vs.split(".")))
+```
+
+- version_str2tuple(sysconfig.get_python_version()) 输出 (3, 9)；
+- version_str2tuple(platform.python_version()) 输出 (3, 9, 6)；
+
+2. platform.python_version_tuple() 输出 ('3', '9', '6')，调用 `version_tuple_str2int` 函数将元组序列中的字符转成整数。
+
+```Python
+def version_tuple_str2int(vst:tuple):
+    return tuple(map(int, vst))
+```
+
+- version_tuple_str2int(platform.python_version_tuple()) 输出 (3, 9, 6)。
+
+将版本字符串转换成整数tuple后，即可直接与预期版本tuple进行比较匹配。
+
+```Python
+# '3.9'
+version_str2tuple(sysconfig.get_python_version()) > (3, 8)
+
+# '3.9.6'
+version_str2tuple(platform.python_version()) > (3, 9, 6)
+
+# ('3', '9', '6')
+version_tuple_str2int(platform.python_version_tuple()) > (3, 9, 6)
+
+# (3, 9, 6, 'final', 0)
+tuple(sys.version_info) > (3, 9, 6) # sys.version_info > (3, 9, 6)
+```
+
 ## Integer literals
 
 [Integer literals](https://docs.python.org/3/reference/lexical_analysis.html#integer-literals)
