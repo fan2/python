@@ -14,6 +14,9 @@ builtins.type
 builtins.isinstance  
 builtins.issubclass  
 
+builtins.hasattr  
+builtins.getattr  
+
 ## vars
 
 builtins.vars  

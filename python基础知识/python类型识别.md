@@ -77,6 +77,65 @@ id(obj, /)
 
 ```
 
+## hasattr/getattr
+
+hasattr 判断对象 obj 是否有属性 name，返回bool类型。
+getattr 获取对象 obj 的属性 name，如果没有该属性可以指定默认值 default。
+
+```Shell
+hasattr(obj, name, /)
+    Return whether the object has an attribute with the given name.
+
+    This is done by calling getattr(obj, name) and catching AttributeError.
+
+etattr(...)
+    getattr(object, name[, default]) -> value
+
+    Get a named attribute from an object; getattr(x, 'y') is equivalent to x.y.
+    When a default argument is given, it is returned when the attribute doesn't
+    exist; without it, an exception is raised in that case.
+```
+
+[python - How to check if an object has an attribute? - Stack Overflow](https://stackoverflow.com/questions/610883/how-to-check-if-an-object-has-an-attribute)
+
+```Python
+if not hasattr(someObject, 'someProp'):
+    # Set someProp
+    pass
+
+if hasattr(someObject, 'someProp'):
+    # Access someProp
+    # prop = someObject.someProp
+    # prop = getattr(someObject, 'someProp')
+    pass
+
+try:
+    getattr(someObject, 'someProp')
+except AttributeError:
+    print "someObject not hasattr someProp"
+else
+    print "someObject hasattr someProp"
+```
+
+假如要设计一个二分查找的测试用例，精心挑选序列的一些指定索引元素进行查找，判断查找出的索引是否符合预期。
+为了测试循环和递归两种算法，我们设计了一个基础类 TestBSearch，提供接口 set_binary_search 供子类设定要测试的目标算法（函数）。
+
+> 子类的 `__init__` 或 `setUp` 中调用该接口设定目标算法函数。
+
+这里把传入的 binary_search 挂接到属性 bsearch 上，以供后续 test 测试用例调用。
+由于每个测试用例执行时都会调用一遍 `__init__` 或 `setUp`，这里进行去重判断。
+如果没有这个属性才挂接，否则不重复挂接。
+
+```Python
+class TestBSearch(unittest.TestCase):
+
+    # 设置二分查找搜索函数
+    def set_binary_search(self, binary_search):
+        if not hasattr(self, 'bsearch'):
+            self.bsearch = binary_search
+
+```
+
 ## class method
 
 ### `__base__`

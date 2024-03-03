@@ -43,6 +43,22 @@
 
 ### run debug
 
+vscode 打开普通 Python File（例如code.py），可以有以下运行方式：
+
+1. `⇧⌘P` 调起 Command Palette，输入 `Run`，可执行 Run Code 或 Python: Run Python File in Terminal。
+
+    - 如果py脚本开头没有指定 Shebang - `#!/usr/bin/env python3`，则执行 `/usr/bin/env python3 code.py`；否则，将执行 `python -u code.py`。
+
+2. 可在右上角 ▶︎ 按钮下拉选择运行方式：Run Python File, Run Python File in Dedicated Terminal 将采用 Python: Select Interpreter 中选定的python版本执行脚本。
+
+    - 例如：`/usr/local/bin/python3.9 code.py`
+
+调试（Debug）也可从多个入口发起：
+
+1. `⇧⌘P` 调起 Command Palette，输入 `Debug`，选择 Debug: Start Debugging 选择 Python Debugger。
+2. 可在右上角 ▶︎ 按钮下拉选择 `Python Debugger: Debug Python File` 启动调试。
+3. 在左侧浏览器面板中点击 Run and Debug，也起发起调试。
+
 ## vscode + conda
 
 Anaconda 配合 VSCode 可以搭建一个适用于机器学习、AI、数据科学领域学习与开发的 Python 开发环境。
@@ -108,64 +124,3 @@ Anaconda 配合 VSCode 可以搭建一个适用于机器学习、AI、数据科�
 
 - Quick Start - [UI tour](https://code.visualstudio.com/docs/python/python-quick-start#_ui-tour)。
 - Quick Start - [Run, debug, and test](https://code.visualstudio.com/docs/python/python-quick-start#_run-debug-and-test)
-
-## python unittest
-
-[unittest --- 单元测试框架 — Python 3.12.2 文档](https://docs.python.org/zh-cn/3/library/unittest.html#)
-
-[用单元测试让你的python代码更靠谱测试函数单元测试和测试用例测试类-腾讯云开发者社区-腾讯云](https://cloud.tencent.com/developer/article/1347180)
-
-假设 name_function.py 文件中定义了 get_formatted_name 函数：
-
-```Python
-# coding:utf-8
-
-def get_formatted_name(first, last, middle=''):
-    if middle:
-        full_name = first + ' ' + middle + ' ' + last
-    else:
-        full_name = first + ' ' + last
-    return full_name.title()
-```
-
-test_name_function.py 单测 name_function 中的 get_formatted_name 函数：
-
-```Python
-import unittest
-from name_function import get_formatted_name
-
-class NameTestCase(unittest.TestCase):
-    def test_first_last_name(self):
-        formatted_name = get_formatted_name('janis', 'joplin')
-        self.assertEqual(formatted_name, 'Janis Joplin')
-
-    def test_first_last_middle_name(self):
-        formatted_name = get_formatted_name('wolfgang', 'mozart', 'amadeus')
-        self.assertEqual(formatted_name, 'Wolfgang Amadeus Mozart')
-
-unittest.main()
-```
-
-以上代码 class NameTestCase 继承 unittest.TestCase 创建了一个测试样例。
-通过 setUp() 和 tearDown() 方法，可以设置测试开始前与完成后需要执行的指令。
-上述两个独立的测试方法的命名都以 test 开头，这个命名约定告诉测试运行者类的哪些方法表示测试。
-
-每个测试的关键是使用断言来管理预期：
-
-- 调用 assertEqual() 或 assertNotEqual() 来检查预期的输出；
-- 调用 assertTrue() 或 assertFalse() 来验证一个条件；
-- 调用 assertIn() 或 assertNotIn() 来验证包含情况；
-- 调用 assertRaises() 来验证抛出了一个特定的异常。
-
-使用这些方法而不是 `assert` 语句是为了让测试运行者能聚合所有的测试结果并产生结果报告。
-
-**常用断言方法**：
-
-方法                       | 用途
---------------------------|------
-assertEqual(a, b)         | 核实 a == b
-assertNotEqual(a, b)      | 核实 a != b
-assertTrue(x)             | 核实 x为True
-assertFalse(x)            | 核实 x为False
-assertIn(item , list )    | 核实 item 在 list 中
-assertNotIn(item , list ) | 核实 item 不在 list 中

@@ -98,6 +98,90 @@ Jupyter Notebooks - [IntelliSense support in the Jupyter Notebook Editor](https:
 vscode 中编辑 Jupyter Notebooks，提供完整的 InterelliSense 支持，包括代码自动完成、成员列表、方法的快速信息和参数提示。
 在 Notebooks 编辑器窗口中，您可以与在代码编辑器中一样高效地输入书写Python代码。
 
+## Notebook Cell Operations
+
+### 折叠cell
+
+当有多个Code Cell且cell代码很长时，可考虑将暂时不看的cell折叠起来，以便聚焦当前cell。
+
+点击Cell边框外拖拽区左侧的蓝色bar可折叠当前Cell。
+
+[python - VS Code editing .ipynb file: How to collapse notebook cells? - Stack Overflow](https://stackoverflow.com/questions/66876197/vs-code-editing-ipynb-file-how-to-collapse-notebook-cells)
+
+Notebook cells have a blue bar on the left side to indicate that they are focused.
+This bar is now interactive - you can click the top part to collapse the cell input, and the bottom part to collapse the output.
+
+**vscode settings**:
+
+Notebook: Show Folding Controls
+
+- Controls when the Markdown header folding arrow is shown.
+- [x] mouseover
+
+### outline中显示Cells
+
+当有多个Code Cell且cell代码很长时，除了可以在编辑区将暂时不看的cell折叠起来，也可在 Breadcrumbs(`⌥M`) 导航cells。
+
+**vscode settings**:
+
+Notebook › Breadcrumbs: Show Code Cells ("notebook.breadcrumbs.showCodeCells": true)
+
+- [x] When enabled notebook breadcrumbs contain code cells.
+
+也可配置使Code Cells显示在outline视图中，然后在 outline 视图中点击快速定位跳转。
+
+**vscode settings**:
+
+Notebook › Outline: Show Code Cells ("notebook.outline.showCodeCells": true)
+
+- [x] When enabled notebook outline shows code cells.
+
+### 鼠标拖拽上下移动
+
+在 Cell 边框线左侧 Gutter 区鼠标拖动支持 Move Up/Down，上下移动调整 cell 的位置。
+
+**vscode settings**:
+
+Notebook: Drag And Drop Enabled ("notebook.dragAndDropEnabled": true)
+
+- [x] Control whether the notebook editor should allow moving cells through drag and drop.
+
+### 显示行号
+
+Cell Toobar 更多点选 Show Cell Line Numbers，显示行号。
+
+**vscode settings**:
+
+Notebook: Line Numbers ("notebook.lineNumbers": "on")
+
+Controls the display of line numbers in the cell editor.
+
+- [x] on
+
+### output
+
+Code Cell 运行结果（output）可能输出行宽度超出编辑器，可以打开 `wordWrap` 选项：
+
+Notebook › Output: Word Wrap ("notebook.output.wordWrap": true)
+
+- Controls whether the lines in output should wrap.
+
+Code Cell 运行结果（output）默认输出30行，如果输出超长会截断并提示：
+
+> Output is truncated. View as a scrollable element or open in a text editor.
+
+可以打开 `scrolling` 选项，支持纵向滚动：
+
+Notebook › Output: Scrolling ("notebook.output.scrolling": true)
+
+- Initially render notebook outputs in a scrollable region when longer than the limit.
+
+也可修改默认的行数限制 `textLineLimit`：
+
+Notebook › Output: Text Line Limit ("notebook.output.textLineLimit": 100)
+
+- Controls how many lines of text are displayed in a text output.
+
 ## Run & Debug Cell
 
 Jupyter Notebooks - [Running cells](https://code.visualstudio.com/docs/datascience/jupyter-notebooks#_running-cells)
@@ -107,7 +191,7 @@ Jupyter Notebooks - [Running cells](https://code.visualstudio.com/docs/datascien
 
 ### requires ipykernel package
 
-在 Notebook 的右上角选择 Kernel 为最新 brew 更新的 python3.12，提示 requires the ipykernel package：
+vscode 打开普通 Python File，然后在右上角 ▶︎ 按钮下拉选择 `Run Current File in Interactive Window`，或在 Notebook 的右上角选择 Kernel 为最新 brew 更新的 python3.12，提示 requires the ipykernel package：
 
 ```Shell
 Running cells with '/usr/local/bin/python3.12' requires the ipykernel package.  
