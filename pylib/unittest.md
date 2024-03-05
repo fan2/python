@@ -1,5 +1,30 @@
 [TOC]
 
+参考：
+
+- 《Python基础教程》第16章《测试基础》
+- 《Python编程从入门到实践》第11章《测试代码》
+
+极限编程先锋引入了“测试一点点，再编写一点点代码”的理念。这种理念与直觉不太相符，却很管用，胜过与直觉一致的“编写一点点代码，再测试一点点”的做法。
+换而言之，测试在先，编码在后。这也称为**测试驱动的编程**。
+
+开发软件时，必须先知道软件要解决什么问题——要实现什么样的目标。要阐明程序的目标，可编写需求说明，也就是描述程序必须满足何种需求的文档。这样以后就很容易核实 需求是否确实得到了满足。
+
+这里的理念是先编写测试，再编写让测试通过的程序。测试程序就是需求说明，可帮助确保程序开发过程紧扣这些需求。
+
+在测试领域，有两个重要的基础概念：单元测试和测试用例。**单元测试**用于核实函数的某个方面没有问题；**测试用例**是一组单元测试，这些单元测试一起核实函数在各种情形下的行为都符合要求。
+
+**全覆盖式测试**用例包含一整套单元测试，涵盖了各种可能的函数使用方式。
+良好的测试用例考虑到了函数可能收到的各种输入，包含针对所有这些情形的测试。
+对于大型项目，要实现全覆盖可能很难。通常，最初只要针对代码的重要行为编写测试即可，等项目被广泛使用时再考虑全覆盖。
+
+**覆盖率**（coverage）是一个重要的测试概念。
+运行测试时，很可能达不到运行所有代码（分支）的理想状态。
+实际上，最理想的情况是，使用各种可能的输入检查每种可能的程序状态，但这根本不可能做到。
+优秀测试套件的目标之一是确保较高的覆盖率，为此可使用覆盖率工具，它们测量测试期间实际运行的代码所占的比例。
+
+Python标准库中的模块unittest提供了自动化测试框架工具集，让你能够以结构化方式编写庞大而详尽的测试集（测试用例）。
+
 # unittest
 
 [unittest — Unit testing framework — Python 3.12.2 documentation](https://docs.python.org/3/library/unittest.html)
@@ -23,12 +48,13 @@ A testcase is created by subclassing `unittest.TestCase`. 
 
 以上代码 class NameTestCase 继承 `unittest.TestCase` 创建了一个测试样例。
 
-测试方法都以 `test` 开头命名，该前缀告诉测试框架哪些方法是需要运行的测试用例。unittest 运行起来后，会执行所有以 `test` 开头的测试用例。
+测试方法都以 `test` 开头命名，该前缀告诉测试框架哪些方法是需要运行的单元测试。
+unittest 运行起来后，会执行该模块的测试用例，即所有以 `test` 开头的单元测试。
 
 > The three individual tests are defined with methods whose names start with the letters `test`.
 > This naming convention informs the test runner about which methods **represent** tests.
 
-如果多个测试用例，测试流程基本相同，仅仅是部分测试参数差异。此时，可考虑将公共部分提取为辅助函数。然后，每个测试用例都调用这个辅助函数。
+如果多个单元测试，测试流程基本相同，仅仅是部分测试参数差异。此时，可考虑将公共部分提取为辅助函数。然后，测试用例都调用这个辅助函数。
 
 > 如果想要定义辅助函数，只要命名不以 test 开头的 [Non-test methods](https://stackoverflow.com/questions/6961099/non-test-methods-in-a-python-testcase) 即可。
 
@@ -36,19 +62,22 @@ A testcase is created by subclassing `unittest.TestCase`. 
 
 通过 setUp() 和 tearDown() 方法，可以设置测试开始前与完成后需要执行的指令。
 
-运行每个以 `test` 开头命名的测试用例，都会先执行 setUp()；用例执行完，会执行 tearDown()。
+运行每个以 `test` 开头命名的单元测试，都会先执行 setUp()；用例执行完，会执行 tearDown()。
 
 1. Tests can be numerous, and their set-up can be repetitive. Luckily, we can factor out set-up code by implementing a method called `setUp`(), which the testing framework will automatically call for every single test we run.
 2. Similarly, we can provide a `tearDown`() method that tidies up after the test method has been run.
 
 Tests share setup and shutdown code: The `setUp`() and `tearDown`() methods allow you to define instructions that will be executed before and after **each** test method.
 
-可在 `__init__` 中初始化成员变量，挂靠到self上，后续测试用例中通过 self.var 形式引用这些成员变量。
-但 `__init__` 不止初始化一次，调用次数同 setUp/tearDown。
+可在 `__init__` 中初始化成员变量，挂靠到self上，后续测试用例通过 self.var 形式引用这些成员变量。
+但 `__init__` 不止初始化一次，调用次数同 setUp/tearDown，即运行每个单元测试前都会运行。
 
 A new TestCase instance is created as a unique test fixture used to execute each individual test method. Thus `setUp`(), `tearDown`(), and `__init__`() will be called once per test.
 
-如果想初始化成员变量，且只初始化一次，可考虑调用类方法 `setUpClass` 和 `tearDownClass`。
+例如所有单元测试中都会用到的相同的测试数据，可以抽取到 `__init__` 或 `setUp` 中初始化，然后定义为属性(prop)，在后续测试用例中引用(self.prop)。
+这样做，可以避免测试用例中对一套测试数据的重复书写（初始化），但是运行期每次执行单元测试之前都会调用 `__init__` 或 `setUp` 还是会重复初始化。
+对于网络连接这类重型操作，如果每个单元测试都创建/销毁一条临时网络连接，动作幅度和资源消耗非常大，最好是能全局初始化只创建一次。
+在这种场景下，可考虑调用类方法 `setUpClass` 创建一条公用的网络连接，然后在 `tearDownClass` 中关闭连接（销毁相关资源）。
 
 ```Python
 import unittest
@@ -112,64 +141,12 @@ assertWarnsRegex(warn, r, fun, *args, **kwds) | `fun(*args, **kwds)` 引发了 w
 assertLogs(logger, level) | `with` 代码块在 logger 上使用了最小的 level 级别写入日志 | 3.4
 assertNoLogs(logger, level) | `with` 代码块没有在 logger 上使用最小的 level 级别写入日志 | 3.10
 
-### subTest
+## entrypoint
 
-Distinguishing test iterations using subtests
+测试模块一般是直接运行的，其中的入口点触发测试用例的运行。
+启动运行后，将实例化所有（或挑选的）的TestCase子类，并运行所有（或挑选的）以test打头的方法（单元测试）。
 
-When there are very small differences among your tests, for instance some parameters, unittest allows you to distinguish them inside the body of a test method using the `subTest`() context manager.
-
-```Python
-class NumbersTest(unittest.TestCase):
-
-    def test_even(self):
-        """
-        Test that numbers between 0 and 5 are all even.
-        """
-        for i in range(0, 6):
-            with self.subTest(i=i):
-                self.assertEqual(i % 2, 0)
-
-if __name__ == '__main__':
-    unittest.main(argv=[''], verbosity=2, exit=False)
-```
-
-Without using a subtest, execution would **stop** after the *first* failure, and the error would be less easy to diagnose because the value of `i` wouldn’t be displayed.
-
-对于以上 test_even 用例中的 for 循环，如果不添加 subTest，那么i=1时，用例即立即宣告失败并退出。
-实际上，我们希望跑完for循环，并将失败的循环变量i打印出来，添加 subTest 可满足这种需求。
-
-## skip
-
-Unittest supports skipping individual test methods and even whole classes of tests.
-
-Skipping a test is simply a matter of using the skip() decorator or one of its conditional variants:
-
-```Python
-class MyTestCase(unittest.TestCase):
-
-    @unittest.skip("demonstrating skipping")
-    def test_nothing(self):
-        self.fail("shouldn't happen")
-
-    @unittest.skipUnless(sys.platform.startswith("win"), "requires Windows")
-    def test_windows_support(self):
-        # windows specific testing code
-        pass
-```
-
-Classes can be skipped just like methods:
-
-```Python
-@unittest.skip("MyTestCase")
-class MyTestCase(unittest.TestCase):
-    def test_not_run(self):
-        pass
-
-    def test_nothing(self):
-        self.fail("shouldn't happen")
-```
-
-## main run TestCase
+### main run TestCase
 
 ```Python
 unittest.main(module='__main__', defaultTest=None, argv=None, testRunner=None, testLoader=unittest.defaultTestLoader, exit=True, verbosity=1, failfast=None, catchbreak=None, buffer=None, warnings=None)
@@ -257,7 +234,7 @@ class NameTestCase(unittest.TestCase):
 unittest.main()
 ```
 
-在控制台中运行单元测试用例脚本：
+在控制台中运行测试用例脚本：
 
 ```Shell
 $ python3 test_name_function.py
@@ -285,7 +262,7 @@ Ran 2 tests in 0.000s
 OK
 ```
 
-## TextTestRunner run TestSuite
+### TextTestRunner run TestSuite
 
 **test suite**
 
@@ -335,7 +312,7 @@ if __name__ == '__main__':
     runner.run(suite())
 ```
 
-## main or TextTestRunner?
+### main or TextTestRunner?
 
 采用 `unittest.main` 作为测试入口点时，会启动执行当前模块（Python File或Jupyter Notebook）中的所有TestCase测试用例。
 
@@ -345,3 +322,67 @@ if __name__ == '__main__':
 
 如果不想执行所有的测试用例，最好将不同的测试用例分散到独立的模块中，保证每个Python File或者Jupyter Notebook中只有一个TestCase测试用例。
 也可创建 TestSuite 按需添加指定 TestCase 的测试用例，改用 `unittest.TextTestRunner` 加载 TestSuite，再调用 run 启动测试用例。
+
+## Organization
+
+### subTest
+
+Distinguishing test iterations using subtests
+
+When there are very small differences among your tests, for instance some parameters, unittest allows you to distinguish them inside the body of a test method using the `subTest`() context manager.
+
+> `self.subTest(msg=None, **params)` Return a context manager which executes the enclosed code block as a subtest.
+
+一般用在for循环下，结合 with 和 subTest 将循环体代码块作为子测试，而非简单的代码语句，从而拥有类似单元测试的报错机制。
+对于大量逻辑重复的单元测试，仅仅是测试数据索引级别的差异，可考虑使用for循环搭配subTest改写为一个单元测试，使代码更简洁。
+
+```Python
+class NumbersTest(unittest.TestCase):
+
+    def test_even(self):
+        """
+        Test that numbers between 0 and 5 are all even.
+        """
+        for i in range(0, 6):
+            with self.subTest(i=i):
+                self.assertEqual(i % 2, 0)
+
+if __name__ == '__main__':
+    unittest.main(argv=[''], verbosity=2, exit=False)
+```
+
+Without using a subtest, execution would **stop** after the *first* failure, and the error would be less easy to diagnose because the value of `i` wouldn’t be displayed.
+
+对于以上 test_even 用例中的 for 循环，如果不添加 subTest，那么i=1时，用例即立即宣告失败并退出。
+实际上，我们希望跑完for循环，并将失败的循环变量i打印出来，添加 subTest 可满足这种需求。
+
+### skip
+
+Unittest supports skipping individual test methods and even whole classes of tests.
+
+Skipping a test is simply a matter of using the skip() decorator or one of its conditional variants:
+
+```Python
+class MyTestCase(unittest.TestCase):
+
+    @unittest.skip("demonstrating skipping")
+    def test_nothing(self):
+        self.fail("shouldn't happen")
+
+    @unittest.skipUnless(sys.platform.startswith("win"), "requires Windows")
+    def test_windows_support(self):
+        # windows specific testing code
+        pass
+```
+
+Classes can be skipped just like methods:
+
+```Python
+@unittest.skip("MyTestCase")
+class MyTestCase(unittest.TestCase):
+    def test_not_run(self):
+        pass
+
+    def test_nothing(self):
+        self.fail("shouldn't happen")
+```

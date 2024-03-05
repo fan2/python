@@ -50,6 +50,11 @@ def binary_search_recursion(A: list, e, l=0, r=None, debug=False):
 
 ## 测试用例的设计(case by case)
 
+每个单元测试用于核实函数的某个方面没有问题。
+测试用例（一组单元测试），用于核实一系列输入都将得到预期的输出。
+
+本案测试用例的整体设计要点如下：
+
 1. 基于 `random` 模块生成随机序列 rList，并调用 sorted 排好序；
 
     - random.sample 从序列 range(1,21) 这20个数中不放回随机取样10个数。
@@ -62,11 +67,16 @@ def binary_search_recursion(A: list, e, l=0, r=None, debug=False):
 
 3. 测试case都是取特定索引的元素，二分查找验证位置，需要写6组assertEqual例程。
 
-4. binary_search_loop 算法试错：将 while l <= r 中的 = 去掉，看看边界case不通过的输出。
-
-5. 可基于random.choices替代random.sample，进行放回取样，验证有重复数值序列的二分查找验证。
-
 根据实际情况，可选择 unittest.main 或 unittest.TextTestRunner 作为测试入口点。
+
+对于测试用例，6组单元测试将第一步中准备的数据作为输入，测试二分查找函数的输出是否符合预期。
+第一步准备的测试数据，可以放在 `__init__` 或 `setUp` 中初始化，每个单元测试执行前都会调用。
+如果想测试数据只全局初始化一次，则可考虑在类方法 `setUpClass` 中进行初始化，在 `tearDownClass` 中执行必要的清理。
+
+可考虑加强验证测试：
+
+1. binary_search_loop 算法试错：将 while l <= r 中的 = 去掉，看看边界case不通过的输出。
+2. 可基于random.choices替代random.sample，进行放回取样，验证有重复数值序列的二分查找验证。
 
 以下实现了循环二分查找 binary_search_loop 的测试用例 TestBSearchLoop。
 如果要实现递归二分查找 binary_search_recursion 的测试用例 TestBSearchRecursion，只需切换每个case中的函数名即可。
@@ -175,7 +185,15 @@ if __name__ == '__main__':
 
 ## 测试用例的设计(foreach subTest)
 
-将6组索引提前组装成列表，再用for循环执行subTest，不通过的case会dump指定的msg。
+以上测试用例的设计中，每个单元测试的工作流程如下：
+
+1. 挑选索引及待搜元素
+2. 调用待测函数，返回查找到的索引
+3. 核实查找到的索引与预设索引是否匹配
+
+除了第1步筛选出不同的索引外，后续步骤基本一样。
+因此，为了可考虑将测试用例收缩到一个单元测试中，原单元测试变为子测试。
+具体做法是，将6组索引提前组装成列表，再用for循环执行subTest，不通过的case会dump指定的msg。
 
 ```Python
 import unittest
@@ -221,9 +239,7 @@ if __name__ == '__main__':
 
 ## 测试用例的设计(base case)
 
-无论是 case by case，还是 foreach subTest 测试用例中，binary_search_recursion 的测试用例 TestBSearchRecursion 相比 binary_search_loop 的测试用例 TestBSearchLoop 只需切换每个case中的二分查找函数名即可，其他测试参数和流程一致。
-
-因此可以考虑提取 TestBSearchRecursion 和 TestBSearchLoop 的基类 TestBSearch，再派生两个子类即可，定制测试函数。
+无论是 case by case，还是 foreach subTest，测试用例中，测试用例 TestBSearchRecursion 相比测试用例 TestBSearchLoop 只需切换每个case中的二分查找函数名即可，其他测试参数和流程一致。因此，可以考虑提取出一个基类 TestBSearch，再派生两个子类，适当时机设定待测函数即可。
 
 ### 提取测试用例基类
 
@@ -361,7 +377,6 @@ class TestBSearch(unittest.TestCase):
                 e = rList[t[0]]
                 # 查找到的索引
                 ei = self.bsearch(rList, e, debug=True)
-                # ei = binary_search_recursion(rList, e, debug=True)
                 # 应与预期索引匹配
                 self.assertEqual(ei, t[0], msg=f'{rList[t[0]]}, {t[1]}')
 
