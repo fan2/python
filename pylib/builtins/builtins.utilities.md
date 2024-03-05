@@ -126,59 +126,6 @@ class int(object)
 11
 ```
 
-## map
-
-Python 内建模块 builtins 中的 map 类支持将序列中的元素做迭代映射转换。
-
-```Shell
-Help on class map in module builtins:
-
-class map(object)
- |  map(func, *iterables) --> map object
- |
- |  Make an iterator that computes the function using arguments from
- |  each of the iterables.  Stops when the shortest iterable is exhausted.
-```
-
-上面谈到可以调用 int(str) 将字符串转为整数，也可调用 map 对序列 iterables 逐个迭代调用 func 进行转换。
-
-1. sysconfig.get_python_version() 输出 '3.9'，platform.python_version() 输出 '3.9.6'。
-
-`version_str2tuple` 函数将版本号字符串按点号（`.`）分割成字符数组，再对字符数组调用 int 逐一映射为整数。
-
-```Python
-def version_str2tuple(vs:str):
-    return tuple(map(int, vs.split(".")))
-```
-
-- version_str2tuple(sysconfig.get_python_version()) 输出 (3, 9)；
-- version_str2tuple(platform.python_version()) 输出 (3, 9, 6)；
-
-2. platform.python_version_tuple() 输出 ('3', '9', '6')，调用 `version_tuple_str2int` 函数将元组序列中的字符转成整数。
-
-```Python
-def version_tuple_str2int(vst:tuple):
-    return tuple(map(int, vst))
-```
-
-- version_tuple_str2int(platform.python_version_tuple()) 输出 (3, 9, 6)。
-
-将版本字符串转换成整数tuple后，即可直接与预期版本tuple进行比较匹配。
-
-```Python
-# '3.9'
-version_str2tuple(sysconfig.get_python_version()) > (3, 8)
-
-# '3.9.6'
-version_str2tuple(platform.python_version()) > (3, 9, 6)
-
-# ('3', '9', '6')
-version_tuple_str2int(platform.python_version_tuple()) > (3, 9, 6)
-
-# (3, 9, 6, 'final', 0)
-tuple(sys.version_info) > (3, 9, 6) # sys.version_info > (3, 9, 6)
-```
-
 ## Integer literals
 
 [Integer literals](https://docs.python.org/3/reference/lexical_analysis.html#integer-literals)
@@ -505,4 +452,132 @@ math.log(size_bytes, 1024))：计算真数 size_bytes 以 1024 为底的对数�
 >>> length = 4788224
 >>> convert_size(length)
 '4.57 MB'
+```
+
+## sorted
+
+内置函数 `sorted` 支持对可迭代序列进行（升序）排序，可指定 reverse 进行降序排列。
+
+```Shell
+    sorted(iterable, /, *, key=None, reverse=False)
+        Return a new list containing all items from the iterable in ascending order.
+```
+以下代码片段在 [1,40] 之间随机挑选13个数，然后调用 sorted 函数进行排序：
+
+```Python
+    l = 1; r = 40; n = 13
+    random.seed(r+1)
+    rl = random.sample(range(l,r+1), n)
+    srl = sorted(rl) # 默认升序
+    # srl = sorted(rl, reverse=True) # 降序
+```
+
+对于 list(tuple) 和 dict 等符合可结合 lambda 指定排序的 key：
+
+```Python
+a=[('b',3), ('a',2), ('d',4), ('c',1)]
+# 按照第一个元素排序
+sorted(a,key=lambda x:x[0])
+# 按照第二个元素排序
+sorted(a,key=lambda x:x[1])
+```
+
+[Python | Sort Python Dictionaries by Key or Value - GeeksforGeeks](https://www.geeksforgeeks.org/python-sort-python-dictionaries-by-key-or-value/)
+
+```Python
+d={'b':3, 'a':2, 'd':4, 'c':1}
+# sort by keys
+sorted(d.items())
+
+# sort by keys（列表推导）
+ks = list(d.keys())
+ks.sort()
+sorted_dict = {k: d[k] for k in ks}
+
+# sort by values
+sorted(d.items(), key=lambda kv:(kv[1], kv[0]))
+```
+
+## reversed
+
+内置类 `reversed` 支持对可迭代序列进行逆序，根据输入的序列返回不同的类型。
+
+```Shell
+class reversed(object)
+ |  reversed(sequence, /)
+ |
+ |  Return a reverse iterator over the values of the given sequence.
+```
+
+以下代码片段将 range、tuple、list 传入 reversed() 返回对应的逆序列。
+
+```Python
+r = range(1,11)
+rr = reversed(r)
+type(rr) # 返回 range_iterator
+
+t = tuple(r)
+rt = reversed(t)
+type(rt) # 返回 reversed
+
+l = [*r]
+rl = reversed(l)
+type(rl) # 返回 list_reverseiterator
+```
+
+## map
+
+Python 内建模块 builtins 中的 map 类支持将序列中的元素做迭代映射转换。
+
+```Shell
+Help on class map in module builtins:
+
+class map(object)
+ |  map(func, *iterables) --> map object
+ |
+ |  Make an iterator that computes the function using arguments from
+ |  each of the iterables.  Stops when the shortest iterable is exhausted.
+```
+
+上面谈到可以调用 int(str) 将字符串转为整数，也可调用 map 对序列 iterables 逐个迭代调用 func 进行转换。
+
+1. sysconfig.get_python_version() 输出 '3.9'，platform.python_version() 输出 '3.9.6'。
+
+`version_str2tuple` 函数将版本号字符串按点号（`.`）分割成字符数组，再对字符数组调用 int 逐一映射为整数。
+
+```Python
+def version_str2tuple(vs:str):
+    return tuple(map(int, vs.split(".")))
+    # list comprehension
+    # return tuple([int(s) for s in vs.split('.')])
+```
+
+- version_str2tuple(sysconfig.get_python_version()) 输出 (3, 9)；
+- version_str2tuple(platform.python_version()) 输出 (3, 9, 6)；
+
+2. platform.python_version_tuple() 输出 ('3', '9', '6')，调用 `version_tuple_str2int` 函数将元组序列中的字符转成整数。
+
+```Python
+def version_tuple_str2int(vst:tuple):
+    return tuple(map(int, vst))
+    # list comprehension
+    # return tuple([int(s) for s in vst])
+```
+
+- version_tuple_str2int(platform.python_version_tuple()) 输出 (3, 9, 6)。
+
+将版本字符串转换成整数tuple后，即可直接与预期版本tuple进行比较匹配。
+
+```Python
+# '3.9'
+version_str2tuple(sysconfig.get_python_version()) > (3, 8)
+
+# '3.9.6'
+version_str2tuple(platform.python_version()) > (3, 9, 6)
+
+# ('3', '9', '6')
+version_tuple_str2int(platform.python_version_tuple()) > (3, 9, 6)
+
+# (3, 9, 6, 'final', 0)
+tuple(sys.version_info) > (3, 9, 6) # sys.version_info > (3, 9, 6)
 ```

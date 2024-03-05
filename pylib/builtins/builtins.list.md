@@ -71,14 +71,14 @@ array 相比 list 的局限在于：list 可以混合存储任意类型，而 ar
 
 4. `l1=[1,2,3,4]`：定义包含多个元素的列表，多个元素之间以逗号分隔。
 
-5. `l=[*range(1,5)]`：使用星号对可枚举对象range进行解包，生成列表。
+5. `l=[*range(1,5)]` 或 `l=[*tuple(range(1,5))]`：使用星号对可枚举对象range、tuple进行解包，生成列表。
 
 列表支持基于脚标索引访问元素（access through subscripted index）。
 
 此外，有些场合可能需要预分配指定尺寸的数组（列表），以便按索引设值而不用担心越界访问。
 
 - `[None]*10`: 初始化长度为10的列表，所有元素初始化为空对象None。
-- `[0]*10`: 初始化包含10个的列表。
+- `[0]*10`: 初始化包含10个0的列表。
 
 ```Shell
 >>> l1=[None]*10
@@ -426,9 +426,9 @@ list 模拟栈的 LIFO 惯用法：
 - 尾部出栈：e=list.pop()
 - 替换：先读取按需修改，再 pop 后 append
 
-另外也可单向访问双端队列（collections.deque）遵循栈的 LIFO 用法。
+另外也可单向访问双端队列（collections.`deque`）遵循栈的 LIFO 用法。
 
-如果需要频繁对序列做先出先进（FIFO）的操作，双端队列（collections.`deque`）的速度应该会更快。  
+如果需要频繁对序列做先出先进（FIFO）的操作，双端队列（collections.deque）的速度应该会更快。  
 除了标准的 append/pop 接口，deque 还专门提供了 `appendleft`/`popleft` 接口。
 
 - 双端队列标准惯用法：入队 **enqueue** - `dq.append(e)`, 出队 **dequeue** - `e=dq.popleft()`。
@@ -472,9 +472,43 @@ def capwords(s, sep=None):
 
 ```Python
 page_no = [3,11,45,65,69,85,109,127,141,163,191,195,203,227]
-offset=25
-correct_page_no = [i + offset for i in page_no]
+offset = 25
+correct_page_no = [p + offset for p in page_no]
 ```
+
+### map
+
+以上使用列表推导对页数进行矫正，也可使用 map 结合 lambda 的函数式编程方式实现同样的目的。
+
+```Python
+correct_page_no=list(map(lambda x:x+offset, page_no))
+```
+
+`version_str2tuple` 函数将版本号字符串（例如'3.9'、'3.9.6'）按点号（`.`）分割成字符数组，再调用map对字符数组调用 int 逐一映射为整数。
+
+```Python
+def version_str2tuple(vs:str):
+    return tuple(map(int, vs.split(".")))
+```
+
+推荐使用列表推导实现：`tuple([int(s) for s in vs.split('.')])`。
+
+- version_str2tuple(sysconfig.get_python_version()) 输出 (3, 9)；
+- version_str2tuple(platform.python_version()) 输出 (3, 9, 6)；
+
+platform.python_version_tuple() 输出 ('3', '9', '6')，为字符串元组。
+`version_tuple_str2int` 函数将元组序列中的字符转成整数。
+
+```Python
+def version_tuple_str2int(vst:tuple):
+    return tuple(map(int, vst))
+```
+
+推荐使用列表推导实现：`tuple([int(s) for s in vst])`。
+
+### with if
+
+还可以针对 for 循环添加过滤条件，筛选出符合条件的元素，再执行复合计算。
 
 以下示例将列表解析返回的元素传入三目运算，判断偶数为1，奇数为0，返回奇偶性标识列表。
 
@@ -489,10 +523,6 @@ correct_page_no = [i + offset for i in page_no]
 >>> [e if e>4 else 1 for e in range(1,8)]
 [1, 1, 1, 1, 5, 6, 7]
 ```
-
-### with if
-
-还可以针对 for 循环添加过滤条件，筛选出符合条件的元素，再执行复合计算。
 
 以下示例通过列表推导将指定模块中以下划线开头的非供外部使用的名称过滤掉：
 

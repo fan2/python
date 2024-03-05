@@ -77,10 +77,12 @@ id(obj, /)
 
 ```
 
-## hasattr/getattr
+## hasattr/getattr/setattr/delattr
 
-hasattr 判断对象 obj 是否有属性 name，返回bool类型。
-getattr 获取对象 obj 的属性 name，如果没有该属性可以指定默认值 default。
+1. `hasattr`: 判断对象 obj 是否有名称为 name 的属性，返回 bool 类型。
+2. `getattr`: 获取对象 obj 名称为 name 的属性，支持指定默认值 default。
+3. `setattr`: 将对象 obj 名称为 name 的属性设置为指定的值 value。
+4. `delattr`: 删除对象 obj 名称为 name 的属性。
 
 ```Shell
 hasattr(obj, name, /)
@@ -88,12 +90,22 @@ hasattr(obj, name, /)
 
     This is done by calling getattr(obj, name) and catching AttributeError.
 
-etattr(...)
+getattr(...)
     getattr(object, name[, default]) -> value
 
     Get a named attribute from an object; getattr(x, 'y') is equivalent to x.y.
     When a default argument is given, it is returned when the attribute doesn't
     exist; without it, an exception is raised in that case.
+
+setattr(obj, name, value, /)
+    Sets the named attribute on the given object to the specified value.
+
+    setattr(x, 'y', v) is equivalent to ``x.y = v``
+
+delattr(obj, name, /)
+    Deletes the named attribute from the given object.
+
+    delattr(x, 'y') is equivalent to ``del x.y``
 ```
 
 [python - How to check if an object has an attribute? - Stack Overflow](https://stackoverflow.com/questions/610883/how-to-check-if-an-object-has-an-attribute)
@@ -101,6 +113,7 @@ etattr(...)
 ```Python
 if not hasattr(someObject, 'someProp'):
     # Set someProp
+    setattr(someObject, 'someProp', var_or_method)
     pass
 
 if hasattr(someObject, 'someProp'):
@@ -195,6 +208,7 @@ class TestBSearch(unittest.TestCase):
 ```
 
 ## is, is not
+
 reference - [6.10.3. Identity comparisons](https://docs.python.org/3/reference/expressions.html#is)
 
 The operators `is` and `is not` test for **object identity**: `x is y` is true if and only if x and y are the same object. Object identity is determined using the `id()` function. x is not y yields the inverse truth value. 

@@ -1,3 +1,8 @@
+[4.7. Defining Functions](https://docs.python.org/3/tutorial/controlflow.html#defining-functions)
+[4.8. More on Defining Functions](https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions)
+
+[4.8.6. Lambda Expressions](https://docs.python.org/3/tutorial/controlflow.html#lambda-expressions)
+[细说Python的lambda函数用法](https://zhuanlan.zhihu.com/p/80960485)
 
 ## 如何定义函数
 
