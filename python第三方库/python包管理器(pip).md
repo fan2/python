@@ -231,7 +231,9 @@ Commands:
 > [常用的python模块及安装方法](http://blog.chinaunix.net/uid-24567872-id-3926986.html)  
 > [不得不知的几个 python 开源项目](http://lukejin.iteye.com/blog/608230)  
 
-另外也可以 `python3 -m pip` 执行 pip 模块来安装包。
+#### python -m pip
+
+另外也可以 `python3 -m pip` 执行指定 Python 配套的 pip。
 
 > `-m mod` : run library module as a script
 
@@ -245,6 +247,53 @@ python -m pip install matplotlib
 # Linux (Debian)
 apt-get install python3-tk
 python3 -m pip install matplotlib
+```
+
+假设我们用 brew 安装了多个 python，或者之前用过的 python 一直残留着没有移除。
+
+```Shell
+$ ls -1 /usr/local/Cellar/ | grep 'python@'
+python@3.10
+python@3.11
+python@3.12
+python@3.8
+python@3.9
+
+$ find /usr/local/Cellar/ -type d -iname "python@*"
+/usr/local/Cellar//python@3.12
+/usr/local/Cellar//python@3.10
+/usr/local/Cellar//python@3.11
+/usr/local/Cellar//python@3.8
+/usr/local/Cellar//python@3.9
+```
+
+我们在之前的某个版本安装了一些工具包，后来忘了。那么怎么查找到当时用的那个版本呢？
+
+在命令行执行 `python3 -m pip -V` 可以看到指定 python 版本的配套 pip 版本和 site-packages 位置。
+
+- 也可打印 `sys.path` 看看 modules 的搜索路径。
+
+```Shell
+# macOS Xcode command line tool 安装的 python3 的 site-packages 位置
+$ python -m pip -V
+pip 21.2.4 from /Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/site-packages/pip (python 3.9)
+
+# macOS brew 安装的 python3 的 site-packages 位置
+$ python3 -m pip -V
+pip 24.0 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
+
+# conda base 中 site-packages 的位置
+$ pip -V
+pip 23.3.1 from /usr/local/anaconda3/lib/python3.9/site-packages/pip (python 3.9)
+```
+
+可以指定python可执行文件的绝对路径，执行 `python -m pip list` 命令列出已安装的 site-packages。
+
+```Shell
+$ /usr/local/Cellar/python@3.8/3.8.18_2/bin/python3.8 -m pip list
+$ /usr/local/Cellar/python@3.9/3.9.18_2/bin/python3.9 -m pip list
+$ /usr/local/Cellar/python@3.10/3.10.13_2/bin/python3.10 -m pip list
+$ /usr/local/Cellar/python@3.11/3.11.7_2/bin/python3.11 -m pip list
 ```
 
 #### [upgrade pip](https://pip.pypa.io/en/stable/installing/#upgrading-pip)

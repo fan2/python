@@ -6,6 +6,8 @@
 
 控制台输入 `help('FORMATTING')` 可查看字符串格式化相关议题（Format String Syntax）。
 
+[7. Input and Output — Python 3.12.2 documentation](https://docs.python.org/3/tutorial/inputoutput.html)
+
 ---
 
 [Python String Formatting Best Practices](https://realpython.com/python-string-formatting/)
@@ -40,6 +42,11 @@ str(255) 将值字符串化为 '255'，hex(255) 将值字符串化为带 0x 前�
 ```
 
 ## %-formatting
+
+Old string formatting
+
+The % operator (modulo) can also be used for string formatting.
+This operation is commonly known as string interpolation.
 
 [printf-style String Formatting](https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting)
 
@@ -145,6 +152,15 @@ hello world
 # 重复使用某一位置序号
 >>> print('{0} {1} {0}'.format('hello','world'))
 hello world hello
+```
+
+甚至，可以像下面这样，把编号当对象使用进行深度引用：
+
+```Shell
+>>> table = {'Sjoerd': 4127, 'Jack': 4098, 'Dcab': 8637678}
+>>> print('Jack: {0[Jack]:d}; Sjoerd: {0[Sjoerd]:d}; '
+...       'Dcab: {0[Dcab]:d}'.format(table))
+Jack: 4098; Sjoerd: 4127; Dcab: 8637678
 ```
 
 ### keyword argument

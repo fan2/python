@@ -362,7 +362,11 @@ Unittest supports skipping individual test methods and even whole classes of tes
 
 Skipping a test is simply a matter of using the skip() decorator or one of its conditional variants:
 
+- 以下在 python 3.10 以下运行时，单元测试 skipIf 会报 SyntaxError: invalid syntax 错误，因为无法识别 match/case 关键字。
+
 ```Python
+import sys, unittest
+
 class MyTestCase(unittest.TestCase):
 
     @unittest.skip("demonstrating skipping")
@@ -373,6 +377,22 @@ class MyTestCase(unittest.TestCase):
     def test_windows_support(self):
         # windows specific testing code
         pass
+
+    @unittest.skipIf(sys.version_info < (3, 10),
+                     "Python Version too low, upgrade to 3.10 or higher.")
+    def test_match_case(self):
+        # Tests that work for Python >= 3.10.
+        def http_error(status):
+            match status:
+                case 400:
+                    return "Bad request"
+                case 404:
+                    return "Not found"
+                case 418:
+                    return "I'm a teapot"
+                case _:
+                    return "Something's wrong with the internet"
+        self.assertEqual(http_error(404), "Not found")
 ```
 
 Classes can be skipped just like methods:
