@@ -437,6 +437,8 @@ list 模拟栈的 LIFO 惯用法：
 
 [**list comprehension**](https://docs.python.org/3/glossary.html?highlight=list%20comprehension) : A compact way to process all or part of the elements in a sequence and return a list with the results.
 
+[5.1.3. List Comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions): List comprehensions provide a concise way to create lists. Common applications are to make new lists where each element is the result of some operations applied to each member of another sequence or iterable, or to create a subsequence of those elements that satisfy a certain condition.
+
 **列表解析式** 是遍历一个列表中的元素，过滤筛选出符合一定条件的元素，执行必要地转换后追加到另一个列表并返回这个新的列表的表达式。  
 
 列表解析式形如 `expression comp_for [comp_if]`，或更清晰一点 `expr for iter_var in iterable [if cond_expr]`，其中的条件过滤器 if 语句是可选的。如果没有 if 过滤，则默认遍历所有元素执行转换。
@@ -446,14 +448,6 @@ list 模拟栈的 LIFO 惯用法：
 ### without if
 
 `x in y` 的列表解析等效表达式：`any(x is e or x == e for e in y)`。
-
-string.py 中 string.capwords 函数的定义为典型的列表解析表达式写法：
-
-```Python
-# Capitalize the words in a string, e.g. " aBc  dEf " -> "Abc Def".
-def capwords(s, sep=None):
-    return (sep or ' ').join(x.capitalize() for x in s.split(sep))
-```
 
 以下示例for循环遍历原始可枚举对象，对遍历元素value执行 value**2 计算平方，整体效果是生成1到10的平方值列表。
 
@@ -476,35 +470,14 @@ offset = 25
 correct_page_no = [p + offset for p in page_no]
 ```
 
-### map
-
 以上使用列表推导对页数进行矫正，也可使用 map 结合 lambda 的函数式编程方式实现同样的目的。
 
 ```Python
 correct_page_no=list(map(lambda x:x+offset, page_no))
 ```
 
-`version_str2tuple` 函数将版本号字符串（例如'3.9'、'3.9.6'）按点号（`.`）分割成字符数组，再调用map对字符数组调用 int 逐一映射为整数。
-
-```Python
-def version_str2tuple(vs:str):
-    return tuple(map(int, vs.split(".")))
-```
-
-推荐使用列表推导实现：`tuple([int(s) for s in vs.split('.')])`。
-
-- version_str2tuple(sysconfig.get_python_version()) 输出 (3, 9)；
-- version_str2tuple(platform.python_version()) 输出 (3, 9, 6)；
-
-platform.python_version_tuple() 输出 ('3', '9', '6')，为字符串元组。
-`version_tuple_str2int` 函数将元组序列中的字符转成整数。
-
-```Python
-def version_tuple_str2int(vst:tuple):
-    return tuple(map(int, vst))
-```
-
-推荐使用列表推导实现：`tuple([int(s) for s in vst])`。
+现代 Python 更多地推荐采用面向对象编程范式，建议尽量不采用这种函数式编程方式。
+相比而言，列表推导（list comprehension）实现方式书写简洁且可读性更高（concise and readable）。
 
 ### with if
 

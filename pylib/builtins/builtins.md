@@ -81,7 +81,7 @@ builtins.memoryview
 
 ## len & filter
 
-builtins.len # 对字符串、列表等序列化数据集合求取长度（size）。
+builtins.len # 对字符串、列表等序列化数据集合求取长度（size）。
 
 builtins.reversed  
 builtins.filter  
@@ -89,7 +89,7 @@ builtins.sorted
 
 builtins.zip  
 
-## enum & iter
+## iterate
 
 ### enumerate
 

@@ -384,6 +384,57 @@ str5=str4.lower()
 print(str5) # hello, world!
 ```
 
+### startswith tuple
+
+startswith 的位置参数 prefix 除了支持单个字符串，也支持传入字符串 tuple(str1,str2,...)，逐个尝试匹配。
+
+```Shell
+>>> help(str)
+
+ |  startswith(...)
+ |      S.startswith(prefix[, start[, end]]) -> bool
+ |
+ |      Return True if S starts with the specified prefix, False otherwise.
+ |      With optional start, test S beginning at that position.
+ |      With optional end, stop comparing S at that position.
+ |      prefix can also be a tuple of strings to try.
+```
+
+例如，以下代码片段逐行读取文本文件，判断开头是否以空白字符集开头：
+
+```Python
+import string
+
+with open('test.py') as f:
+    for index, line in enumerate(f):
+        if (not line.startswith(tuple(string.whitespace))):
+            print(f'{index+1}:', line, end='')
+        else:
+            print(f'{index+1}: ')
+```
+
+### join iterable
+
+```Shell
+>>> help(str)
+
+ |  join(self, iterable, /)
+ |      Concatenate any number of strings.
+ |
+ |      The string whose method is called is inserted in between each given string.
+ |      The result is returned as a new string.
+ |
+ |      Example: '.'.join(['ab', 'pq', 'rs']) -> 'ab.pq.rs'
+```
+
+string.py 中的 string.capwords 方法即使用 map 迭代器搭配 join 实现：
+
+```Python
+# Capitalize the words in a string, e.g. " aBc  dEf " -> "Abc Def".
+def capwords(s, sep=None):
+    return (sep or ' ').join(map(str.capitalize, s.split(sep)))
+```
+
 ### expressions
 
 - `len(s)`: Return the length of str(number of single character).  

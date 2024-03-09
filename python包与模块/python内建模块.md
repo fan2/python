@@ -48,6 +48,13 @@ Noteworthy: None is the `nil' object; Ellipsis represents `...' in slices.
 
 [Understanding Data Types in Python](https://jakevdp.github.io/PythonDataScienceHandbook/02.01-understanding-data-types.html)
 
+以下先过滤内置模块中的公开符号，然后再进一步过滤出以“is”开头的判断接口：
+
+```Shell
+>>> [n for n in dir(builtins) if not n.startswith('_') and n.startswith('is')]
+['isinstance', 'issubclass']
+```
+
 ## [FUNCTIONS](https://docs.python.org/3/library/functions.html)
 
 builtins 模块提供了一些常用的内置函数，大概分为 vars、math、utility 三类：
