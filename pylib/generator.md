@@ -19,7 +19,7 @@ Python’s [generator](https://docs.python.org/3/glossary.html#term-generator)s
 
 **Generators**:
 
-[Generators](https://docs.python.org/3/glossary.html#term-generator) are a simple and powerful tool for creating iterators. They are written like regular functions but use the [`yield`](https://docs.python.org/3/reference/simple_stmts.html#yield) statement whenever they want to **return** data. Each time [`next()`](https://docs.python.org/3/library/functions.html#next "next") is called on it, the generator **resumes** where it left off (it remembers all the data values and which statement was last executed).
+[Generators](https://docs.python.org/3/glossary.html#term-generator) are a simple and powerful tool for creating iterators. They are written like regular functions but use the [`yield`](https://docs.python.org/3/reference/simple_stmts.html#yield) statement whenever they want to **return** data. Each time [`next()`](https://docs.python.org/3/library/functions.html#next "next") is called on it, the generator **resumes** where it left off (it **remembers** all the data values and which statement was last executed).
 
 ## 术语理解（interpretation）
 
@@ -209,6 +209,35 @@ for e in flatten(nested):
     print(e)
 ```
 
+### yield from subgenerator
+
+flatten 本身是个函数生成器，内部递归调用相当于 subgenerator，可以改用 `yield from` 语句，更加简洁。
+如果不加 isinstance 判断排除 str，会报错 RecursionError: maximum recursion depth exceeded。
+
+```Python
+def flatten(sequence):
+    """flatten a multi level list or something
+    >>> list(flatten([1, [2], 3]))
+    [1, 2, 3]
+    >>> list(flatten([1, [2], [3, [4]]]))
+    [1, 2, 3, 4]
+    """
+    for element in sequence:
+        if hasattr(element, '__iter__') and not isinstance(element, str):
+            yield from flatten(element)
+        else:
+            yield element
+
+print(list(flatten([1, [2], [3, [4]]])))
+print(list(flatten([[[1], 2], 3, 4, [5, [6, 7]], 8])))
+print(list(flatten(['foo', ['bar', ['baz']]])))
+```
+
+**参考**：
+
+- [Python yield from 用法详解 - 简书](https://www.jianshu.com/p/87da832730f5)
+- [In practice, what are the main uses for the "yield from" syntax in Python 3.3? - Stack Overflow](https://stackoverflow.com/questions/9708902/in-practice-what-are-the-main-uses-for-the-yield-from-syntax-in-python-3-3)
+
 ## 通用生成器--带循环
 
 以下 repeater 是个无限循环，初始传入 value=3，每次调用 next 返回 value=3。
@@ -349,22 +378,105 @@ print(g5.send(13))
 3. g5.send(12)：第1个 yield 表达式返回 12，y=2*12=24，返回 y//3=8
 4. g5.send(13)：第2个 yield 表达式返回 13，z=13，yield 语句 x+y+z=5+24+13=42，返回 42
 
-## 圆括号构造简单生成器
+### throw & close
 
-在 Python 2.4 中，引入了一个类似于列表推导的概念：生成器推导（也叫生成器表达式）。
+生成器还包含另外两个方法。
+
+- `throw`：用于在生成器中（yield表达式处）引发异常，并返回下一个状态。调用时可提供一个异常类型、一个可选值和一个traceback对象。
+- `close`：用于停止生成器，调用时无需提供任何参数。
+
+方法 close（由Python垃圾收集器在需要时调用）也是基于异常的：在 yield 处引发 `GeneratorExit` 异常。
+因此如果要在生成器中提供一些清理代码，可将yield放在一条 try/finally 语句中。
+
+```Python
+def echo(value=None):
+    print("Execution starts when 'next()' is called for the first time.")
+    try:
+        while True:
+            try:
+                value = (yield value)
+            except Exception as e:
+                value = e
+    finally:
+        print("Don't forget to clean up when 'close()' is called.")
+```
+
+调用生成器函数，初始化生成生成器迭代器，并首次调用 next：
+
+```Shell
+>>> generator = echo(1)
+>>> print(next(generator))
+Execution starts when 'next()' is called for the first time.
+1
+```
+
+再次调用 next，激活上次 yield 表达式返回 None 赋值给 value，再次运行至 yield 返回 value=None。
+
+```Shell
+>>> print(next(generator))
+None
+```
+
+对生成器调用 send 注入新状态（value=2），重新 yield 返回 value=2：
+
+```Shell
+>>> print(generator.send(2))
+2
+```
+
+为上次 yield 冻结点注入异常，捕获更新状态 value=TypeError('spam')，并运行至下一条 yield 返回 value：
+
+```Shell
+>>> generator.throw(TypeError("spam"))
+TypeError('spam')
+```
+
+为上次 yield 冻结点注入 GeneratorExit 异常，执行 finally 代码块：
+
+```Shell
+>>> generator.close()
+Don't forget to clean up when 'close()' is called.
+```
+
+调用 close 关闭状态机后，再次调用 next 将报 StopIteration 异常。
+
+```Shell
+>>> next(generator)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
+```
+
+## 圆括号构造生成器表达式
+
+在 Python 2.4 中，引入了一个类似于列表推导（List Comprehension）的概念：生成器推导，也叫生成器表达式（Generator Expressions）。
 其工作原理与列表推导相同，但不是创建一个列表（即不立即执行循环），而是返回一个生成器，让你能够逐步执行计算。
 
 ```Shell
 >>> g = ((i + 2) ** 2 for i in range(2, 27))
 >>> next(g)
 16
+>>> golf = 'golf'
+>>> list(golf[i] for i in range(len(golf)-1, -1, -1))
+['f', 'l', 'o', 'g']
 ```
 
 如你所见，不同于列表推导，这里使用的是圆括号。在像这样的简单情形下，还不如使用列表推导；但如果要包装可迭代对象（可能生成大量的值），使用列表推导将立即实例化一个列表，从而丧失迭代的优势。
 
+> Generator expressions are more compact but less versatile than full generator definitions and tend to be more memory friendly than equivalent list comprehensions.
+
 另一个好处是，直接在一对既有的圆括号内（如在函数调用中）使用生成器推导时，无需再添加一对圆括号。换而言之，可编写下面这样非常漂亮的代码：
 
 > sum(i ** 2 for i in range(10))
+
+以下使用 sum 结合生成器表达式，便捷地实现向量的点积（dot product）：
+
+```Python
+>>> xvec = [10, 20, 30]
+>>> yvec = [7, 5, 3]
+>>> sum(x*y for x,y in zip(xvec, yvec))
+260
+```
 
 string.py 中 string.capwords 函数的早期实现即基于生成器迭代器（现已改为 map 实现）：
 
@@ -419,7 +531,9 @@ clock()
 clock()
 ```
 
-上面的 clock 函数一共有两种状态（Tick 和 Tock），每运行一次，就改变一次状态。
+上面的 clock 函数一共有两种状态（Tick 和 Tock），每运行一次就改变一次状态，模拟钟摆的嘀嗒。
+
+- 当把这两种状态用二进制 0,1 表示时，相当于布尔开关状态机。
 
 这个函数如果用 Generator 实现，代码如下：
 
@@ -442,7 +556,28 @@ next(c)
 
 Generator 之所以可以不用外部变量保存状态，是因为它本身就包含了一个状态信息，即目前是否处于暂停态。
 
-### 增长序列生成器
+类似，以下是引入三种状态的“剪刀石头布”游戏（Rock-Paper-Scissors，Stone-Scissors-Cloth），循环出石头、布、剪刀。
+
+```Python
+def draw_rps():
+    while True:
+        print('Rock')
+        yield
+        print('Paper')
+        yield
+        print('Scissors')
+        yield
+
+dr = draw_rps()
+next(dr)
+next(dr)
+next(dr)
+next(dr)
+next(dr)
+next(dr)
+```
+
+### 周期序列生成器
 
 在 repeater 的基础上，我们稍作修改，让其产生增长序列，其中 i 为初始值，step 为步长。
 
@@ -473,7 +608,7 @@ odds()
 
 count 引入了外部干扰，遇到 10 即复位为 0，从而生成十进制数序列（0-9）：
 
-```
+```Python
 def count():
     g6 = generator6()
     print(next(g6))
@@ -492,6 +627,8 @@ count()
 ```
 
 binary 引入了外部干扰，每生成两个数 0,1 即复位，从而生成二进制数序列：
+
+- 类似上面的 Tick-Tock 和日常生活中的布尔开关状态。
 
 ```Python
 def binary():
@@ -586,7 +723,7 @@ for fib in fibs:
         break
 ```
 
-这一节，我们基于生成器（迭代器）来更简洁地实现。
+这一节，我们基于生成器（迭代器）来更简洁地等效实现。
 
 ```Python
 def fibonacci():

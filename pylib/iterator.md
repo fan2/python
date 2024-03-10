@@ -120,6 +120,13 @@ iterator 迭代器（遍历器）就是这一种接口，为各种不同的数�
 
 > `list` provide iterable support；`list_iterator` conform to iterator protocl.
 
+```Shell
+>>> hasattr(list, '__iter__')
+True
+>>> hasattr(list, '__next__')
+False
+```
+
 iterator 的遍历过程如下：
 
 1. 创建一个指针对象，指向当前数据结构的起始位置。也就是说，遍历器对象本质上就是一个指针对象。
