@@ -433,13 +433,13 @@ list 模拟栈的 LIFO 惯用法：
 
 - 双端队列标准惯用法：入队 **enqueue** - `dq.append(e)`, 出队 **dequeue** - `e=dq.popleft()`。
 
-## comprehension
+## listcomp
 
 [**list comprehension**](https://docs.python.org/3/glossary.html?highlight=list%20comprehension) : A compact way to process all or part of the elements in a sequence and return a list with the results.
 
 [5.1.3. List Comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions): List comprehensions provide a concise way to create lists. Common applications are to make new lists where each element is the result of some operations applied to each member of another sequence or iterable, or to create a subsequence of those elements that satisfy a certain condition.
 
-**列表解析式** 是遍历一个列表中的元素，过滤筛选出符合一定条件的元素，执行必要地转换后追加到另一个列表并返回这个新的列表的表达式。  
+listcomp (**列表解析式**) 是遍历一个列表中的元素，过滤筛选出符合一定条件的元素，执行必要地转换后追加到另一个列表并返回这个新的列表的表达式。  
 
 列表解析式形如 `expression comp_for [comp_if]`，或更清晰一点 `expr for iter_var in iterable [if cond_expr]`，其中的条件过滤器 if 语句是可选的。如果没有 if 过滤，则默认遍历所有元素执行转换。
 
@@ -455,6 +455,14 @@ list 模拟栈的 LIFO 惯用法：
 >>> squares = [value**2 for value in range(1,11)]
 >>> print(squares)
 [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+```
+
+以下创建一个列表，列表元素是元组，包括平方根和平方：
+
+```Shell
+# create a list of 2-tuples like (number, square)
+>>> [(x, x**2) for x in range(1,11)]
+[(1, 1), (2, 4), (3, 9), (4, 16), (5, 25), (6, 36), (7, 49), (8, 64), (9, 81), (10, 100)]
 ```
 
 来看一个日常生活中基于列表解析的实际应用案例。
@@ -508,6 +516,65 @@ correct_page_no=list(map(lambda x:x+offset, page_no))
 >>> [n for n in dir(string) if not n.startswith('_')]
 ['Formatter', 'Template', 'ascii_letters', 'ascii_lowercase', 'ascii_uppercase', 'capwords', 'digits', 'hexdigits', 'octdigits', 'printable', 'punctuation', 'whitespace']
 ```
+
+### multilayer
+
+listcomp 还支持 multi-layers loop。
+
+以下用两重 for 循环展开列表的列表：
+
+```Shell
+>>> vec = [[1,2,3], [4,5,6], [7,8,9]]
+>>> [num for elem in vec for num in elem] # from left to right
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+以下用两重 for 循环将两个列表的元素排列组合成 tuple 序列：
+
+```Shell
+>>> [(x, y) for x in [1,2,3] for y in [4,5,6]]
+[(1, 4), (1, 5), (1, 6), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6)]
+
+# 注意：与 zip 的区别！
+>>> [*zip([1,2,3],[4,5,6])]
+[(1, 4), (2, 5), (3, 6)]
+```
+
+也可在循环后面增加过滤条件：
+
+```Shell
+>>> [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]
+[(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
+```
+
+### Nested
+
+The initial expression in a list comprehension can be any arbitrary expression, including another list comprehension.
+
+以下 matrix 定义了一个 3x4 的矩阵，然后通过嵌套 listcomp 实现矩阵的转置（transpose）。
+
+```Shell
+>>> matrix = [
+...     [1, 2, 3, 4],
+...     [5, 6, 7, 8],
+...     [9, 10, 11, 12],
+... ]
+>>> [[row[i] for row in matrix] for i in range(4)]
+[[1, 5, 9], [2, 6, 10], [3, 7, 11], [4, 8, 12]]
+```
+
+等效于 for 循环加一层 listcomp:
+
+```Shell
+>>> transposed = []
+>>> for i in range(4):
+...     transposed.append([row[i] for row in matrix])
+...
+>>> transposed
+[[1, 5, 9], [2, 6, 10], [3, 7, 11], [4, 8, 12]]
+```
+
+当然，以上最简洁的等效实现方式是使用星号解引用搭配zip：`list(zip(*matrix))`。
 
 ### refs
 
