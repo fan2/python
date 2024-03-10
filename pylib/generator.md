@@ -5,7 +5,7 @@
 
 可借鉴参考《ES6 标准入门》第 16 章《Generator 函数的语法》。
 
-## 基本概念
+## 术语概念（term）
 
 Glossary - **generator**：
 
@@ -21,29 +21,39 @@ Python’s [generator](https://docs.python.org/3/glossary.html#term-generator)s
 
 [Generators](https://docs.python.org/3/glossary.html#term-generator) are a simple and powerful tool for creating iterators. They are written like regular functions but use the [`yield`](https://docs.python.org/3/reference/simple_stmts.html#yield) statement whenever they want to **return** data. Each time [`next()`](https://docs.python.org/3/library/functions.html#next "next") is called on it, the generator **resumes** where it left off (it remembers all the data values and which statement was last executed).
 
+## 术语理解（interpretation）
+
+生成器由两个单独的部分组成：生成器的函数和生成器的迭代器，两位一体通称为**生成器**（generator）。
+
+从外表看，生成器的函数和普通函数一样，只是其中包含一条或多条 yield 语句。
+从语法上，可以把生成器函数理解成一个状态机，yield 语句定义了不同的内部状态。
+
+其次，它还是一个迭代器对象生成函数，调用该函数并不立即执行函数体，而是返回生成器迭代器。
+针对返回的迭代器对象，可以逐次调用 next 或执行 for 循环遍历其内部 yield 定义的状态。
+
+每次调用 next 方法，从函数头部或上一次停下来的地方开始执行，直到遇到下一条 yield 语句为止。
+换言之，生成器函数是分段执行的，yield 语句是暂停执行的标记，而 next 方法可以恢复执行。
+
 ---
 
-生成器由两个单独的部分组成：生成器的函数和生成器的迭代器，两位一体通称为**生成器**。
+`yield` 这个单词既有“生产”、“产出”的意思，又有“让路”、“让出”的意思，真是一语双关！
 
-生成器的函数和普通函数一样，也是由 def 语句定义的代码块，只是其中包含 yield 语句。
-从语法上，可以把 generator 函数理解成一个状态机，yield 语句定义了不同的内部状态。
+为了阐述 yield 语句的具体作用机制，首先明确一下“语句”和“表达式”的概念：
 
-> `yield` 这个单词既有“让出”的意思，又有“产出”的意思，真实一语双关！
+- yield 语句：yield (state)
+- yield 表达式：y = yield (state)
 
-其次，它还是一个迭代器对象生成函数，调用该函数，函数体并不执行，而是返回生成器迭代器。
-返回的迭代器对象可以遍历 generator 函数内部的 yield 语句定义的每一个状态。
-针对迭代器调用 next（或执行 for 循环），每次执行到 yield 冻结。
+下面以 yield 语句表达式 `y = yield (state)` 为例，初步解读一下其运作机制：
 
-每次调用 next 方法，内部指针就从函数头部或上一次停下来的地方开始执行，直到遇到下一条 yield 语句为止。
-换言之，generator 函数是分段执行的，yield 语句是暂停执行的标记，而 next 方法可以恢复执行。
+1. 调用 next，运行至 yield 语句，返回状态值（yield state），并暂停执行（yield CPU control）。
+2. 再次调用 next，从上次的 yield 冻结点唤醒，yield 表达式返回 None，即 y=None。
+3. 如果想改变 yield 表达式的返回值，可改调 g.send(v)，注入 y=v。
 
-以 `y = yield (expr)` 为例：
+如果一个生成器函数包含多条 yield 语句，对其迭代器进行遍历即可获取多个状态值。
 
-1. 调用 next 时返回 expr 的值，yield 冻结。
-2. 再次调用 next，yield 唤醒返回 None，即 y=None。
-3. yield 表达式返回值，则要外面改调 g.send(v) 注入 y=v。
+- 普通函数只能通过 return 语句返回一个值。
 
-## 简单生成器演示
+## 生成器演示（demonstration）
 
 先来看一个最简单的生成器，只有一条空 yield，仅实现让出运行权的效果。
 
@@ -175,7 +185,7 @@ for e in flatten(nested):
 
 然而，如果要展开的是一个列表（或其他任何可迭代对象），你就需要做些工作：遍历所有的子列表（其中有些可能并不是列表）并对它们调用flatten，然后使用另一个for循环生成展开后的子列表中的所有元素。
 
-然而，这个解决方案存在一个问题。如果nested是字符串或类似于字符串的对象，它就属于序列，因此不会引发TypeError异常，可你并不想对其进行迭代。
+但是，这个解决方案存在一个问题：如果nested是字符串或类似于字符串的对象，它就属于序列，因此不会引发TypeError异常，可你并不想对其进行迭代。
 
 > 在函数 flatten 中，不应该对类似于字符串的对象进行迭代，主要原因有两个。首先，你想将类似于字符串的对象视为原子值，而不是应该展开的序列。其次，对这样的对象进行迭代会导致无穷递归，因为字符串的第一个元素是一个长度为1的字符串，而长度为1的字符串的第一个元素是字符串本身！
 
@@ -263,29 +273,8 @@ def dropwhile(predicate, iterable):
 
 > 注意：如果一定要在生成器刚启动时对其调用方法 send，可向它传递参数 None。
 
-```Python
-def generator5():
-    i = 0
-    while True:
-        reset = yield i
-        if reset:
-            i = -1
-        i += 1
-
-g5 = generator5()
-print(next(g5))
-print(next(g5))
-print(g5.send(True))
-print(next(g5))
-print(next(g5))
-```
-
-1. g5=generator5()：返回生成器迭代器，尚未触发执行
-2. next(g5): 触发执行生成器函数，运行至 yield，返回 0 后冻结
-3. next(g5): yield 返回 None，i 自增为1，继续循环至 yield，返回 1 后冻结
-4. g5.send(True): yield 返回 True，i 复位为 -1 并自增为 0，继续循环至 yield，返回 0 后冻结
-5. next(g5): yield 返回 None，i 自增为1，继续循环至 yield，返回 1 后冻结
-6. next(g5): yield 返回 None，i 自增为2，继续循环至 yield，返回 2 后冻结
+上面的 repeater 就是个简单的复读机，无限循环输出初始给定的值。
+对其稍加修改，在中途调用 send 向其内部注入新值，更新内部状态（即复读的内容）。
 
 ```Python
 def repeater(value):
@@ -314,51 +303,51 @@ print(next(r))
 下面综合演示 yield 语句和表达式混合使用：
 
 ```Python
-def generator6(x):
+def generator5(x):
     y = 2 * (yield (x+1))
     z = yield (y//3)
     yield (x+y+z)
 
-g6 = generator6(5)
-print(next(g6))
-print(next(g6))
+g5 = generator5(5)
+print(next(g5))
+print(next(g5))
 ```
 
-1. g6=generator6(5)：x=5，返回生成器迭代器，尚未触发执行
-2. next(g6): 触发执行生成器函数，运行至 yield，返回 x+1=6 后冻结
-3. next(g6): yield 表达式返回 None，与整数 2 相乘，报异常 TypeError：
+1. g5=generator5(5)：x=5，返回生成器迭代器，尚未触发执行
+2. next(g5): 触发执行生成器函数，运行至 yield，返回 x+1=6 后冻结
+3. next(g5): yield 表达式返回 None，与整数 2 相乘，报异常 TypeError：
 
     - TypeError: unsupported operand type(s) for *: 'int' and 'NoneType'
 
-修改测试代码，第一次调用 next(g6) 后，可以调用 send 向内注入 yield 表达式值：
+修改测试代码，第一次调用 next(g5) 后，可以调用 send 向内注入 yield 表达式值：
 
 ```Python
-g6 = generator6(5)
-print(next(g6))
-print(g6.send(12))
-print(next(g6))
+g5 = generator5(5)
+print(next(g5))
+print(g5.send(12))
+print(next(g5))
 ```
 
-1. g6=generator6(5)：x=5，返回生成器迭代器，尚未触发执行
-2. next(g6): 触发执行生成器函数，运行至 yield，返回 x+1=6 后冻结
-3. g6.send(12)：第1个 yield 表达式返回 12，y=2*12=24，返回 y//3=8
-4. next(g6): 第2个 yield 表达式返回 None，z=None，第三个 yield 语句报异常 TypeError:
+1. g5=generator5(5)：x=5，返回生成器迭代器，尚未触发执行
+2. next(g5): 触发执行生成器函数，运行至 yield，返回 x+1=6 后冻结
+3. g5.send(12)：第1个 yield 表达式返回 12，y=2*12=24，返回 y//3=8
+4. next(g5): 第2个 yield 表达式返回 None，z=None，第三个 yield 语句报异常 TypeError:
 
 - TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'
 
 再次修改测试部分，把 send 后的 next 改为再次 send 传值：
 
 ```Python
-g6 = generator6(5)
-print(next(g6))
-print(g6.send(12))
-print(g6.send(13))
+g5 = generator5(5)
+print(next(g5))
+print(g5.send(12))
+print(g5.send(13))
 ```
 
-1. g6=generator6(5)：x=5，返回生成器迭代器，尚未触发执行
-2. next(g6): 触发执行生成器函数，运行至 yield，返回 x+1=6 后冻结
-3. g6.send(12)：第1个 yield 表达式返回 12，y=2*12=24，返回 y//3=8
-4. g6.send(13)：第2个 yield 表达式返回 13，z=13，yield 语句 x+y+z=5+24+13=42，返回 42
+1. g5=generator5(5)：x=5，返回生成器迭代器，尚未触发执行
+2. next(g5): 触发执行生成器函数，运行至 yield，返回 x+1=6 后冻结
+3. g5.send(12)：第1个 yield 表达式返回 12，y=2*12=24，返回 y//3=8
+4. g5.send(13)：第2个 yield 表达式返回 13，z=13，yield 语句 x+y+z=5+24+13=42，返回 42
 
 ## 圆括号构造简单生成器
 
@@ -410,7 +399,169 @@ A slight modification will give you the index rather than the value:
 2
 ```
 
-## 基于生成器创建斐波那契数列
+## 生成器与状态机应用实例
+
+Generator 是实现状态机的最佳结构。比如，下面的 clock 函数就是一个状态机。
+
+```Python
+ticking = True
+def clock():
+    global ticking
+    if ticking:
+        print('Tick!')
+    else:
+        print('Tock!')
+    ticking = not ticking
+
+clock()
+clock()
+clock()
+clock()
+```
+
+上面的 clock 函数一共有两种状态（Tick 和 Tock），每运行一次，就改变一次状态。
+
+这个函数如果用 Generator 实现，代码如下：
+
+```Python
+def clock():
+    while True:
+        print('Tick!')
+        yield
+        print('Tock!')
+        yield
+
+c = clock()
+next(c)
+next(c)
+next(c)
+next(c)
+```
+
+对比上面的 Generator 实现与普通函数实现，可以看到少了用来保存状态的外部变量 ticking，这样就更简洁，更安全（状态不会被非法篡改），更符合函数式编程的思想，在写法上也更优雅。
+
+Generator 之所以可以不用外部变量保存状态，是因为它本身就包含了一个状态信息，即目前是否处于暂停态。
+
+### 增长序列生成器
+
+在 repeater 的基础上，我们稍作修改，让其产生增长序列，其中 i 为初始值，step 为步长。
+
+```Python
+def generator6(i=0， step=1):
+    while True:
+        reset = yield i
+        if reset is not None: # isinstance(reset, int)
+            i = reset
+        i += step
+```
+
+初始化状态机后，当外部不干涉状态机时，其生成无限等步长增长序列。
+
+例如 odds 生成奇数序列 1,3,5,7,9,...；把起始值改为 2，则生成偶数序列。
+
+```Python
+def odds():
+    g6 = generator6(i=1, step=2)
+    print(next(g6))
+    print(next(g6))
+    print(next(g6))
+    print(next(g6))
+    print(next(g6))
+
+odds()
+```
+
+count 引入了外部干扰，遇到 10 即复位为 0，从而生成十进制数序列（0-9）：
+
+```
+def count():
+    g6 = generator6()
+    print(next(g6))
+    print(next(g6))
+    print(next(g6))
+    print(next(g6))
+    print(next(g6))
+    print(next(g6))
+    print(next(g6))
+    print(next(g6))
+    print(next(g6))
+    print(next(g6)) # 9
+    print(g6.send(-1)) # 逢十进一复位为 0
+
+count()
+```
+
+binary 引入了外部干扰，每生成两个数 0,1 即复位，从而生成二进制数序列：
+
+```Python
+def binary():
+    g6 = generator6()
+    print(next(g6))
+    print(next(g6))
+    print(g6.send(-1))
+    print(next(g6))
+    print(g6.send(-1))
+    print(next(g6))
+
+binary()
+```
+
+1. g6=generator6()：返回生成器迭代器，尚未触发执行
+2. next(g6): 触发执行生成器函数，运行至 yield，返回 0 后冻结
+3. next(g6): yield 返回 None，i 自增为1，继续循环至 yield，返回 1 后冻结
+4. g6.send(-1): yield 返回 -1，i 复位为 -1 并自增为 0，继续循环至 yield，返回 0 后冻结
+5. next(g6): yield 返回 None，i 自增为1，继续循环至 yield，返回 1 后冻结
+6. 重复 4-5，不断生成二进制序列。
+
+初始化和注入点稍作修改，即可改为生成军训口令“一二一”序列。
+
+- 这个非典型示例中 send 修改都超过了 next 读取内部状态，一般状态机也不这么设计。
+
+```Python
+def command():
+    g6 = generator6(1)
+    print(next(g6))
+    print(next(g6))
+    print(g6.send(0))
+
+    print(g6.send(0))
+    print(next(g6))
+    print(g6.send(0))
+
+    print(g6.send(0))
+    print(next(g6))
+    print(g6.send(0))
+
+command()
+```
+
+count 示例十进制组成数，实际上是个周期循环。
+日常生活中，最典型的“周期”是 week，七天循环一周。
+weekdays 则演示了一周从周一到周日，过完一周后复位为周一，周而复始。
+
+```Python
+def weekdays():
+    g5 = generator6(1)
+    print(next(g5)) # Monday
+    print(next(g5)) # Tuesday
+    print(next(g5)) # Wednesday
+    print(next(g5)) # Thursday
+    print(next(g5)) # Friday
+    print(next(g5)) # Saturday
+    print(next(g5)) # Sunday
+    print(g5.send(0)) # reset to Monday
+    print(next(g5))
+    print(next(g5))
+    print(next(g5))
+    print(next(g5))
+    print(next(g5))
+    print(next(g5))
+    print(g5.send(0)) # reset to Monday
+
+weekdays()
+```
+
+### 斐波那契数列
 
 假如只想找出第一个大于1000的斐波那契数，而不关注前向序列，如果用列表实现，非常耗费内存。
 在迭代器专题中，我们演示了基于迭代器实现了斐波那契数列。
