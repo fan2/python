@@ -244,6 +244,64 @@ The expression list is evaluated once; it should yield an iterable object. An **
 - `for k in dict1` 遍历字典的键值，等效于 `for k in dict1.keys()`；  
 - `for c in str1` 遍历字符串中的字符（单字符子串）。  
 
+### Using \_ as a Loop Variable
+
+> ChatGPT/DeepSeek topic: `Using an underscore _ as a loop variable in Python`
+
+Using an underscore `_` as a loop variable in Python is a convention to indicate that the loop variable is *not* used within the loop's body. It signals that the loop is primarily for repeating an action a specific number of times, rather than processing the elements of an iterable.
+
+In Python, using a single underscore `_` as a loop variable is a ​​convention to indicate that the loop variable is intentionally unused or irrelevant​​ within the loop body. This practice improves code readability by signaling to other developers that the value is being ignored.
+
+For example:
+
+```Python
+for _ in range(5):
+    print("Hello")
+```
+
+`_` signifies that the loop index is irrelevant; only the repetition matters. The loop executes five times (prints "Hello" 5 times), but the `_` variable (loop counter) is not used.
+
+**Keywords**: Unused, Placeholder, Throwaway Indicator
+
+**Key Takeaways**: Using `_` as a loop variable is a convention to indicate that the variable's value is not needed.
+
+以下代码片段求前20项的斐波那契数：
+
+```Python
+a = 0
+b = 1
+for _ in range(20):
+    (a, b) = (b, a + b)
+    print(a, end=' ')
+```
+
+**Unpacking Extension​**​:
+
+`_` is also used to ignore values during unpacking (e.g., `x, _, y = (1, 2, 3)`), reinforcing its role as a discard placeholder.
+
+[Trying to understand Python loop using underscore and input](https://stackoverflow.com/questions/39188827/trying-to-understand-python-loop-using-underscore-and-input)
+
+As a general purpose "throwaway" variable name to indicate that part of a function result is being deliberately ignored, as in code like:
+
+```Python
+label, has_label, _ = text.partition(':')
+```
+
+另外一个典型的例子是目录循环迭代生成器 os.walk（Directory tree generator），生成 (dirpath, dirnames, filenames) 三元组。
+
+```Python
+for dirpath, folders, files in os.walk(directory):
+```
+
+如果不关注子目录名，只关注每一层中的文件，可以以 `_` 标识忽略 folders：
+
+```Python
+for dirpath, _, files in os.walk(dir):
+    print(f"{dirpath}: {files}")
+    for file in files:
+        print(f"\t{os.path.join(dirpath, file)}") # filepath
+```
+
 ### comprehension
 
 [**list comprehension**](https://docs.python.org/3/glossary.html?highlight=list%20comprehension) : A compact way to process all or part of the elements in a sequence and return a list with the results.
