@@ -437,7 +437,7 @@ def capwords(s, sep=None):
 
 Pretty-Printed Python Path:
 
-> python3 -c "import pprint; pprint.pp('\n'.join(sys.path))"
+> python3 -c "import sys, pprint; pprint.pp(sys.path)"
 > python3 -c "import sys; print('\n'.join(sys.path))"
 
 ### expressions
