@@ -94,7 +94,7 @@ str 的 join(self, iterable, /) 方法需要传入可迭代对象，将它们连
 
 ## iterator
 
-An object representing a stream of data. Repeated calls to the iterator’s [`__next__()`](https://docs.python.org/3/library/stdtypes.html#iterator.__next__ "iterator.__next__") method (or passing it to the built-in function [`next()`](https://docs.python.org/3/library/functions.html#next "next")) return successive items in the stream. When no more data are available a [`StopIteration`](https://docs.python.org/3/library/exceptions.html#StopIteration "StopIteration") exception is raised instead. At this point, the iterator object is exhausted and any further calls to its `__next__()` method just raise [`StopIteration`](https://docs.python.org/3/library/exceptions.html#StopIteration "StopIteration") again. Iterators are required to have an [`__iter__()`](https://docs.python.org/3/library/stdtypes.html#iterator.__iter__ "iterator.__iter__") method that returns the iterator object itself so every iterator is also iterable and may be used in most places where other iterables are accepted. One notable exception is code which attempts multiple iteration passes. A container object (such as a [`list`](https://docs.python.org/3/library/stdtypes.html#list "list")) produces a fresh new iterator each time you pass it to the [`iter()`](https://docs.python.org/3/library/functions.html#iter "iter") function or use it in a [`for`](https://docs.python.org/3/reference/compound_stmts.html#for) loop. Attempting this with an iterator will just return the same exhausted iterator object used in the previous iteration pass, making it appear like an empty container.
+An object representing a stream of data. Repeated calls to the iterator's [`__next__()`](https://docs.python.org/3/library/stdtypes.html#iterator.__next__ "iterator.__next__") method (or passing it to the built-in function [`next()`](https://docs.python.org/3/library/functions.html#next "next")) return successive items in the stream. When no more data are available a [`StopIteration`](https://docs.python.org/3/library/exceptions.html#StopIteration "StopIteration") exception is raised instead. At this point, the iterator object is exhausted and any further calls to its `__next__()` method just raise [`StopIteration`](https://docs.python.org/3/library/exceptions.html#StopIteration "StopIteration") again. Iterators are required to have an [`__iter__()`](https://docs.python.org/3/library/stdtypes.html#iterator.__iter__ "iterator.__iter__") method that returns the iterator object itself so every iterator is also iterable and may be used in most places where other iterables are accepted. One notable exception is code which attempts multiple iteration passes. A container object (such as a [`list`](https://docs.python.org/3/library/stdtypes.html#list "list")) produces a fresh new iterator each time you pass it to the [`iter()`](https://docs.python.org/3/library/functions.html#iter "iter") function or use it in a [`for`](https://docs.python.org/3/reference/compound_stmts.html#for) loop. Attempting this with an iterator will just return the same exhausted iterator object used in the previous iteration pass, making it appear like an empty container.
 
 The **iterator** objects themselves are required to support the following two methods, which together form the *iterator protocol*:
 
@@ -106,7 +106,7 @@ The **iterator** objects themselves are required to support the following two me
 
 Python defines several iterator objects to support iteration over general and specific sequence types, dictionaries, and other more specialized forms. The specific types are not important beyond their implementation of the iterator protocol.
 
-Once an iterator’s `__next__`() method raises `StopIteration`, it must continue to do so on subsequent calls. Implementations that do not obey this property are deemed broken.
+Once an iterator's `__next__`() method raises `StopIteration`, it must continue to do so on subsequent calls. Implementations that do not obey this property are deemed broken.
 
 ### concept
 
@@ -530,6 +530,23 @@ def capwords(s, sep=None):
 
 #### demo2: version tuple str2int
 
+sys.version_info 输出 tuple `(3, 9, 6, 'final', 0)`，可以通过 map 对 `sys.version_info[:3]` 中的每个元素调用 str 转换为字符串。
+
+```python
+>>> ".".join(map(str, sys.version_info[:3]))
+'3.9.6'
+```
+
+以下代码片段中根据当前版本是小于 3.8 还是大于 3.8 来选择使用 time.clock() 还是 time.perf_counter() 来获取当前时间戳。
+
+```python
+def time_perf() -> float:
+    if sys.version_info < (3, 8):
+        return time.clock()
+    else:
+        return time.perf_counter()
+```
+
 1. sysconfig.get_python_version() 输出 '3.9'，platform.python_version() 输出 '3.9.6'。
 
 `version_str2tuple` 函数将版本号字符串按点号（`.`）分割成字符数组，再对字符数组调用 int 逐一映射为整数。
@@ -566,9 +583,6 @@ version_str2tuple(platform.python_version()) > (3, 9, 6)
 
 # ('3', '9', '6')
 version_tuple_str2int(platform.python_version_tuple()) > (3, 9, 6)
-
-# (3, 9, 6, 'final', 0)
-tuple(sys.version_info) > (3, 9, 6) # sys.version_info > (3, 9, 6)
 ```
 
 以上示例中，字符串转整数，转换器为 int 类，传入字符串构造转换。

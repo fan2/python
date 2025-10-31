@@ -203,6 +203,8 @@ $ echo $VIRTUAL_ENV
 deactivate
 ```
 
+[Python venv: How To Create, Activate, Deactivate, And Delete](https://python.land/virtual-environments/virtualenv)
+
 ### mechanism
 
 When a Python interpreter is running from a virtual environment, [`sys.prefix`](https://docs.python.org/3/library/sys.html#sys.prefix) and [`sys.exec_prefix`](https://docs.python.org/3/library/sys.html#sys.exec_prefix) point to the directories of the virtual environment, whereas [`sys.base_prefix`](https://docs.python.org/3/library/sys.html#sys.base_prefix) and [`sys.base_exec_prefix`](https://docs.python.org/3/library/sys.html#sys.base_exec_prefix) point to those of the *base* Python used to create the environment. It is sufficient to check `sys.prefix != sys.base_prefix` to determine if the current interpreter is running from a virtual environment.
